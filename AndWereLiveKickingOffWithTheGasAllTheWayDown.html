@@ -1,0 +1,43 @@
+<br />
+<p>I just wanted to thank everyone who helped make this happen.  There were a few key friends involved that motivated me to get back into blogging and I'm excited on this long journey ahead!</p>
+<br />
+<h4>Site Developed with Visual Studio</h4>
+<br />
+<p>Just a few key points to clarify</p>
+<ul>
+    <li>The site is titled TechieJS and is a unique name I was able to get a hold of.  It does not mean that I will only be focusing on Javascript</li>
+    <li>The backend of the site is developed using: ASP.NET, C#, SQL Server</li>
+    <li>The front end is obviously using: HTML, CSS, Javascript, jQuery, and other Javascript frameworks.</li>
+</ul>
+<br />
+    <h4> So how painless was the launch?</h4>
+<br />
+    <p>Well the launch was nothing but rocky but that is to be expected because I haven't used Plesk(Godaddy) before and had to tweak quite a few settings to get everything hashed out</p>
+    <p>At first sight, I was having quite a few issues publishing to the Godaddy servers.  I had my Publish settings setup identically to another site I was successfully working on and thought it was going to be as simple as changing the username and password...Yeah right.</p>
+<br />
+<h4>Where do we start?</h4>
+<br />
+<p>The first round of posts will likely center around the ASP.NET MVC framework, some C# and lots of front end tweaking until I get everything looking decent.  I am a visual perfectionist and I have to have my work look presentable.  It bothers me when people have blatant visual defects.  As you follow along, you'll start from thinking I'm OCD to embracing this methodology!</p>
+<br />
+<h4>Launch Troubles</h4>
+<br />
+<p>I'm still unclear as to why the style bundling was such a major disaster considering everything worked flawlessly in my development environment(haha).  I was using CSS stylesheet bundling to combine some of the very common .css files such as bootstrap.css, style.css, etc.  This is what it looks like in the BundleConfig.cs file: </p>
+<div>
+<img class="postImage" src="http://techiejs.com/Content/img/PublicImages/8dd64c7e-a115-4bf7-9797-c98d32e81015_original.png" alt="Original CSS Stylesheet bundling" width="600" text-align="center" />
+</div>
+<br />
+<div>
+    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/fcac37bf-8aba-4656-a01c-a599dc8c4669_original.png" alt="Original Page with broken CSS" width="600" />
+</div>
+<br />
+<p>After some head scratching and some inspection in Google Development Tools, I noticed I was getting a 403 for the bundle.</p>
+<br />
+<div>
+    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/f60b2f2c-74c5-421a-a89c-6a62a396673b_original.png" alt="Google Development Tools 403" width="600" />
+</div>
+<p>Including the stylesheets individually was basically the quickest way I could go to sleep and research the issue later.  I will solve this and add a link here once it's done.</p>
+<div>
+    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/7f36950f-d8e7-4bb6-8595-7f7cd601154f_original.png" alt="Un Bundling CSS Stylesheets" width="600" />
+</div>
+<br />
+<p>That's a wrap for today! I'll continue to post regularly and add to the technology suite covered in this page!</p>

@@ -1,0 +1,161 @@
+<br />
+<p>There was a bit of confusion when I read the forums and the AngularJS docs when it comes to what a provider, service and factory are.  The confusion is not so much in the documentation, but in the way that I read it at first and since this blog is to catalog my experiences, I'm going to write about it.  You could very well have read the docs and said to yourself, "Clear as mud" and went on with your life, but no worries, I'm here to save you!</p>
+<br />
+<h4>Does it matter?</h4>
+
+<p> Well that depends.  Depends if you actually want to understand what you're writing and not resorting to defaults.  I was in the former camp, writing a factory and using it the way I knew how.  That's not wrong and it gets the job done, but why not learn about ALL the options you have?  Alright, if you need more convincing then this is probably not the post for you, let's get to the "understanding"</p>
+<br />
+<h4>Definitions</h4>
+
+<ul>
+<li><strong>Angular Service:</strong> What you get here is the instance of the function, so similar to a class, "basically new yourFunction()".  Using a service, we can then inherit the parent class properties via prototype. </li>
+<li><strong>Angular Provider:</strong> When invoked with $.get you will receive the value of the $.get function defined in the provider. </li>
+<li><strong>Angular Factory:</strong> The result of what is returned by the passed in function in the declaration of the factory</li>
+</ul>
+<br />
+<h4>Angular Service</h4>
+<p>When you define a service and later inject it into your controller, you are then able to use the service as a new'd up function of what was declared in the service declaration.  For instance:</p>
+<br />
+
+
+<pre class="prettyprint">
+//Service
+(function(){
+
+	angular.module("myApplication")
+		.service("SuperService", PassedInFunction);
+
+	var PassedInFunction = function () { // bunch of stuff here};
+	PassedInFunction.prototype.defaultName = "My ultimate function";
+
+//Controller
+(function(){
+	angular
+	.controller("myApplication", ["SuperService", HomeController]);
+
+	function HomeController(SuperService){
+		var vm = this;
+		vm.message = "This is coming from the parent class
+			 extending prototype with the name of: " + SuperService.defaultName;
+		vm.newFunction = SuperService;
+		vm.messageFromNewFunction = "This is coming from newFunction
+		which is an instance of SuperService():" + vm.newFunction.defaultName;
+			}
+}());
+
+//The result if you wrote this to the html via {{vm.message}} would be:
+//"This is coming from the parent class extending prototype with the name of: My ultimate function"
+//This is coming from newFunction which is an instance of SuperService(): My ultimate function"
+</pre>
+<br />
+<p>Clear as mud? Good! Notice the usage!</p>
+<pre class="prettyprint">
+SuperService.defaultName
+vm.newFunction.defaultName;
+</pre>
+<br />
+<h4>Angular Provider</h4>
+<p>A little trickier but nonetheless straightforward.  When you create an injectable argument, you are able to configure the constructor function before the provider .$get() method is called </p>
+<br />
+<pre class="prettyprint">
+//Provider declaration
+(function(){
+
+	angular
+	.module("myApplication")
+	.provider("SuperProvider", function(){
+
+		var firstName = "Oleg";
+		var lastName = "Shalygin";
+
+		this.$get = function(){
+			return firstName + " " + lastName;
+		}
+		});
+}());
+
+//Controller
+	(function(){
+		angular
+		.controller("myApplication", ["SuperProvider", HomeController]);
+
+		function HomeController(SuperProvider){
+			var vm = this;
+			vm.message = SuperProvider;
+		}
+}());
+
+//The result if you wrote this to the html via {{vm.message}} would be:
+//"Oleg Shalygin"
+
+</pre>
+<br />
+<p>The biggest advantage here is you can make modifications to the provider before it is called.</p>
+<br />
+<h4>Angular Factory</h4>
+<p>Probably the easiest to undersand and use is the factory.  This is one that I use very commonly throughout most of my angular applications to handle my API(resource calls).  A factory will return back the value that the function returns when you pass the function in the factory declaration phase(module.factory)</p>
+<br />
+<pre class="prettyprint">
+//Factory declaration
+(function(){
+
+	angular
+	.module("myApplication")
+	.factory("SuperFactory", function(){
+
+		var firstName = "Oleg";
+		var lastName = "Shalygin";
+
+		return firstName + " " + lastName;
+		}
+	});
+}());
+
+//Controller
+(function(){
+	angular
+	.controller("myApplication", ["SuperFactory", HomeController]);
+
+	function HomeController(SuperFactory){
+		var vm = this;
+		vm.message = SuperFactory;
+		}
+}());
+
+//The result if you wrote this to the html via {{vm.message}} would be:
+//"Oleg Shalygin"
+
+</pre>
+<br />
+<p>Just so it is clear and you are familiar with the angular source:  factory, service and value all derive from <strong>provider</strong>.  Here is the source </p>
+<br />
+<pre class="prettyprint">
+provider.service = function(name, Class) {
+  provider.provide(name, function() {
+    this.$get = function($injector) {
+      return $injector.instantiate(Class);
+    };
+  });
+}
+
+provider.factory = function(name, factory) {
+  provider.provide(name, function() {
+    this.$get = function($injector) {
+      return $injector.invoke(factory);
+    };
+  });
+}
+
+provider.value = function(name, value) {
+  provider.factory(name, function() {
+    return value;
+  });
+};
+</pre>
+<br />
+<p>The following sources were used to develop some of the content here so feel free to navigate and read a little more.  OR, feel free to send me an email or drop a comment! </p>
+<ul>
+	<li><a href="http://stackoverflow.com/questions/15666048/service-vs-provider-vs-factory">Stack Overflow Discussion </a></li>
+	<li><a href="https://groups.google.com/forum/#!msg/angular/56sdORWEoqg/HuZsOsMvKv4J">Google Discussion</a></li>
+</ul>
+<br />

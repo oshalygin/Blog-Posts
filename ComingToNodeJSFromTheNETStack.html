@@ -1,0 +1,160 @@
+
+<br />
+<p>It all began when I first started learning AngularJS and the benefits of a non-blocking UI</p>
+<p> There are of course other benefits to AngularJS, but to me, I was enamored with a UI that felt very fluid.  The learning curve for AngularJS isn't very steep especially if you come from a MVC background.
+</p>
+
+<h4>What is AngularJS</h4>
+<p>
+    I am still in the process of getting a better handle of Angular and so far it's going quite well.  I've made a few basic single page applications that seem to flow and function as intended.  I am eagerly awaiting the next release(Angular 2.0) and will jump right in as soon as the libraries are released.  But back to what AngularJS actually is, I rather go ahead and just quote my favorite comment on Angular.
+</p>
+<pre class="prettyprint">
+"Angular is what HTML would have been, had it been designed for applications. HTML is a great declarative language for static documents. It does not contain much in the way of creating applications, and as a result building web applications is an exercise in what do I have to do to trick the browser into doing what I want?"
+</pre>
+<span>
+Source:  <a href="https://docs.angularjs.org/guide/introduction">AngularJS Introduction @ docs.angularjs.org</a></li>
+</span>
+<br />
+<h4>Why NodeJS?</h4>
+<p>
+    Being new to Angular, it probably would have been best to just go ahead and integrate it into my daily .NET stack, but I wanted to get the full fledged Javascript backend experience...Smart?  Maybe.  I've used Javascript extensively a few years back so the syntax wasn't a surprise.
+</p>
+
+<h4> Initial Impressions </h4>
+<p>
+    First step was to try and use Visual Studio.  I firmly believe that as a development environment, it doesn't get any better than Visual Studio.  I downloaded the VS extension on codeplex:  <a href="https://nodejstools.codeplex.com/"> Node.js Tools </a> and off I went!
+</p>
+<p>
+    Setting up my first project seemed straight forward enough.  Here are all of the available projects once you install the extension:
+</p>
+
+<div>
+    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/2af6b429-b01f-4ad6-a4c7-9cd9ae6f4268_original.png" alt="Nodejs Tools Projects" width="600" text-align="center" />
+</div>
+<br />
+<p>To get the full fledged learning experience, I started off with a Blank Node.js Web Application.  Deleted the contents in server.js and off I went...Or so I thought.  The Intellisense was wonky at best.  The built-in Javascript Intellisense in Visual Studio was working in tandem with Resharper 9.0.  Both of them were showing up:</p>
+
+<div>
+    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/9dddcc07-e553-4fbf-b9f0-38ee47aac324_original.png" alt="NodeJS Tools Intellisense" width="600" text-align="center" />
+
+</div>
+<p>Definitely not the advertised Intellisense that I was expecting.  See below from the codeplex docs:</p>
+<div>
+    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/0036f3ae-2ec2-40c2-a67e-e87cd2d0db81_original.png" alt="NodeJS Tools advertised intellisense" width="600" text-align="center" />
+</div>
+<p> The above is what it should look like.  Don't see a difference?  Look closely on the first image you will see two Intellisense windows overlapping each other...Terrible.  The fix took a few tries to get right but I settled with the built-in Intellisense of Resharper instead because it covered more properties and functions.  Essentially you can either disable the Resharper intellisense or the Visual Studio intellisense.  The first image below shows how to disable the Resharper Intellisense:</p>
+
+<div>
+    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/4d7fd4a8-81b0-40fb-9f61-2c7669c22ed1_original.png" alt="Disabling Javascript Intellisense in Resharper" width="600" text-align="center" />
+</div>
+<br />
+<p>This is how the Intellisense will look like once you've disabled the Resharper built-in Intellisense(note I disabled the Visual Studio Intellisense later)</p>
+<div>
+    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/302bf8c8-4eb3-430d-837a-f1db114ff251_original.png" alt="Visual Studio only intellisense for NodeJS" width="600" text-align="center" />
+</div>
+<br />
+<h4>A basic NodeJS project</h4>
+<p>
+    Just as an example, here is a basic project that takes a request URL and writes it back with a response to the page.
+</p>
+<pre class="prettyprint">
+var http = require("http");
+
+var server = http.createServer(function(req, res){
+console.log(req.url);
+resp.write("<html><body>" + req.url + "</html></body>");
+resp.end();
+});
+
+server.listen(3000);
+
+</pre>
+<p>Essentially what you're doing in the above code block is establishing a server that takes in a request and provides a response.  You also specify the port that you will be listening on, in our case it is "3000"
+</p>
+<div>
+    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/f9512b78-c4b0-4e70-83a4-f10d807537da_original.png" alt="Basic nodejs project application" width="600" text-align="center" />
+</div>
+<span>Output when you run the page(F5)</span>
+    <br />
+    <h4>Express.js</h4>
+    <p>Express.js is a web framework for NodeJs to take on views, routing, database handling and everything else you would expect from a web framework.  It is basically a requirement that you include it in your Node.js project if you're developing a web application.  TLDR: <strong>Get it.</strong></p>
+    <h4>NPM</h4>
+    <p>
+        Stands for "Node Package Manager".  Think of NuGet except the search tools aren't as refined.  The UI is basically non-existent, no matter what IDE you use, but that's alright because the command line is perfectly fine for grabbing packages.  An example of a command line would be:
+    </p>
+<pre class=prettyprint>
+npm install express --save
+npm install underscore --save
+npm install vash --save
+npm install jade --save
+npm uninstall jade --save
+</pre>
+
+    <h4>Vash</h4>
+    <p>Think razor view engine for ASP.NET.  The syntax is fairly similar and works as you would expect(mostly).  First of all, this is how you include a view engine in your nodejs application:
+    </p>
+<pre class="prettyprint">
+var express = require('express');
+var app = express();
+app.set('view engine', 'vash');
+</pre>
+    <p>
+
+    <p> This is what the vash syntax looks like:</p>
+<pre class="prettyprint">
+// model = { what: 'hello!' }
+<p>@what</p>
+<p>@model.what().who[2]('are you sure')('yes, it\'s ok')( model.complex ? 'FULL POWER' : '' )</p>
+// model = ['a', 'b']
+@model.forEach(function(item){
+<li>@item</li>
+// model = { hasIceCream: true }
+<p class="@( model.hasIceCream ? 'ice-cream' : '')">Ice Cream</p>
+    })
+</pre>
+    <br />
+    <p>So considering this is a very popular view engine for ASP.NET and its clean and easy to read, you would figure that it's also the most popular Node.js view engine? FALSE.  Enter, Jade:</p>
+
+    <div>
+        <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/730cbc4d-3761-4e4f-86a7-5dec6aa1eb72_original.jpg" alt="Jade nodejs template engine" width="600" text-align="center" />
+    </div>
+    <br />
+    <p>Before someone gets carried away and starts telling you about all of the benefits of this HAML like syntax, take a look at the syntax first:</p>
+<pre class="prettyprint">
+doctype html
+html(lang="en")
+  head
+    title= pageTitle
+    script(type='text/javascript').
+      if (foo) {
+         bar(1 + 5)
+      }
+  body
+    h1 Jade - node template engine
+    #container.col
+      if youAreUsingJade
+        p You are amazing
+      else
+        p Get on it!
+      p.
+        Jade is a terse and simple
+        templating language with a
+        strong focus on performance
+        and powerful features.
+</pre>
+    <span>Personally it's not my cup of tea, could be yours, but not mine.  I needed something more familiar with a better structure set.</span>
+    <br />
+    <h4>Thoughts on Node.js</h4>
+    <p>I'll be honest, I haven't truly mastered Node.js nor spent months developing in it but I have a few complaints that made me focus my learning efforts in other directions.  Here is my list of "complaints":</p>
+    <ul>
+        <li><strong>IDE</strong>: Since Visual Studio doesn't natively support Node.js with rich intellisense and all of the other fun features that are available with .NET, it is very difficult to find an IDE that "just works".  The IDE either makes your life easy or painful.  In the case of Node, Visual Studio made it painful.  I used Webstorm halfway through the project, but it was basically the same experience with a nicer UI. </li>
+        <li><strong>Javascript</strong>:  When you're working with C# for your backend needs, it just feels so natural.  Javascript just doesn't feel very natural as a backend language interfacing with databases and feeding code to the view.  On top of Javascript not being a true Object Oriented Language(not without some clever tactics), it just feels like I have to constantly review my code to make sure I didn't make a typo somewhere.  Sure some of this could be resolved by the IDE, but where is the perfect IDE solution?</li>
+        <li><strong>NoSQL</strong> and MongoDB.  Yeah...document databases...they're great for searching documents I guess.  When you're coming from a rich interface and familiarity with SQL, it's not a simple transition going to Node by any means.  MongoDB is very lightweight and "simple" to get started but I have a hard time replacing SQL.  That said, there are drivers that interface with SQL, but as nice as you are probably familiar with in .NET.  If you're looking for a good driver to interface with SQL Server on your Node.js project, I hear great things about sql-cli.  You can install it via npm <i>"npm install sql-cli --save"</i></li>
+        <li><strong>The Framework</strong>:  The .NET framework really does a lot for the developer and shields them from the obscure details that do not generate content but basically "setup" the framework.  Dabbling with routes and getting into the minutia of how to feed data to the page gets old really fast.  Some people may like the "pure" feel of Node.js, but I find it a chore.</li>
+        <li><strong>Documentation</strong>:  There is a lot of good documentation out there but nothing matches .NET.  I spent quite a bit of time looking around for the right api to use.</li>
+        <li><strong>Debugging</strong>:  Debugging is not as you would expect, mostly because the IDE's don't support it as you would expect.  I could write a whole story about Javascript debugging but I will leave it at being ineffective for Node.js applications.</li>
+    </ul>
+    <br />
+    <br />
+    <p>Well that's all I have for now, thanks for reading guys and feel free to shoot me an email or leave a comment letting me know what you think!</p>
+    <br />

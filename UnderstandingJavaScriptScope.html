@@ -1,0 +1,218 @@
+<br />
+<p>I got a few emails asking me to cover some javascript fundamentals on my vehicle simulation models(www.fsaesim.com for those interested!).  Most of the users of my simulation are mechanical/electrical engineers that have a very limited programming background.  At some point in the future I'll do a huge revamp of FSAESim.com, but until then, these posts will help clarify the nuances of Javascript and the Javascript compiler.</p>
+<br />
+<h4>Why do we need to even talk about Javascript scope?</h4>
+
+<p>
+    If it was straight forward like most other languages, then we could forego this whole post, but it's not and it is critical to understand how scope is determine in javascript if you're pulling your hair out trying to debug your application. <br/>
+    <br/>
+    Scope is nothing but the current context of your code.  If you've ever tried to make sense of javascript, this image will make a lot of sense!
+</p>
+<br/>
+<div class="text-center">
+    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/2fa3ec5d-82dd-4585-90fc-855a53918313_original.png" alt="Javascript lol null" width="100" text-align="center" />
+</div>
+<h4>Global scope</h4>
+
+<p>the first thing to understand is when you are declaring variables outside of a function, you are declaring variables on the global scope. For instance</p>
+<br />
+<pre class="prettyprint">
+    var globalVariable = "I am a global variable";
+    console.log(globalVariable);
+//Output: I am a global variable
+</pre>
+
+<br />
+<h4>Local Variables</h4>
+<p>Functions create their own scope and as such are considered "local" to that function.  Local scope variables cannot be accessed in the global scope.  There is black magic trickery that you can employ to push them out to the local scope but we'll keep things pretty basic for now.</p>
+<br />
+<pre class="prettyprint">
+    var globalVariable = "I am a global variable";
+    function calculator(){
+        var firstValue = 2;
+        var secondValue = 3;
+        var result = firstValue*secondValue;
+    }
+    console.log(result)
+//Output: Reference Error:  result is not defined!
+</pre>
+<br />
+<p>So what happened here when we tried to access result in the global scope? Well result doesn't exist in the global scope!  But what if you start to create functions inside of functions? Well, you're going to create nested local scopes! Here is an example:</p>
+<br />
+
+<pre class="prettyprint">
+    	var globalVariable = "I am a global variable";
+    function calculator(){
+        var firstValue = 2;
+        var secondValue = 3;
+        var result = firstValue*secondValue;
+        console.log(result);
+
+        function typeOfCalculator(){
+            var firstType = "TI-89"
+            var secondType = "TI-83"
+            console.log(firstType);
+           }
+      typeOfCalculator()
+    }
+    calculator();
+</pre>
+<br />
+<p>What if you tried to call result from typeOfCalculator()?  No problem, because typeOfCalculator() is nested within the calculator() scope!</p>
+<br />
+<pre class="prettyprint">
+var globalVariable = "I am a global variable";
+    function calculator(){
+        var firstValue = 2;
+        var secondValue = 3;
+        var result = firstValue*secondValue;
+        console.log(result);
+
+      function typeOfCalculator(){
+        var firstType = "TI-89"
+        var secondType = "TI-83"
+        console.log(firstType);
+        console.log(result);
+      }
+      typeOfCalculator();
+    }
+    calculator();
+//Output: 6
+//Output: "TI-89"
+//Output: 6
+</pre>
+
+<br />
+<br />
+<h4>Can I create scope with something other than functions?</h4>
+<p>Unfortunately not, unless you're thinking of Ecmascript 6 which will <strong>let</strong> you create scope within if/for/while/switch statements. I won't go into this yet and save it for another post. Let's look at an example with an if statement and see if it creates a local scope(<em>Hint: it doesnt</em>) </p>
+<br />
+<pre class="prettyprint">
+for(var i = 0; i<=3; i++){
+    var numberOfCalculations = i;
+  }
+console.log(numberOfCalculations);
+</pre>
+<br />
+
+<h4>Local Scope Summary</h4>
+<p>
+    The simplest way to look at scope is by understanding that <strong>functions</strong> create scope.
+</p>
+<br />
+<pre class="prettyprint">
+    //Global Scope
+   function calculator(){
+    //Scope 1
+            }
+        function typeOfCalculator(){
+            //Scope 2
+                }
+</pre>
+
+<h4>What is Lexical Scope?</h4>
+<p>Fancy name for something we already showed above in the calculator example.  Basically the outer scope is accessed by functions within their local scope.  Scope 2 has access to Scope 1 in the above code example.   </p>
+
+<h4>Closures?</h4>
+<p>A closure is very similar to how lexical scope works but it's slightly different. Some believe they are interchangeable but they're different enough for me to break them up into different results. Plus, if they were the same thing, why do they have a different name? Exactly...</p>
+<pre class="prettyprint">
+var globalVariable = "I am a global variable";
+    function calculator(){
+        var firstValue = 2;
+        var secondValue = 3;
+        var result = firstValue*secondValue;
+
+      function typeOfCalculator(){
+        var firstType = "TI-89"
+        var secondType = "TI-83"
+
+        return function(){
+          console.log(firstType + " and " + secondType + "are the calculators I own");
+        }
+
+      }
+      typeOfCalculator();
+    }
+
+    calculator();
+</pre>
+<br/>
+<p>Now do you think the output would show <strong>"TI-89 and TI-83 are the calculators I own"?</strong>  Actually, it wouldn't because all that typeOfCalculator() is doing is returning another function! So how do we call the log statement? Simple! We do it by assigning it to another variable and calling it.
+</p>
+<br/>
+<pre class="prettyprint">
+var result = typeOfCalculator();
+result();
+//OR you can do this but it's a bit weird...but whatever floats your boat!
+typeOfCalculator()();
+
+Output: TI-89 and TI-83 are the calculators I own
+Output: TI-89 and TI-83 are the calculators I own
+</pre>
+<br/>
+<h4>The "this" keyword in Javascript</h4>
+<p>Are you ready for the fun part? Understanding the proper usage of "this" can be a bit tricky, especially if you have nested scopes. <strong>this</strong> refers to the outer scope and if it's outside of any nested scope, it refers to the global scope.
+</p>
+<br/>
+
+<pre class="prettyprint">
+    var globalVariable = "I am a global variable";
+    function calculator(){
+        var firstValue = 2;
+        var secondValue = 3;
+        var result = firstValue*secondValue;
+        console.log(this); //Have fun looking at the global scope output
+      function typeOfCalculator(){
+        var firstType = "TI-89"
+        var secondType = "TI-83"
+        console.log(this); //This will refer to the calculator() scope
+        console.log(this.firstValue); //Output: undefined!
+        return function(){
+          console.log(firstType + " " + secondType + "are the calculators I own");
+        }
+
+      }
+
+
+    }
+</pre>
+<br/>
+
+<div class="text-center">
+    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/914b7d67-e988-443a-a601-f9fcceb5f58f_original.jpg" alt="Javascript no work lol" width="300" text-align="center" />
+</div>
+<br />
+<p>So you just said I could access the outer scope, but why is this.firstValue undefined? Well the "this" keyboard always refers to the outermost scope, which here is the global scope.  The value of <strong>this</strong> doesn't scope lexically! </p>
+<br/>
+<pre class="prettyprint">
+    function calculator(){
+
+        this.firstValue = 1;
+        var secondValue = 3;
+        var result = firstValue*secondValue;
+      function typeOfCalculator(){
+
+        var firstType = "TI-89"
+        var secondType = "TI-83"
+        console.log(this.firstValue);
+
+      }
+       typeOfCalculator();
+
+
+    }
+  calculator();
+//Output:  1
+</pre>
+<br/>
+<p>That's it for now, I'll discuss module pattern in the next session! Whatever you do, don't forget your curly braces!!</p>
+<br />
+<div class="text-center">
+    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/eb55ed06-0be7-4d33-b713-29dad4b9aaa5_original.jpg" alt="Javascript curly brace lol" width="300" text-align="center" />
+</div>
+<br/>
+<ul>
+    <li><a href="https://en.wikipedia.org/wiki/Scope_(computer_science)">Wikipedia Scope discussion </a></li>
+    <li><a href="https://github.com/getify/You-Dont-Know-JS">You Don't Know JS Book series</a></li>
+</ul>
+<br />

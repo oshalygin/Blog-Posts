@@ -1,0 +1,330 @@
+<p>I must admit, I've been neglecting the blog.  It's not because I don't have anything interesting to post, but work has been a bit chaotic lately.  That said, I came back to clean up all the bot comments only to find out that I'm getting 404'd all over my own site!  What?!  This might actually be one of those cases where I can thank the bots to re-inspire me to clean up the blog and start posting more content.
+</p>
+<p> I'll preface this whole post by saying that I was oblivious to the value of testing when I first wrote this application.  As we start doing more and more testing at work, I love how much confidence it gives me in the code that I've written.  So where am I going with all this and how does it relate to the blog application?  All I did was fix a few typos in the body of one of my posts and now the links are broken and I'm living in 404 land.  Time to get at the root of the problem, <strong>NOT enough automated testing!</strong>
+</p>
+<br />
+
+
+<div>
+    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/8352ad20-d9f0-4ea6-b912-d12f53b2316f_original.jpg" alt="Picard Facepalm lol ugh" width="600" text-align="center" />
+</div>
+<br />
+<p>First order of business was to debug the code that I already had in place to see what was going wrong?  Meh, I just went straight to refactoring and writing my tests.
+I Initially wanted to sanitize my form input title by replacing the spaces with dashes(-).  After that was out of the way, I removed all unsafe/unfavorable/ugly/dirty characters from the title.</p>
+
+<br />
+<pre class="prettyprint">
+ [Test]
+        public void PostTitleRemovesBadCharacters()
+        {
+            PostBLL postBLL = new PostBLL();
+
+            string inputPostTitle = "And we're live! Kicking off with the gas all the way down!";
+
+            string sut = postBLL.UrlTitleWithDashes(inputPostTitle);
+            sut = postBLL.SanitizedUrlTitle(sut);
+
+            string result = "And-were-live-Kicking-off-with-the-gas-all-the-way-down";
+
+            Assert.That(sut, Is.EqualTo(result));
+
+        }
+</pre>
+
+<pre class="prettyprint">
+    [Test]
+        public void PostTitleAddedDashes()
+        {
+            PostBLL postBLL = new PostBLL();
+
+            string inputPostTitle = "And we're live! Kicking off with the gas all the way down!";
+
+            string sut = postBLL.UrlTitleWithDashes(inputPostTitle);
+
+            string result = "And-we're-live!-Kicking-off-with-the-gas-all-the-way-down!";
+
+            Console.WriteLine(sut);
+
+            Assert.That(sut,Is.EqualTo(result));
+
+
+        }
+</pre>
+<br />
+<p>Before you get too excited I want to mention that I'll refactor PostBLL into a Singleton in the future, but it's 4:41AM and I am committed to fixing the 404's in a timely manner and in a way that will be easy to extend later.  Stay tuned for another post when this is refactored.  Want to see what the original method looked like?</p>
+
+<h2>Terrible separation of concerns method in my Repository(DAL) layer</h2>
+<p>I really ought to refactor most of my middle tier logic for the blog.  This is a perfect place to start, so here we go!</p>
+<p><strong>Original</strong></p>
+<pre class="prettyprint">
+            public Post UpdatePost(int? id, string title, string body, DateTime date, string tags, string photoPath)
+        {
+            TNDbContext context = DataContext;
+
+            Post post = GetPost(id);
+            post.Title = title;
+            post.Body = body;
+
+            post.Preview = body.BlogPreviewTruncate();
+
+            post.Date = date;
+            post.PhotoPath = photoPath;
+            post.DateEdited = DateTime.Now;
+
+
+            //Reserved characters
+            title = title.Trim()
+                //Reserved characters
+                .Replace("$", "")
+                .Replace("&", "")
+                .Replace("+", "")
+                .Replace(",", "")
+                .Replace("/", "")
+                .Replace(":", "")
+                .Replace(";", "")
+                .Replace("=", "")
+                .Replace("?", "")
+                .Replace("@", "")
+                //Unsafe unsafe
+                .Replace("<", "")
+                .Replace(">", "")
+                .Replace("#", "")
+                .Replace("%", "")
+                .Replace("{", "")
+                .Replace("}", "")
+                .Replace("|", "")
+                .Replace("\\", "")
+                .Replace("^", "")
+                .Replace("~", "")
+                .Replace("[", "")
+                .Replace("]", "")
+                .Replace("`", "")
+                //Personal choice
+                .Replace("*", "")
+                .Replace("(", "")
+                .Replace(")", "")
+                .Replace("_", "")
+                .Replace(";", "")
+                .Replace("!", "")
+                .Replace(":", "")
+                .Replace("_", "")
+                .Replace("'", "");
+
+
+
+
+
+            string[] titleNames = title.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            var newTitle = new StringBuilder();
+
+
+
+            for (int i = 0; i < titleNames.Length; i++)
+            {
+
+                newTitle.Append(titleNames[i]);
+                if (i != (titleNames.Length - 1))
+                {
+                    newTitle.Append("-");
+                }
+            }
+
+            post.UrlTitle = newTitle.ToString();
+
+
+
+            post.Tags.Clear();
+
+            string[] tagNames = tags.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (string tag in tagNames)
+            {
+                Tag tagToIncrement = context.Tags.FirstOrDefault(x => x.Name == tag);
+
+                if (tagToIncrement != null)
+                {
+                    tagToIncrement.TimesTagWasUsed += 1;
+                    context.Tags.AddOrUpdate(tagToIncrement);
+                    context.Entry(tagToIncrement).State = EntityState.Modified;
+
+                }
+
+                var tagToAdd = post.Tags.Count(x => x.Name == tag);
+                if (tagToAdd == 0)
+                {
+                    post.Tags.Add(CreateNewTag(tag));
+                }
+
+            }
+
+
+
+            if (post.Id == default(int))
+            {
+                context.Posts.Add(post);
+                context.Entry(post).State = EntityState.Added;
+            }
+            else
+            {
+                context.Posts.AddOrUpdate(post);
+                context.Entry(post).State = EntityState.Modified;
+            }
+            context.SaveChanges();
+
+            return post;
+        }
+</pre>
+<br />
+<h2>I promise :) </h2>
+<div>
+    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/6a669a50-98e4-4ef0-867d-8f27355673a4_original.gif" alt="Bad Code Simpsons Bart" width="600" text-align="center" />
+</div>
+<br />
+
+<h2>Better Ravioli Code</h2>
+
+<p>Still work in progress but I like where this is going because it is much easier to test</p>
+
+<pre class="prettyprint">
+   public class TagBLL
+    {
+
+        public List<Tag> CreateTag(string tagInput)
+        {
+            List<Tag> tagBuilder = new List<Tag>();
+            string[] tagName = tagInput.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+            tagBuilder.AddRange(tagName.Select(x => new Tag() { Name = x }));
+
+            return tagBuilder;
+        }
+    }
+</pre>
+
+<pre class="prettyprint">
+       public Post UpdatePost(int? id, string title, string body, DateTime date, string tags, string photoPath)
+        {
+            BlogRepository _repo = new BlogRepository();
+            TagBLL tagBLL = new TagBLL();
+
+
+            Post post = _repo.GetPost(id);
+
+            post.Title = title;
+            post.Body = body;
+
+            post.Preview = body.BlogPreviewTruncate();
+
+            post.Date = date;
+            post.PhotoPath = photoPath;
+            post.DateEdited = DateTime.Now;
+
+            string newTitle = UrlTitleWithDashes(title);
+            newTitle = SanitizedUrlTitle(newTitle);
+            post.UrlTitle = newTitle;
+
+            post.Tags.Clear();
+            post.Tags = tagBLL.CreateTag(tags);
+
+            List<string> tagList = post.Tags.Select(x => x.Name).ToList();
+
+            if (tagList.Count != 0)
+            {
+                int tagSuccess = _repo.IncrementTags(tagList);
+            }
+
+            bool success = _repo.SavePost(post);
+
+            return success ? post : null;
+
+        }
+
+</pre>
+
+<pre class="prettyprint">
+  public string UrlTitleWithDashes(string preSanitizedUrlTitle)
+        {
+            string titleWithDashes = preSanitizedUrlTitle.Replace(" ", "-");
+
+            return titleWithDashes;
+
+
+        }
+</pre>
+
+<pre class="prettyprint">
+  public string SanitizedUrlTitle(string preSanitizedTitle)
+        {
+            string sanitizedTitle = preSanitizedTitle.Trim()
+                //Reserved characters
+                .Replace("$", "")
+                .Replace("&", "")
+                .Replace("+", "")
+                .Replace(",", "")
+                .Replace("/", "")
+                .Replace(":", "")
+                .Replace(";", "")
+                .Replace("=", "")
+                .Replace("?", "")
+                .Replace("@", "")
+                //Unsafe unsafe
+                .Replace("<", "")
+                .Replace(">", "")
+                .Replace("#", "")
+                .Replace("%", "")
+                .Replace("{", "")
+                .Replace("}", "")
+                .Replace("|", "")
+                .Replace("\\", "")
+                .Replace("^", "")
+                .Replace("~", "")
+                .Replace("[", "")
+                .Replace("]", "")
+                .Replace("`", "")
+                //Personal choice
+                .Replace("*", "")
+                .Replace("(", "")
+                .Replace(")", "")
+                .Replace("_", "")
+                .Replace(";", "")
+                .Replace("!", "")
+                .Replace(":", "")
+                .Replace("_", "")
+                .Replace("'", "");
+
+            return sanitizedTitle;
+        }
+</pre>
+
+<p>Is the above elegant?  Probably not, and I'll be coming back to it to clean it up some more.  I'm probably going to replace the above LINQ with a regular expression but I want to actually look at the performance differences between the two before I make that switch</p>
+
+<h2>Baby Steps </h2>
+<p>The simplest way to test your application and help automate the process is to build a quick Console application.  This doesn't have to be anything particularly magical, but it's a huge step forward.  Do you really want to run your application and input data manually every time you change a line of code?  Is it safe not to test?  You be the judge for your application, but I like to sleep well at night so I'll stick to testing!</p>
+
+<div>
+    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/faf935e0-556c-4b63-b3ec-dc9fc4501e6c_original.jpg" alt="Console Application Unit Testing" width="600" text-align="center" />
+</div>
+<br />
+
+
+<h2>Which Testing Framework?</h2>
+<p>Which one should you use? <strong>Depends</strong></p>
+<p>Which one do I use? <strong>YES</strong></p>
+
+<ol>
+<li>What I'm trying to say is, they're all basically the same for smaller applications barring the syntax differences.</li>
+<li>For larger applications, MSTest gets a bad rap, but I don't have any personal experience to be able to judge it one way or another.</li>
+</ol>
+
+<h2>NUnit and the NUnit Test Runner</h2>
+<p>Personally I just love the syntax behind the NUnit framework.  Here is a quick comparison between MSTest syntax and NUnit.
+<pre class="prettyprint">
+//MSTest
+Assert.AreEqual(someValue, someOtherValue);
+
+//NUnit
+Assert.That(someValue, Is.EqualTo(someOtherValue))
+
+</pre>
+
+<p>If I had to, I could use MSTest, but I don't because I don't have to :).  I'm also sure that over time the team at Microsoft will improve the scaleability of their framework and resolve any performance issues that other developers are seeing.</p>
+<p>I'll go into more detail about NUnit on another post.  Stay tuned!</p>

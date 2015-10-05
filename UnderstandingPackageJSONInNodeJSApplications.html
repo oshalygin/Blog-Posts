@@ -1,0 +1,278 @@
+<br />
+<p>This post builds upon the previous topic on how to use <span><a href="http://techiejs.com/Blog/Post/Using-Node-Package-Manager-effectively">NPM effecitvely</a></span>.  In the previous post we discussed what hard dependencies and developer dependencies were.  We also discussed how to install packages globally, locally and strictly for development.  In this post we will focus on understand the infamous <strong>package.json</strong> file which may be a bit scary to those coming from the .NET world, but don't fear, it's basically a better version of web.config.</p>
+<br>
+
+<br>
+<div class="text-center">
+    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/f15c5b75-9ed5-4f9e-9e7d-93f97afcbc56_original.jpg"
+    alt="scared kitty lol cat" width="400" style="border:0"  text-align="center" />
+</div>
+<br>
+
+
+<h4>But XML is better than JSON!</h4>
+<p>No, it's not, its bulky, hard to read and not compact.  JSON has been around forever, and only recently since the explosion of mobile applications has gained significant ground on XML.  Don't believe me?  Just look at how .NET is moving toward project.json, package.json and other JSON configuration files.  XML is on it's way out, and I personally won't miss it.
+</p>
+<br>
+<h4>Package.json</h4>
+<p>First order of business is to understand what this file is used for in nodejs projects.</p>
+<p><strong>package.json</strong> is the central source of truth in your project, located in the root folder.  This file contains all of the underlying information necessary to describe the project, the dependencies, licenses, version, and automation scripts(although you don't want to put these here).</p>
+<br>
+<h4>Example of a package.json file</h4>
+<p>Before we dive in, let's look at a complete package.json file that contains the typical properties you can expect to see.</p>
+<br>
+<br>
+<div class="text-center">
+    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/95da5ab4-5659-4579-bdde-413814893904_original.png"
+    alt="nodejs logo javascript" width="200" style="border:0"  text-align="center" />
+</div>
+<br>
+<pre class="prettyprint">
+{
+  "name": "my-blog-application",
+  "version": "1.5.8",
+  "description": "A blog application that is used to deliver this content",
+  "author": "oshalygin@gmail.com",
+  "contributors": [{
+    "name": "John Smith",
+    "email": "jsmith@gmail.com"
+    },{
+    "name": "Chris Jones",
+    "email": "cjones@gmail.com"}],
+  "bin": {
+  "module-name": "./bin/my-blog-application"
+},
+  "scripts": {
+    "test": "vows --spec --isolate",
+    "start": "node index.js",
+    "prepublish": "typescript --bare --compile --output lib/files src/files/*.ts"
+  },
+  "main": "lib/app.js",
+  "repository": {
+  "type": "git",
+  "url": "https://github.com/oshalygin"
+},
+  "bugs": {
+  "url": "https://github.com/nodejs/"
+},
+  "keywords": [
+  "blog",
+  "nodejs"
+],
+  "dependencies": {
+    "async": "~0.8.0",
+    "express": "4.2.x"
+  },
+  "devDependencies": {
+    "vows": "^0.7.0",
+    "assume": "<1.0.0 || >=2.3.1 <2.4.5 || >=2.5.2 <3.0.0",
+    "pre-commit": "*"
+  },
+  "preferGlobal": true,
+  "private": true,
+  "license": "MIT"
+}
+</pre>
+<br>
+<br>
+<h4>Breaking it down!</h4>
+<br>
+<p>If this is your first time seeing a package.json file, you might have the <em>"deer in headlights"</em> feeling, don't worry, it's pretty straightforward and I'll break down the details on each parameter.</p>
+<br>
+<h3>"name"</h3>
+<br>
+<pre class="prettyprint">
+//Stuff above
+"name": "my-blog-application",
+//Stuff below</pre>
+<br>
+<p>Typically you want "name" to be the first item in the list, but the order isn't critical.  <strong>"name"</strong> is the name of of your package and should be stated in <em>lowercase</em> text.  This is required, otherwise you will not be able to run the <strong>"npm install"</strong> command.  Don't forget it!</p>
+<br>
+<h3>"version"</h3>
+<br>
+<pre class="prettyprint">
+//Stuff above
+"version": "1.5.8",
+//Stuff below</pre>
+<br>
+<p>"version" isn't pseudo whatever you want to label it...It has very specific meaning and it is critical that you follow the proper versioning convention so that your package(if public) can be consumed without fail by other developers.  The convention is <a href="http://semver.org/">Semantic Versioning</a>.</p>
+<p>version: <span class="text-highlights text-highlights-purple rounded tooltips" data-toggle="tooltip" data-original-title="Major Version">1</span><span class="text-highlights text-highlights-red rounded tooltips" data-toggle="tooltip" data-original-title="Minor Version">5</span><span class="text-highlights text-highlights-green rounded tooltips" data-toggle="tooltip" data-original-title="Patch Version">8</span> breaks down into the following: <small><span class="color-purple">MajorVersion</span>.<span class="color-red">MinorVersion</span>.<span class="color-green">PatchVersion</span></small></p>
+<ul>
+    <li><span class="has-success"><strong>MAJOR</strong></span>: Major API changes that typically breaks existing API.</li>
+    <li><span class="has-warning"><strong>MINOR</strong></span>: Minor version change that implements user stories while still being backwards compatible in regards to the API.</li>
+    <li><span class="has-error"><strong>PATCH</strong></span>:  Typically for bug fixes and under the hood changes(think refactoring).</li>
+</ul>
+<br>
+<h3>"description"</h3>
+<br>
+<pre class="prettyprint">
+//Stuff above
+"description": "A blog application that is used to deliver this content",
+//Stuff below</pre>
+<br>
+<p><strong>"description"</strong> describes your project from a 10,000 foot view.  Don't write 5 paragraphs here telling us your life story and the inception of the project, just keep it simple and to the point.</p>
+<br>
+<h3>"author"</h3>
+<br>
+<pre class="prettyprint">
+//Stuff above
+"author": "oshalygin@gmail.com",
+//Stuff below</pre>
+<br>
+<p><strong>"author"</strong> is the name of the person who created the package.  I've seen this as company name or individual developers.  You can write out your name or just your email address.  I prefer my email, but whatever you do, don't list 50 people, there's another parameter(spoiler!) for that...</p>
+<br>
+<h3>"contributors"</h3>
+<br>
+<pre class="prettyprint">
+//Stuff above
+ "contributors": [{
+    "name": "John Smith",
+    "email": "jsmith@gmail.com"
+    },{
+    "name": "Chris Jones",
+    "email": "cjones@gmail.com"}],
+//Stuff below</pre>
+<br>
+<p><strong>"contributors"</strong> is an array of objects(typically name/email) that give credit to the rest of the team members that participated, are currently participating or have contributed in one way or another to the project.  If this is your project, don't be stingy to add people to the project, you'll never know when you'll be rewarded with a cool project to contribute to in the future!</p>
+<br>
+<h3>"bin"</h3>
+<br>
+<pre class="prettyprint">
+//Stuff above
+"bin": {
+  "module-name": "./bin/my-blog-application"
+},
+//Stuff below</pre>
+<br>
+<p><strong>"bin"</strong> I typically don't use too often but this is the location of your binary scripts that you intend to run via CLI(Command Line Interface).</p>
+<br>
+<br>
+<h3>"scripts"</h3>
+<br>
+<pre class="prettyprint">
+//Stuff above
+  "scripts": {
+    "test": "vows --spec --isolate",
+    "start": "node index.js",
+    "prepublish": "typescript --bare --compile --output lib/files src/files/*.ts"
+  },
+},
+//Stuff below</pre>
+<br>
+<p><strong>"scripts"</strong> are used to expose npm CLI commands that you would like to run.  In the above example you could run <em>npm run test</em>.  The syntax breaks down to the following:</p>
+<ul>
+    <li><em>npm run {command name}</em></li>
+    <li><em>npm run-script {command name}</em></li>
+</ul>
+<p>I would recommend not throwing the kitchen sink in terms of scripts here.  Save that for gulp and gulpfile.js!</p>
+<br>
+<h3>"main"</h3>
+<br>
+<pre class="prettyprint">
+//Stuff above
+"main": "lib/app.js",
+//Stuff below</pre>
+<br>
+<p><strong>"main"</strong> is used to define the main entry point when calling node's <em>require</em>.  Do not use this to deploy your application, start up webservices, or make coffee.</p>
+<br>
+<h3>"repository"</h3>
+<br>
+<pre class="prettyprint">
+//Stuff above
+"repository": {
+  "type": "git",
+  "url": "https://github.com/oshalygin"
+//Stuff below</pre>
+<br>
+<p>If you are looking for other developers to contribute to your code or you want to let people know where your source code is located, you do that with the <strong>"repository"</strong> property.  This is critical in gaining momentum with your project and showing others that you have solid test coverage and the code is SOLID.  No one wants to invest time in your package if they can't tell if it was developed by a clown or by someone that made a conscious effort toward quality.</p>
+<br>
+<h3>"bugs"</h3>
+<br>
+<pre class="prettyprint">
+//Stuff above
+  "bugs": {
+  "url": "https://github.com/nodejs/"
+},
+//Stuff below</pre>
+<br>
+<p>I don't personally list the bugs URL, but you will see them on larger projects(think nodejs, roslyn, etc).  This parameter points developers and users to a URL at which you can report any bugs that exist in the project.</p>
+<br>
+<h3>"keywords"</h3>
+<br>
+<pre class="prettyprint">
+//Stuff above
+  "keywords": [
+  "blog",
+  "nodejs"],
+},
+//Stuff below</pre>
+<br>
+<p>Do you want developers to find your package? Well, start using the "keywords" parameter.  This parameter takes an array of strings, and is used in npm and other utilities to locate your project.</p>
+<br>
+<h3>"dependencies"</h3>
+<br>
+<pre class="prettyprint">
+//Stuff above
+  "dependencies": {
+    "async": "~0.8.0",
+    "express": "4.2.x"
+  },
+//Stuff below</pre>
+<br>
+<p>We covered dependencies in a previous post(see: <span><a href="http://techiejs.com/Blog/Post/Using-Node-Package-Manager-effectively">NPM effectively</a></span>).  These packages are automatically installed when someone brings in your package.</p>
+<br>
+<h3>"devDependencies"</h3>
+<br>
+<pre class="prettyprint">
+//Stuff above
+   "devDependencies": {
+    "vows": "^0.7.0",
+    "assume": "<1.0.0 || >=2.3.1 <2.4.5 || >=2.5.2 <3.0.0",
+    "pre-commit": "*"
+  },
+//Stuff below</pre>
+<br>
+<p>We covered devDependencies in a previous post(see: <span><a href="http://techiejs.com/Blog/Post/Using-Node-Package-Manager-effectively">NPM effectively</a></span>).  These are not installed when someone installs your package but are used in the development of the project.  These can be installed with the following command, <em>npm install --dev</em></p>
+<br>
+<h3>"preferGlobal"</h3>
+<br>
+<pre class="prettyprint">
+//Stuff above
+"preferGlobal": true,
+//Stuff below</pre>
+<br>
+<p>Used very infrequently.  This is for packages that are intended to be used globally with CLI.  Examples include gulp, bower, jshint, etc.  <br><em>npm install "package" -g</em>.</p>
+<br>
+<h3>"private"</h3>
+<br>
+<pre class="prettyprint">
+//Stuff above
+"private": true,
+//Stuff below</pre>
+<br>
+<p>Use this if you want to keep your project private.  This is key to keeping your work behind closed doors until you are ready to publish it.  I usually clean my code up quite a bit before I open it up to the world.</p>
+<br>
+<h3>"license"</h3>
+<br>
+<pre class="prettyprint">
+//Stuff above
+"license": "MIT"
+//Stuff below</pre>
+<br>
+<p>Never forget this parameter.  In fact, most editors and IDE's will give you plenty of warnings if this is omitted.  This parameter defines which license your source is released under.  Here is a list of licenses you can choose from(list is not comprehensive but covers 99% of what you'll see).</p>
+<h4>Open Source Licenses</h4>
+<ul>
+    <li><strong>Copyleft:</strong>  The opposite of copyright(not joking!).  Copyright is all about protecting intellectual property, whereas copyleft is all about ensuring that the software is distributed as open source.  There is a weak/strong version of copyleft, but the specific discussion is outside the scope of this post.</li>
+    <li><strong>GPL(General Public License):</strong>  Implements strong copyleft.  If your code uses a package that is licensed under GPL, your code must also be licensed as GPL.</li>
+    <li><strong>MIT:</strong>  Permissive non-copyleft license.  This license allows others to use your code, as long as they carry the copyright message through.</li>
+    <li><strong>Apache 2.0:</strong>  Very similar to MIT, except a bit more strict.  Every file that contains a copyright message or patent must be carried through and not omitted.  A <em>STRONG</em> file is included with the license which lists out the details of the license.</li>
+    <li><strong>EPL:</strong>  Eclipse Public License is a weak-copyleft license which involves automatic patent licensing.</li>
+</ul>
+<br>
+<p>Now get that project started and start using package.json without fear!</p>
+<br>
+<div class="text-center">
+    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/e2255954-97c4-4160-93a3-028a9fed183e_original.jpg"
+    alt="callbacks nodejs lol" width="400" style="border:0"  text-align="center" />
+</div>
+<br>

@@ -1,0 +1,130 @@
+<br />
+
+
+<p> Some of you might have read my last post on Node where I was being a tad too harsh. Truthfully, I've been working with Node quite a bit more since the last post and I must agree that I started veering toward the <a href="https://en.wikipedia.org/wiki/Dunning%E2%80%93Kruger_effect">Dunning–Kruger effect</a>.
+
+    <p>Before I go into the meat and potatoes behind saving your packages with npm, I want to briefly describe the Dunning-Kruger effect. It is a trap that many developers fall into in the tech realm. The Dunning-Kruger effect covers lots of different scenarios, but I'll list the basics:
+    </p>
+    <ul>
+        <li>The effect is the result of internal illusion in the unskilled, and external misconception in the skilled: </li>
+        <li>This bias is attributed to a metacognitive inability of the unskilled to accurately evaluate their own ability level</li>
+        <li>Conversely, highly skilled individuals may underestimate their relative competence, erroneously assuming that tasks that are easy for them are also easy for others.[</li>
+    </ul>
+    <br>
+    <p>How does this all relate to Node and my previous post? Well, my initial judgement about how simple it is, the community behind it, and the awesome power that NodeJS offers led me to post a highly biased article. So why not delete the post and not confuse the readers(<small><em>and hide your Dunning-Kruger!</em></small>). Well the reason for leaving it is that I want other people to not fall into the same trap and do a little self reflection when they've gained more knowledge and understanding. There are still a considerable number of legitimate points behind my original post, and I stand behind "the right tool for the right job". Anyways, rambling over, on to NPM!</p>
+    <br>
+    <div class="text-center ">
+        <img class="postImage " src="http://techiejs.com/Content/img/PublicImages/dbb7a008-4e59-4787-9542-d2f89c4d3630_original.png" alt="Node package manager npm nodejs" width="500 " text-align="center " />
+    </div>
+    <br>
+
+    <h4>Node Package Manager</h4>
+    <p>Probably a good idea to define the acronym to save you some Google time. TLDR: npm = NuGet...except for JavaScript libraries. It's managed by a highly skilled team at npm, Inc. Essentially npm is a huge registry of open-source, enterprise, and private packages. </p>
+<p>NPM is a command line tool(CLI). I have seen some GUI's, but please avoid them...that just feels dirty.</p>
+<br>
+    <h4>What Can I Get with NPM?</h4>
+    <p>What can you get? Just about anything! Here are a list of top npm packages people download</p>
+    <ul>
+        <li>Browserify</li>
+        <li>Express</li>
+        <li>pm2</li>
+        <li>Grunt-cli(I prefer Gulp but mor eon that in another post)</li>
+        <li>karma</li>
+        <li>bower (the stepchild of npm)</li>
+        <li>cordova</li>
+        <li>yo</li>
+        <li>less</li>
+    </ul>
+    <br>
+    <p>I could go on but you get the point. </p>
+    <br>
+    <h4>How Do I Save a Package to My Solution?</h4>
+    <p>Here is the magic <strong>npm install "packagename" "saveAttribute" </strong> </p>
+    <p>Notice that <em>package.json</em> file hanging out in the root of your solution? That json file keeps track of your 3rd party dependencies necessary to develop, build, or deploy your application. </p>
+    <p>Here is an example of a <strong> package.json file</strong></p>
+    <pre class="prettyprint">
+{
+  "name": "NPM Project",
+  "version": "0.1.0",
+  "description": "Getting yourself familiar with npm",
+  "authors": [
+    "Oleg Shalygin"
+  ],
+  "license": "MIT",
+  "homepage": "http://www.techiejs.com",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "scripts": {
+    "init": "npm install",
+    "install": "bower install",
+    "start": "node src/server/app.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.8.2",
+    "compression": "^1.1.0",
+    "cors": "^2.2.0",
+    "express": "^4.9.3",
+    "morgan": "^1.1.1",
+    "serve-favicon": "^2.0.1"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-if": "^1.2.5",
+    "gulp-jscs": "^2.0.0",
+    "gulp-jshint": "^1.11.2",
+    "gulp-load-plugins": "^1.0.0-rc.1",
+    "gulp-print": "^1.1.0",
+    "gulp-util": "^3.0.6",
+  }
+}
+
+    </pre>
+
+    <br>
+    <p>Notice devDependencies? Notice dependencies? Let's discuss the differences!</p>
+<br>
+    <h4>Using -g When Installing a Package</h4>
+    <p>If you want to save a package to your global node modules directory, you will append your command line input with <strong>-g</strong>.</p>
+    <p>Here is an example</p>
+    <pre class="prettyprint">
+    npm install bower -g
+    </pre>
+    <p>Now you can use this package in ANY project! You'll want to avoid throwing everything into your global folder because you don't want to pollute it with project specific dependencies, especially if you want to distribute your project in a lightweight manner.</p>
+<br>
+    <h4>Using --save When Installing a Package</h4>
+    <p>Now you saved a 3rd party node package into your project folder! Typically this resides in <strong>"node_modules"</strong>.</p>
+    <p>Here is an example</p>
+    <pre class="prettyprint">
+    npm install cors --save
+    </pre>
+<br>
+    <h4>Using --save-dev When Installing a Package</h4>
+    <p>So you've seen people use <strong>--save-dev</strong> and you're confused. Don't worry, what this attribute does is add the package to the <em>devDependencies</em> section of your package.json file and signifies this as a development dependence. These are going to be packages that help in the development process but don't need to be passed around and distributed for production use.</p>
+    <p>Common dev dependencies include:</p>
+    <ul>
+        <li>Task Runners such as Gulp or <small>Grunt</small></li>
+        <li>Linting tools such as JSHint or <small>JSLint</small></li>
+    </ul>
+
+    <p>Here is an example</p>
+    <pre class="prettyprint">
+    npm install cors --save-dev
+    </pre>
+<br>
+    <h4>How do I quickly install all of my dependecies?</h4>
+    <p>The power of npm! All you need to do is make the following call: </p>
+
+    <pre class="prettyprint">
+    npm install
+    </pre>
+    <br>
+    <p>That's it! NPM will go out and install of the dependencies mentioned in your package.json file and pull them into your solution.</p>
+    <p>Happy coding and don't fall into the Dunning–Kruger effect!</p>
+
+    <div class="text-center ">
+        <img class="postImage " src="http://techiejs.com/Content/img/PublicImages/2ed1043c-c45d-4fc6-9f14-31d3e21f3964_original.jpg" alt="Dunning Kruger effect dont fall into the development trap" width="300 " text-align="center " />
+    </div>
+
+    <br />

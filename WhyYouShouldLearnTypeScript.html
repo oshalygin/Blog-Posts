@@ -1,0 +1,174 @@
+
+<br />
+<p>First thought, <em>"What is TypeScript?"</em> and <em>"Why should I care?"</em>.  I'll start off by giving a brief overview of TypeScript and explain why it is a very powerful language that has a long history with a bright future ahead of it.</p>
+<br>
+<h4>History of TypeScript</h4>
+<p>TypeScript is a strict super-set of JavaScript, that means you can write plain vanilla JavaScript right inside a .ts file.  TypeScript was developed and is currently maintained by the fine gents at Microsoft.  The original purpose of TypeScript was to allow for developers to create large scale JavaScript applications with type safety.  Unlike other languages such as Script#, GWT and Dart, TypeScript doesn't ditch JavaScript to the curb and implement its own syntax on it's own.  Remember, JavaScript works as it should, 100% of the time alongside TypeScript code.
+</p>
+<p>
+Don't worry, TypeScript didn't just appear last Wednesday, it's been around since 2012 with two years of development behind the scenes at Microsoft.  TypeScript is transpiled to JavaScript under numerous modules(AMD, UMD, CommonJs) and different target specificiations(ES3, ES4, ES5, ES6, etc)</p>
+<br>
+<div class="text-center">
+    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/2280801c-0a5d-47ec-a62b-c65270e363d5_original.png"
+    alt="angularjs2 typescript guilp" style="border:0"  width="600" text-align="center" />
+</div>
+<br>
+
+
+<h4>Transpiled?</h4>
+
+
+
+<p>This is the beauty of TypeScript.  It is transpiled!!  Basically a transpilation process is nothing more than a source-to-source compilation.  You take one piece of source code in one language and convert it to another language.  TypeScript -> JavaScript.  The transpiled code to JavaScript is idiomatic JavaScript, it will be simple to read and understand if you're a JavaScript developer.</p>
+
+<p>The beauty here is that the TypeScript language can keep getting developed to suit the needs of developers while Browsers adopt whatever the current JavaScript specification is such as ES5 or ES6.  The developers can start using new features such as classes and interfaces before they're rolled out to all the major browsers(ES6)!  But Oleg, when ES6 rolls out, TypeScript is pointless! False!  There are a ton of features that are coming with ES6 and it will take a long while for browsers to adopt them all, years.  Why would you wait years when you can start using them today?  Why not with one single line of code transpile to ES6 once its production ready? </p>
+<br>
+<h4>Open Source</h4>
+<br>
+<div class="text-center">
+    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/2a8a6bc0-8b78-41bc-bcea-c25694eebc47_original.png"
+    alt="typescript logo" width="200" style="border:0"  text-align="center" />
+</div>
+<br>
+<p>Don't trust the magic?  Want to use your OSX?  Want to run your favorite browser/host?  Not a problem, the GitHub repo is located at the following link: </p>
+<br>
+<span><a href="https://github.com/Microsoft/TypeScript">TypeScript Source Code</a></span>
+<br>
+<span><a href="https://github.com/Microsoft/TypeScript/blob/master/doc/TypeScript%20Language%20Specification.pdf?raw=true">TypeScript Language Specification PDF</a></span>
+<br>
+<br>
+<h4>TypeScript Features</h4>
+<ul>
+    <li>Compile-time Type Checking with Type Annotations</li>
+    <li>Type Interference</li>
+    <li>Classes</li>
+    <li>Interfaces</li>
+    <li>Enumerated Type</li>
+    <li>Generics</li>
+    <li>Modules</li>
+    <li>"Fat" Arrow Syntax</li>
+    <li>Optional and default params</li>
+    <li>Tuples</li>
+</ul>
+<br>
+<h4>Code Examples</h4>
+ <p>I intend to go through the basics in future posts but for now I wanted to at least show you some TypeScript Code and the JavaScript code it transpiles to.  This code is from typescriptlang.org and can be experimented with at the following link</p>
+<br>
+<span><a href="http://www.typescriptlang.org/Playground">TypeScript Playground</a></span>
+<br>
+<br>
+<pre class="prettyprint">
+ //TypeScript
+ class Greeter {
+    greeting: string;
+    constructor(message: string) {
+        this.greeting = message;
+    }
+    greet() {
+        return "Hello, " + this.greeting;
+    }
+}
+</pre>
+<br>
+<pre class="prettyprint">
+//JavaScript
+var Greeter = (function () {
+    function Greeter(message) {
+        this.greeting = message;
+    }
+    Greeter.prototype.greet = function () {
+        return "Hello, " + this.greeting;
+    };
+    return Greeter;
+})();
+</pre>
+<br>
+<h4>Inheritance</h4>
+<br>
+
+<pre class="prettyprint">
+//TypeScript
+class Animal {
+    constructor(public name: string) { }
+    move(meters: number) {
+        alert(this.name + " moved " + meters + "m.");
+    }
+}
+
+class Snake extends Animal {
+    constructor(name: string) { super(name); }
+    move() {
+        alert("Slithering...");
+        super.move(5);
+    }
+}
+
+class Horse extends Animal {
+    constructor(name: string) { super(name); }
+    move() {
+        alert("Galloping...");
+        super.move(45);
+    }
+}
+
+var sam = new Snake("Sammy the Python");
+var tom: Animal = new Horse("Tommy the Palomino");
+
+sam.move();
+tom.move(34);
+
+</pre>
+<br>
+<pre class="prettyprint">
+//JavaScript
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var Animal = (function () {
+    function Animal(name) {
+        this.name = name;
+    }
+    Animal.prototype.move = function (meters) {
+        alert(this.name + " moved " + meters + "m.");
+    };
+    return Animal;
+})();
+var Snake = (function (_super) {
+    __extends(Snake, _super);
+    function Snake(name) {
+        _super.call(this, name);
+    }
+    Snake.prototype.move = function () {
+        alert("Slithering...");
+        _super.prototype.move.call(this, 5);
+    };
+    return Snake;
+})(Animal);
+var Horse = (function (_super) {
+    __extends(Horse, _super);
+    function Horse(name) {
+        _super.call(this, name);
+    }
+    Horse.prototype.move = function () {
+        alert("Galloping...");
+        _super.prototype.move.call(this, 45);
+    };
+    return Horse;
+})(Animal);
+var sam = new Snake("Sammy the Python");
+var tom = new Horse("Tommy the Palomino");
+sam.move();
+tom.move(34);
+
+</pre>
+<br>
+<p>Remember, TypeScript was created with developers in mind.  Stay tuned for more updates!</p>
+
+<br>
+<div class="text-center">
+    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/7f1d2064-f47f-4663-bcb7-259387400797_original.png"
+    alt="typescript background buildings" style="border:0" width="500" text-align="center" />
+</div>
+<br>

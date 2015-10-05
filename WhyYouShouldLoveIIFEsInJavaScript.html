@@ -1,0 +1,129 @@
+
+<br />
+<p>Immediately invoked functions were a bit confusing the first time I saw them in code.  As years pass and I used them more frequently, I write IIFE's without going bananas over the syntax/pattern. </p>
+<p>So if you haven't heard of IIFE's, why should you care? Well because I'm writing about it, and because they're awesome! This is an extension to the fundamentals series I'm doing on JavaScript and IIFE's are essential to <strong>understand</strong>.</p>
+<br />
+<h4>Immediately Invoked Function Expression</h4>
+<p> Let's start with some definitions...First of all an IIFE stands for <em>Immediately Invoked Function Expression.</em> It is also sometimes referred to an <strong>Self Invoked Anonymous Function</strong> or <em>SIAF </em> for short. <br>For those that want to be hip and use it around their friends, IIFE is pronounced <em>"iffy"</em>.</p>
+<br>
+<div class="text-center">
+    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/464dbcca-ff70-446c-93c1-5141e05741d7_original.jpg" alt="cool rabbit iife javascript angularjs" width="200" text-align="center" />
+</div>
+<br>
+<ul>
+<li><em>IIFE - Immediately Invoked Function Expression</em> is an anonymous function that is created and instantly called in-line. </li>
+</ul>
+<br />
+<h4>Show me some IIFE syntax!</h4>
+<p>Here is a basic IIFE that writes to console some value</p>
+<br />
+<pre class="prettyprint">
+	//IIFE
+	(function(){
+		console.log("50");
+	}());
+	//50 is output to the console.
+</pre>
+<br />
+<p>Clear as mud? Good haha. If you look at the syntax and break it down into components you can see where the function is invoked:
+	</p>
+<br>
+<pre class="prettyprint">
+	//Part 1: the anonymous function
+	function(){
+		console.log("50");
+	}()
+	//Part 2: the immediate invocation
+	(
+	//stuff
+	);
+</pre>
+<br />
+<h4>What is an Anonymous Function?</h4>
+<br>
+<pre class="prettyprint">
+	function(){
+	//Random cool stuff goes here.
+	}();
+	</pre>
+<br>
+<p>What does the above code do? I'm so glad you asked, because it throws a nice, red, syntax error! If the code isn't surrounded by parenthesis, the JavaScript compiler treats the it as a function declaration instead of an expression. You can't invoke a function declaration, but you can invoke a function expression.</p>
+<br>
+
+<pre class="prettyprint">
+	//Function Expression Syntax:
+	var foo = function(){
+	//Fun Stuff;
+	};
+	//Function Declaration Syntax:
+	 function foo(){
+	//Fun Stuff;
+	};
+	</pre>
+<br>
+<p>Remember, you can't invoke a function declarations by using parenthesis!</p>
+<br>
+<h4>IIFE in Action!</h4>
+<p>
+What we're trying to protect against by using IIFE's is polluting the global scope with variables, functions and all sorts of other JavaScript hoisting related issues. Note that variables and functions in JavaScript get hoisted to the top and may have collision!</p>
+<p>Let's look at a piece of code that does a great job at polluting the global scope.
+</p>
+<br />
+<pre class="prettyprint">
+	function HampsterPrep(){
+		return "The internal hampsters are launching!  T minus ";
+	}
+	var startingCalculationValue = 10;
+
+	var result = HampsterPrep() + startingCalculationValue.toString() + " seconds...";
+	console.log(result);
+
+	//Output:  The internal hampsters are launching!  Countdown will begin in: 10 seconds...
+
+</pre>
+<br />
+<p>Now in the global scope or another part of your code, you're going to pickup variables that you think are related but actually arent. What if you called the above block in your main page and you wanted to use re-use the logic? Would you just call <strong>"result"</strong>? You could easily have name collision!  Instead of the above example, let's look at the same scenario but this time using an IIFE.</p>
+
+<br />
+<pre class="prettyprint">
+	(function(){
+    	function HampsterPrep(){
+			return "The internal hampsters are launching!  T minus ";
+		}
+	var startingCalculationValue = 10;
+
+	var result = HampsterPrep() + startingCalculationValue.toString() + " seconds...";
+	console.log(result);
+})();
+//Output:  The internal hampsters are launching!  Countdown will begin in: 10 seconds...
+
+</pre>
+<br />
+<h4>But...Wait A Minute...</h4>
+<div class="text-center">
+    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/53a9748d-cdb1-48a2-8505-be5262f2a1da_original.jpg" alt="I have no idea what Im doing lol dog" width="400" text-align="center" />
+</div>
+<br>
+<p><em>"So Oleg, I'm confused with all the parenthesis, brackets and crazy patterns!  Also, we got the same result as before!"</em></p>
+<p>Yeah we did but how about the global scope?  How many name collision issues are we going to have when we try to debug our application that has thousands of lines of JavaScript code? </p>
+
+<br />
+<pre class="prettyprint">
+//First Example:
+HampsterPrep();  //The internal hampsters are launching!  T minus
+startingCalculationValue; //10
+result; //The internal hampsters are launching!  Countdown will begin in: 10 seconds...
+
+//Second Example:
+HampsterPrep(); //undefined
+startingCalculationValue; //undefined
+result; //undefined
+
+</pre>
+<br />
+<p>If this is is your first experience with IIFE's, don't be discouraged!  It gets easier and more familiar as you continue using this pattern.  Remember, <strong>Clean code and a Clean global scope</strong>! This pattern also opens up the module pattern, which I'll talk about in an upcoming post.</p>
+<p>As always, drop me a comment or send me an email with any questions you may have!  Until next time!</p>
+<br>
+<div class="text-center">
+    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/a0db501b-6202-4ef7-b476-443be0bc1953_original.jpg" alt="keep calm and keep learning javascript" width="300" text-align="center" />
+</div>

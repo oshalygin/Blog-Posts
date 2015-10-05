@@ -1,0 +1,227 @@
+
+<br />
+<p>Before you start boycotting this blog for boring configuration file posts, I promise you that this is the last one, haha.</p>
+<p>The more and more you work with TypeScript, you'll need to become very intimate with <strong>tsconfig.json</strong> and the different configuration parameters it currently supports.</p>
+
+<br>
+<h4>What is tsconfig.json for?</h4>
+<p>TypeScript projects!  <strong>tsconfig.json</strong> allows you to configure how your TypeScript project is transpiled.  You can specify individual files to be transpiled, exclude certain folders, remove comments, etc.  This configuration file is essential in all TypeScript projects, don't forget to include it!
+</p>
+
+<br>
+<div class="text-center">
+    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/97fe1ed8-47c7-4f75-bbff-6b0cc61b3028_original.jpg"
+    alt="code configuration numbers" width="600" style="border:0"  text-align="center" />
+</div>
+<br>
+
+<br>
+<h4>When are the configuration settings read?</h4>
+<p>That occurs when you invoke the TypeScript compiler via <strong>"tsc"</strong> either through a gulp task, command line or through Visual Studio TypeScript settings.</p>
+<p>Note that tsconfig.json is only gained support with <u>TypeScript 1.5+</u>, previous versions will not read the configuration settings!</p>
+<br>
+<h4>Where do you store tsconfig.json?</h4>
+<p>Typically you will have only one tsconfig.json in your project, but you can have numerous versions that you can localize to different folders.</p>
+<p>First thing first, if you specify the "files" you want to transpile, the settings found inside of that tsconfig.json will apply only to those files.  If you do NOT specify the files explicitly, then the compiler will pick up the current directly and move up the parent chain.</p>
+<br>
+<h4>tsconfig.json in Detail</h4>
+<p>You probably scrolled down to this section as soon as you opened the post because you either had no idea what I was talking about or wanted an example to go off of.  Apologies, but there is some logic to my madness :)</p>
+<br>
+<h4>Example of a basic tsconfig.json file</h4>
+<br>
+<pre class="prettyprint">
+{
+    "compilerOptions": {
+        "module": "amd",
+        "noImplicitAny": true,
+        "removeComments": false,
+        "preserveConstEnums": true,
+        "outFile": "../../build/fullProject.js",
+        "sourceMap": false
+    },
+    "files": [
+        "core.ts",
+        "sys.ts",
+        "types.ts",
+    ]
+}
+</pre>
+<br>
+<br>
+<h3>"compiler options"</h3>
+<p>The meat and potatoes of what you're going to configure here.  We will go through each one so you have a firm grasp of what they're used for.  Note that there are options added throughout the current development and this list may not include everything that is on the bleeding edge.</p>
+<br>
+
+<h3>"module"</h3>
+<pre class="prettyprint">
+//Stuff above
+ "compilerOptions": {
+        "module": "amd",
+//Stuff below</pre>
+<br>
+<p>Here is where you pick which module you want the TypeScript compiler to transpile your wonderful <strong>.ts</strong> files to.  There are four options:</p>
+<ul>
+    <li>commonjs</li>
+    <li>amd</li>
+    <li>system</li>
+    <li>umd</li>
+</ul>
+<p>We won't go into too much detail on what each one is and how the code differs but I would <em>HIGHLY</em> recommend checking out this link:  </p>
+<span><a href="http://addyosmani.com/writing-modular-js/">Writing Modular JavaScript</a></span>
+<br>
+<br>
+<h3>"noImplicitAny"</h3>
+<pre class="prettyprint">
+//Stuff above
+    "compilerOptions": {
+        "noImplicitAny": true,
+//Stuff below</pre>
+<br>
+<p>Do you like warnings?  This one is pretty good, it lets you know if any of your expressions or declarations have an implied "any" type.  The "any" type in TypeScript is basically telling TypeScript that you are too lazy to define the type or you don't care.  If you're going to take the time to write TypeScript, set this to true and follow it like the bible.</p>
+<br>
+
+<h3>"removeComments"</h3>
+<pre class="prettyprint">
+//Stuff above
+    "compilerOptions": {
+        "removeComments": false,
+//Stuff below</pre>
+<br>
+<p>Can you guess what this one is?  Haha this will remove all the comments in your TypeScript code when its transpiled to JavaScript.  I usually turn this to true because I want my <strong>.js</strong> files to not carry any bloat.  That said, I rarely comment my code and I am pretty religious about writing clean code.  Clean code != comments.</p>
+<br>
+
+<h3>"preserveConstEnums"</h3>
+<pre class="prettyprint">
+//Stuff above
+    "compilerOptions": {
+        "preserveConstEnums": true,
+//Stuff below</pre>
+<br>
+<p>Tells the compiler not to erase const enum declarations in your generated code.  This can be useful for debugging, leave this to true.</p>
+
+<br>
+
+
+<h3>"outFile"</h3>
+<pre class="prettyprint">
+//Stuff above
+        "compilerOptions": {
+            "outFile": "../../build/fullProject.js",
+//Stuff below</pre>
+<br>
+<p>With HTTP 2.0, I would highly recommend <span class="color-red">against</span> setting an outFile.  What this option does is concatenates all of your transpiled .ts files and outputs a single file into a location.  <strong><em>AVOID THIS</em></strong></p>
+
+<br>
+<div class="text-center">
+    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/3f5197ad-61ce-4760-b52b-32a39964940e_original.jpg"
+    alt="angry asian lady lol" width="500" style="border:0"  text-align="center" />
+</div>
+<br>
+
+
+<h3>"outDir"</h3>
+<pre class="prettyprint">
+//Stuff above
+        "compilerOptions": {
+            "outDir": "../../build/",
+//Stuff below</pre>
+<br>
+<p>I use "outDir" if I don't have this wired up to my Gulp task.  What "outDir" does is redirect all of your transpiled files(along with the folder structure) to the specified directory.</p>
+<br>
+
+<h3>"sourceMap"</h3>
+<pre class="prettyprint">
+//Stuff above
+"compilerOptions": {
+        "sourceMap": false
+//Stuff below</pre>
+<br>
+<p>There is always some ongoing debate about map files...  I tend to only use this in development while debugging.  This flag, if set to true, will transpile .js along with the associated <em>'.map'</em> files.</p>
+<br>
+
+<h3>"target"</h3>
+<pre class="prettyprint">
+//Stuff above
+"compilerOptions": {
+        "target": ES5
+//Stuff below</pre>
+<br>
+<p>The default for this puppy is "ES5", but there are three options:</p>
+<ul>
+    <li>ES3</li>
+    <li>ES5</li>
+    <li>ES6</li>
+</ul>
+<p>And who said that ES6 and TypeScript can't play nice together?  Typically I leave this at the default of "ES5" since that is what is supported by most browsers.  Note that as ES6 gains traction with TypeScript all you have to do is change one line of code in the future!</p>
+<br>
+
+<h3>"target"</h3>
+<pre class="prettyprint">
+//Stuff above
+"compilerOptions": {
+        "target": ES5
+//Stuff below</pre>
+<br>
+<p>The default for this puppy is "ES5", but there are three options:</p>
+<ul>
+    <li>ES3</li>
+    <li>ES5</li>
+    <li>ES6</li>
+</ul>
+<p>And who said that ES6 and TypeScript can't play nice together?  Typically I leave this at the default of "ES5" since that is what is supported by most browsers, this is ever changing as ES6 gains traction, but with TypeScript all you have to do is change one line of code in the future!</p>
+<br>
+<div class="text-center">
+    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/1acfc90e-c9d2-4c07-9ee8-c7dee0eb4ada_original.png"
+    alt="are we there yet penguins" width="300" style="border:0"  text-align="center" />
+</div>
+<br>
+
+
+<h4>The finish line</h4>
+<p>The meat of tsconfig.json was in the compiler options...but we aren't done yet!  There are two other parameters that you can specify to be specific in what files are transpiled and which ones arent.</p>
+
+<h3>"files"</h3>
+<pre class="prettyprint">
+//Stuff above
+    "files": [
+        "core.ts",
+        "sys.ts",
+        "types.ts",
+],
+//Stuff below</pre>
+<br>
+<p>Remember, if this parameter is omitted, the compiler will transpile <strong>ALL</strong> of the <em>.ts</em> files in the containing directory.  When you want control, you use "files".</p>
+<p><em>SIDE NOTE:</em> I know the gents at the TypeScript team are working hard to provide glob support but at this time it's a little bit of a disaster to use the "files" property.  If you wanted to do something neat like "*.controller.ts", you can't, because there isn't any <span class="color-red">glob</span> support.  There is an active open issue that is still being debated:  <span><a href="https://github.com/Microsoft/TypeScript/issues/1927">Globs Support in tsconfig.json</a></span></p>
+<p>Why is "files" a disaster you ask?  Because do you really want to specify every single .ts file manually and maintain them all here in this tsconfig.json file?  I sure don't...</p>
+<br>
+
+<h3>"exclude"</h3>
+<pre class="prettyprint">
+//Stuff above
+    "exclude": [
+        "node_modules",
+        "wwwroot"
+    ]
+//Stuff below</pre>
+<br>
+<p>The "exclude" property is basically the opposite of "files" except you specify the folders you want to exclude.  Typically you don't want to have a "files" property living alongside "exclude" because it turns into a cluster real fast.  "files" takes precedence over the "exclude" property if you decide to include both.</p>
+<p>I suspect we'll get the bang <strong>"!"</strong> operator pretty soon and eliminate "exclude" altogether.</p>
+<br>
+<h4>Atom TypeScript</h4>
+<p>If you're using the Atom editor you have a really great option at your disposal, a spin-off from the traditional tsconfig.json that gives you <strong>"!"</strong> and <strong>glob</strong> support.  Check out the following package:</p>
+<span><a href="https://atom.io/packages/atom-typescript">Atom-TypeScript</a></span>
+
+<br>
+<div class="text-center">
+    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/92b8f5ac-eee2-42f3-a42c-6ec601155a7e_original.gif"
+    alt="atom typescript gif" width="500" style="border:0"  text-align="center" />
+</div>
+<br>
+
+<br>
+<div class="text-center">
+    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/5a5b8097-e030-4ad6-8256-be2312381d41_original.png"
+    alt="atom editor" width="200" style="border:0"  text-align="center" />
+</div>
+<br>
+<p> Until next time!</p>

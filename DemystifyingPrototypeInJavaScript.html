@@ -1,0 +1,115 @@
+
+<br />
+<p>First thing you need to understand with JavaScript is that there is no such thing as classes(<small>ignoring the ES6 spec</small>).  JavaScript is filled with an endless sea of objects.  Objects are linked to each other, the idea of classes is a mere design pattern that can be implemented via mixins.  I'll cover the fundamentals of OO JavaScript in a future post but I just wanted to preface this topic by setting the stage clear on where JavaScript stands in regards to classes.</p>
+
+<h4>JavaScript descendants </h4>
+
+<p>At the heart of it, all JavaScript objects descend from <span class="primary">Object</span>.  There is nothing magical about Object, it can be thought of as a set of name/value pairs where the name is a <em>string</em> and the value is any JavaScript <em>type</em>.  Don't believe the religious debates about how JavaScript doesn't have types, there are plenty of them.  More on this in another post(<em>I promise</em>).</p>
+<br>
+<div class="text-center">
+    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/6c4c8b4d-c274-4d77-a4d6-b625b39b5930_original.jpg"
+    alt="descendant confused baby lol" width="300" text-align="center" />
+</div>
+<br>
+<p>The super parent Object has two properties, length and prototype. Prototype is the <strong>link</strong> that allows for JavaScript objects to link together.  There are a boat load of methods on the base Object object but I won't go into them here and instead focus on the prototype property.  One key thing to remember is that since all objects are descendants of Object, they all take on the prototype property!</p>
+<br />
+
+<h4>I'm Lost, give me some examples!</h4>
+
+<p>So let's say you've never heard of prototype but you have heard of prototypal inheritance.  Just as a <span class="has-error">*warning*</span> the traditional sense of inheritance has a completely different meaning in JavaScript than it does in other statically typed languages such as C#(<em>more on this in another post</em>).  Okay so here's a starting example</p>
+<br/>
+
+<pre class="prettyprint">
+    var Vehicle = {
+ 	  cylinders: 4
+    }
+    var Car = new Object(Vehicle);
+
+    console.log(Car.cylinders); //4
+    Car.passengers = 2;
+    console.log(Car.passengers); //2
+
+</pre>
+<br>
+<div class="text-center">
+    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/1b66b1ee-d386-4814-87ff-5d1c8d3e5455_original.jpg"
+    alt="confused sign right left lol" width="300" text-align="center" />
+</div>
+<br>
+<p>What just happened in that code?  We didn't define the property cylinders on the object Car, so how can we set a value to it?  What actually happens here during the engine execution step when the engine encounters <strong>Car.cylinders</strong> is call the <em>GET</em> operation.  The <em>GET</em> operation first checks whether or not <strong>cylinders</strong> exists on the <strong>Car</strong> object.  Does it?  Obviously not from our declaration step, so why doesn't the code blow up?  This is the magic of JavaScript and the <strong>prototype</strong> property!
+</p>
+<p>Since the passenger property doesn't exist, <em>GET</em> starts to fish up the prototype chain.  Remember, all objects have the prototype property. Let's chain this object further to help understand JavaScript prototype chain linking:  </p>
+<br/>
+<pre class="prettyprint">
+    var Steel = {
+        carbon: 2,
+        iron: 90,
+        others: 8
+    }
+    var Chassis = new Object(Steel);
+    var Assembly = new Object(Chassis)
+    var Car = new Object(Assembly);
+
+    console.log(Car.iron) // 90
+    console.log(Car.passengers); //undefined
+
+</pre>
+<br>
+<div class="text-center">
+    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/4d263434-35fe-4a46-b35a-1cdc9e981a28_original.jpg"
+    alt="car mold model new prototype" width="300" text-align="center" />
+</div>
+<br>
+<h4>Inheritance?</h4>
+<p>NO!  What is happening above is that Car is linked all the way up the chain to the Steel object via prototypal linking.  Car does not actually inherit the properties of Steel, but when the property <strong>iron</strong> is called, the <em>GET</em> operation begins to check up the prototype chain to see if it can find the property.  The Car object delegates responsibility up the chain.</p>
+<p>First step up the prototype link from Car is Assembly, does it have iron or passenger?  Nope, how about the next prototype link up to <em>Chassis</em>?  Nope, how about <em>Steel</em>?  <strong>YES!</strong> we just found iron, and thus we can return the value which is <span class="success"><em>90</em></span>.  The same series of steps occurs for passengers except when we get to <em>Steel</em> we are still scrambling for the missing <em>passengers</em> property.  Once we traversed all the way up the tree to the base<strong>Object.prototype</strong> and we still don't have a property <em>passengers</em> then the return value is undefined!  In JavaScript(<small>ES5</small>) this prototype chain is spanned through the <em>GET</em> operation.</p>
+
+<h4>Shadowing properties</h4>
+<pre class="prettyprint">
+    var Steel = {
+        carbon: 2,
+        iron: 90,
+        others: 8
+    }
+    var Chassis = new Object(Steel);
+    var Assembly = new Object(Chassis)
+    Assembly.paint = "bare rust";
+    var Car = new Object(Assembly);
+
+    console.log(Car.paint); //"bare rust"
+	Car.paint = "white"
+    console.log(Car.paint); //"white"
+
+</pre>
+<br>
+<div class="text-center">
+    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/7ff89a1b-1bd5-45d7-b92e-4257cf7b6943_original.png"
+    alt="jedi mind tricks lol droids droid" width="500" text-align="center" />
+</div>
+<br>
+<p>No Jedi shadowing mind tricks here.  Although you may instinctively think that Car inherited the properties of Assembly and all you're doing is shadowing the value of the paint property, that only happens if you used Object.defineProperty() and explicitly defined the key on the car object. Implicit shadowing is very dangerous as it may happen unknowingly.  Shadowing only occurs when the property is not marked as read-only!</p>
+
+<h4>Prototype is cool but what is __proto__</h4>
+<p>In this whole discussion we just masked __proto__ which is the actual object used in the chain lookup, whereas prototype is a property/object that builds __proto__ when a new object is linked via the new keyword. I would highly recommend against using __proto__ as its been <strong>"deprecated"</strong> since browsers like to implement it in different ways.  ES6 standardized __proto__ but for now it's best to avoid it.  Here's an example of __proto__ in action.</p>
+
+<pre class="prettyprint">
+    var Steel = function(){
+        this.carbon = 2,
+        this.iron = 90;
+    }
+
+    var Sword = new Steel();
+
+    console.log(Sword instanceof Steel); //true
+    console.log(Sword.iron); //90
+    console.log(Sword.__proto__ == Steel.prototype); //true
+
+</pre>
+
+<br>
+<p>Happy coding and feel free to leave me a message or shoot me an email!</p>
+
+<div class="text-center">
+    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/a0db501b-6202-4ef7-b476-443be0bc1953_original.jpg"
+    alt="keep calm and keep learning javascript" width="300" text-align="center" />
+</div>

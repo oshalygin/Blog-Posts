@@ -1,0 +1,145 @@
+<br />
+
+<p> I promised I was going to give a fundamental walkthrough on JavaScript closures for the global teams that use <a href="http://www.fsaesim.com">www.fsaesim.com </a>and this is the post that delivers on that promise!  This is an ongoing series of JavaScript posts until I feel like I covered all necessary language semantics to understand the vehicle simulation framework.  You're also welcome to fire up JSFiddle and swag some code together!(<em>I strongly suggest this</em>)</p>
+<p>JavaScript closures are  a bit difficult to understand until you've gone through a set of examples to build familiarity.  This might come to you as a surprise, but you've been using JavaScript closures ever since you started with JavaScript...</p>
+<br />
+<h4>What is a JavaScript Closure?</h4>
+
+<pre class="prettyprint">
+//From MDN - Mozilla Developer Network
+//Closures are functions that refer to independent (free) variables.
+//In other words, the function defined in the closure 'remembers' the environment in which it was created.
+</pre>
+<br />
+<p>What?  Okay, I agree, that's confusing.  Here are better explanations:</p>
+<ul>
+	<li>Think of a closure as any scenario where you are accessing variables outside of your current lexical scope.</li>
+	<li>A closure keeps local variables for a function alive after the function has already returned.  Recall that functions create scope, so this is a very powerful component to closures!</li>
+</ul>
+<br />
+<pre class="prettyprint">
+function someFunction(){
+var oranges = "oranges";
+    return function(){
+    console.log(oranges);
+     }
+}
+var letsDoThis = someFunction();
+letsDoThis();
+</pre>
+<br/>
+<pre class="prettyprint">//When you declare a function inside of another function, you're creating a closure!</pre>
+<br>
+<p>What?  <strong>letsDoThis</strong> is becoming a closure that is combining a function and the environment that the function was created in(oranges).</p>
+<br>
+
+<pre class="prettyprint">
+function calculator(a){
+    return function (b){
+    	return a + b;
+    	}
+
+}
+var firstValue = calculator(10);
+var secondValue = calculator(100);
+
+console.log(firstValue(0)); //Returns 10
+console.log(firstValue(10)); //Returns 20
+console.log(firstValue(secondValue(10))); //Returns 120
+</pre>
+<br/>
+<p>The above may be a bit of a brain teaser but it's just as straightforward as the previous example. <strong>firstValue</strong> is a closure that stores an environment where <em> a = 10</em>.  <strong>secondValue</strong> is another closure that stores another enviornment(different from firstValue) where <em> a = 100 </em>.
+<br/>
+<br/>
+<h4>Private methods in JavaScript? Closures!</h4>
+<br>
+<p>Let's suppose you want to create a calculator program and you want to create a private baseVal which you will use to perform your calculations on.  Also, you want to make the functions that PERFORM the calculations private (multiply, divide and addOrSubtract).  How would you do that? Closures!
+</p>
+<br>
+
+<pre class="prettyprint">
+var calculator = (function(){
+    var baseVal = 0;
+
+    function addOrSubtract(val){
+    baseVal += val;
+    }
+
+    function multiply(val){
+    baseVal = baseVal * val;
+    }
+
+    function divide(val){
+    baseVal = baseVal / val;
+    }
+
+    return {
+        multiply: function(passedInVal){
+            multiply(passedInVal)
+        },
+        divide: function(passedInVal){
+            divide(passedInVal)
+        },
+        addOrSubtract: function(passedInVal){
+            addOrSubtract(passedInVal)
+        },
+        result: function(){
+            return baseVal;
+
+        }
+    }
+
+})();
+
+console.log(calculator.result());  //0
+calculator.multiply(300);  //0*300 = 0.  Right? haha
+calculator.addOrSubtract(300); // 0 + 300 = 300
+calculator.divide(3); //300 / 3 = 100
+calculator.addOrSubtract(-50);  // 100 - 50 = 50
+calculator.multiply(10); // 50*10 = 500
+console.log(calculator.result()); // 500
+console.log("===================");
+</pre>
+
+<br>
+<p>The functions that are returned by the calculator function are closures that share the environment that was executed when <strong>var calculator</strong> was declared.  The key here is the <em>shared</em> environment.</p>
+<p>Instead of a immediately invoked function expression <strong>(iief)</strong>, if you were to declare the following:</p>
+<br>
+<pre class="prettyprint">
+	var calculator = function(){
+	//...Stuff
+	}
+
+	var calculatorOne = calculator();
+	var calculatorTwo = calculator();
+
+</pre>
+<br>
+<p>In the above example <strong>calculatorOne</strong> is going to create one environment while <strong>calculatorTwo</strong> will create a separate environment.  This is the magic that is one part of JavaScript object oriented programming.  </p>
+<br/>
+<p>I really liked this example from StackOverFlow so I'll include it here</p>
+<pre class="prettyprint">
+function makeKitchen () {
+	var trashBags = ['A', 'B', 'C']; // only 3 at first
+		return {
+    		getTrashBag: function() {
+      		return trashBags.pop();
+    		}
+  		};
+}
+
+var kitchen = makeKitchen();
+
+kitchen.getTrashBag(); // returns trash bag C
+kitchen.getTrashBag(); // returns trash bag B
+kitchen.getTrashBag(); // returns trash bag A
+</pre>
+<a href="http://stackoverflow.com/questions/111102/how-do-javascript-closures-work?page=1&tab=votes#tab-top">StackOverflow discussion about Closures </a>
+<br>
+<p>Just remember, in the above example if you were to create a kitchenTwo, you would start all over again and have to take out trash all over again :)</p>
+<p>That's it for now, feel free to drop me a line in the comments or send me an email!  Cheers.</p>
+<p>As always, stay calm and keep learning :) </p>
+<div class="text-center">
+    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/707e92ca-e975-42c9-9918-76eb1da035a8_original.jpg" alt="Keep calm and Javascript " width="500" text-align="center" />
+</div>
+<br />

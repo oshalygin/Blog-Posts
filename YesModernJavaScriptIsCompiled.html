@@ -1,0 +1,78 @@
+<br />
+<p>Many think of JavaScript as it existed 20 years ago when Brendan Eich first developed it at Netscape. 20 years in the realm of software development is basically a thousand light years... Technology has evolved drastically from 1995, and so has JavaScript! </p>
+<br />
+
+<h4>Is JavaScript compiled or interpreted?</h4>
+<p> <strong>TLDR:</strong> <em>Compiled</em>. But read on because I'll cover the meat and the potatoes behind it and explain why JavaScript should no longer be though of as a simple and slow interpreted language.
+</p>
+
+<p>What do you mean JavaScript is compiled? Everyone has been telling me that it's interpreted!! Sorry, but you've been speaking to noobs(in b4 hatemail) </p>
+<p>
+There are differences! Where JavaScript differs from traditionally "compiled" languages such as C# and Java is that JavaScript is <strong>JIT(Just-In-Time) compiled</strong>. What that means is that JavaScript isn't compiled well into advance into object code(or another language) that can be ported and thrown around from one environment to the next. </p>
+
+<br>
+<div class="text-center">
+    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/ef31f2b5-3b88-4ce9-bb85-63aee064bf5c_original.png" alt="lol wat muppet" width="400" text-align="center" />
+</div>
+<br>
+<h4>How Do Compilers Generally Work?</h4>
+<p>There are three basic(simplified) steps</p>
+<ul>
+    <li><strong>Lex:</strong>  Break up the components into meaningful portions, a la <em>tokens.</em></li>
+    <li><strong>Parse:</strong>  Collect all the wonderful tokens and parse them into a <strong>Abstract Syntax Tree</strong>. A AST is nothing more than a representational structure of the source code.</li>
+    <li><strong>Generate:</strong>  Grab the AST and convert it to an executable. </li>
+</ul>
+<p>What does this have to do with Javascript? Isn't Javascript executed directly without compiling to AST? Well, the JavaScript compiler is actually quite more complex! </p>
+<br>
+<h4>So How Does the JavaScript Compiler Work?</h4>
+<p>This is going to be a long topic and I don't want to get into the ultra gritty details but I'll cover the high-level concepts.</p>
+<p>There are three major components that are involved with JavaScript Compilation:</p>
+<ul>
+    <li>
+        <strong>The Compiler:</strong>  Handles all standard compiler tasks: parsing, generation and lexing.  Slightly different from the traditional compiler, see below.
+    </li>
+    <li><strong>The Scope:</strong>  Constant looks up all declared variables and passes them along to the engine for execution.  Keeps track of declared variables!</li>
+    <li><strong>The Engine:</strong>  Handles all of the execution and fires all the events that are necessary in the flow(Compilation/Scope lookup)</li>
+</ul>
+<br>
+<h4>How do the three components communicate?</h4>
+<p>Communication is key in all long lasting relationships, JavaScript compilation is no exception!  As portions of JavaScript code is traversed throughout the program, the compiler will lex(tokenize) followed by throwing it into a AST tree.
+</p>
+<p>
+    Sounds about similar? Well things get interesting when we get to the code generation step, the compiler actually starts to communicate with the scope to verify if the piece of code already exists for the current scope. If this code does not exist, scope is informed to declare the variables, otherwise the compiler takes no action.</p>
+<p>Once the compiler is done going through the scope, it will generate the code for the engine to execute. <small>Here is where the engine starts to execute</small>...<strong>NOT SO FAST!</strong> The engine doesn't execute anything just yet! The engine needs to communicate with the scope to verify that the variables being passed to it are <em>accessible</em> in the current scope, if they are, then the value is assigned and we move on. </p>
+<br>
+<h4>Key understanding in how the Engine works</h4>
+<p>The engine compiles the code before it executes it. In part to this process it registers the variable declarations with the scope. This registration is key in the communication stream as discussed earlier. When the communication interchange between the engine and scope is in play, the assignments start to fire. There is a lot more to JavaScript variable assignment that I plan to cover that in the future with some concrete examples...stay tuned!</p>
+<br>
+<h4>JavaScript Hoisting</h4>
+<p>All of this is cool stuff, but why should I know this? Because JavaScript hoisting can really throw you for a loop if you don't understand how the engine executes the code. Variable declarations are processed by the engine prior to any other code execution via the engine-scope communication stream. Hoisting is nothing more than understanding that variable declarations are moved up in the execution tree. You can do scandalous things in JavaScript like assign values to a variable before declaring it! </p>
+<br>
+<pre class="prettyprint">
+   foobarus = "I'm not a subaru, but a fubaru";
+   var foobarus;
+</pre>
+<br>
+<div class="text-center">
+    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/fd2334c5-3540-4a79-b6d3-b0f62511931b_original.jpg" alt="foobaru dont fail lol" width="400" text-align="center" />
+</div>
+<br>
+
+<h4>TLDR: It's 2015 and JavaScript is Compiled</h4>
+<br>
+<p>JavaScript JIT compilers:</p>
+<ul>
+    <li>Google Chrome V80 - NodeJS & Chrome</li>
+    <li>JaegerMonkey - Mozilla</li>
+    <li>SpiderMonkey - Mozilla</li>
+    <li>IonMonkey - Mozilla</li>
+    <li>Chakra - IE</li>
+</ul>
+
+<br>
+<p>Happy Coding!</p>
+<br>
+<div class="text-center">
+    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/fabea32f-7efc-41ff-b834-9eac4ce8f16a_original.jpg" alt="keep it cool dog" width="400" text-align="center" />
+</div>
+<br>

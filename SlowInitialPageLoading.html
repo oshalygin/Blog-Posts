@@ -1,0 +1,48 @@
+
+<br />
+<p>Let me preface this by saying that I am over it.  Initially, I thought it was a bug in my code or a configuration setting in web.config that needed to be modified...No such luck(Am I praying for bugs in my code? haha)</p>
+<br />
+<h4>How it all began</h4>
+<br />
+<p>In your development environment everything works like magic.  Right?  Well it does for me!  The code "works".  When I originally launched techiejs.com it was painful but after quite a bit of tweaking and massaging it came together...Except when I reloaded the site a few hours later and realized it took 3 minutes to load!</p>
+    <p>First order of business was to run PageSpeed!  I love this utility and you should too!  Essentially it allows you to analyse your site and locate any bottlenecks that could be attributed to poor coding practices.</p>
+	<p>Grab the Google Chrome extension of PageSpeed here:  </p>
+	<ul>
+	<li><a href="https://developers.google.com/speed/pagespeed/">Google PageSpeed</a></li>
+	</ul>
+	<div>
+   <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/29c5b44f-3d55-461e-86c7-5312d321dcdc_original.png" alt="PageSpeed icon" width="600" text-align="center" />
+	</div>
+   <br />
+<h4>So what does PageSpeed say?</h4>
+<br />
+<p>Pagespeed results were very good, primarily because I was doing a lot of the work upfront to minimize the overhead.  The results did not show anything out of the ordinary other than a few css and javascript files that needed to be minified.  I will minify much later once I am satisfied with all of the styling and code in the .js files...</p>
+<br />
+<h4>Shared Hosting with GoDaddy</h4>
+<p>So if Pagespeed says everything is fine, what is the problem?  The problem comes down to how the configuration settings are setup on a shared hosting account with GoDaddy.</p>
+<p>GoDaddy is great because of the support, pricing and overall uptime but there are some limitations, specifically in ASP.NET applications.  As luck would have it, my application is directly affected.</p>
+<p>The issue comes down to the Worker Application Pool.  What IIS does is it recycles the worker app pool when there is inactivity with the application for a certain period of time(usually <5 minutes).  There are a few other factors that can affect this and I've listed them below just to make sure everything is peachy.</p>
+<ul>
+<li>Pre Compile the Application</li>
+<li>Do not run in development mode, "debug=false"</li>
+<li>Disable tracing in web.config</li>
+</ul>
+<h4>New Relic Uptime/Downtime Monitoring to the Rescue!</h4>
+<p>What "New Relic" allows me to do is to constantly poll/ping my URL to check if the application is running.  What this in turn does is keep the Application Worker Pool active and in essence allows the application to be on constant standby.</p>
+<p>This is just a temporary workaround and will not be used in the future once I revamp the site or host the site from my end. </p>
+<p>I'll be perfectly honest, it took a lot more than a few clicks to figure out how to setup the polling and uptime monitoring.  Likely because the application suite isn't really intended for this kind of low level pinging.</p>
+<br />
+<p>Here are the steps you want to take to get this going for your site</p>
+<ul>
+<li>Make an account at <a href="http://www.newrelic.com">New Relic</a></li>
+<li>Nagivate at top of the page to "New Relic SYNTHETICS"</li>
+<li>Click "Add Monitor"</li>
+<li>Enter all of the details on your site and select "Ping"</li>
+<li>Set the frequency to 1 minute</li>
+<li> Documentation Link:  <a href="https://docs.newrelic.com/docs/alerts/alert-policies/downtime-alerts/downtime-alert-settings">New Relic Downtime Documentation</a> </li>
+</ul>
+
+<p>Here is what the Monitor Settings look like when you first set this up.</p>
+<div>
+<img class="postImage" src="http://techiejs.com/Content/img/PublicImages/e4d6518c-eed8-4cf6-9f61-d0f6ebc24455_original.png" alt="New Relic Uptime Monitoring for Free" width="600" text-align="center" />
+</div>
