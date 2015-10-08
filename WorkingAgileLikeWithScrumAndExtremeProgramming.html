@@ -1,14 +1,14 @@
 <br>
 <p>How many of your users actually understand how an AngularJS application is bootstrapped and executed when they land on your site?  I would venture to say, close to zero.
 </p>
-<p>Unless you're in the tech industry and have a close relationship with the codebase, you'll think one of two scenarios:</p>
+<p>Unless you're in the tech industry and have a close relationship with the code base, you'll think one of two scenarios:</p>
 <ul>
     <li>These guys have some broken code and they're sloppy letting bugs through</li>
     <li>My computer/browser is old</li>
 </ul>
 <p>Which one of these is good for your business, product or message?  Neither, it gives a bad user experience which may lead your visitors to look elsewhere before consuming your content.</p>
 <h4>What do you mean by unstyled content?</h4>
-<p>Here is an example of a website where the angular interpolated bindings were renderred prior to the execution of the AngularJS application.</p>
+<p>Here is an example of a website where the angular interpolated bindings were rendered prior to the execution of the AngularJS application.</p>
 <div>
     <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/0eb14df3-63e1-4e6d-a45a-c97a365b936e_original.png" alt="busted code angular expression state title" width="300" text-align="center" />
 </div>
@@ -62,12 +62,12 @@
              '</style>');
 </pre>
 <br>
-<p>But it should work! AngularJS is broken!  No, what happens here is the angular code is not executed before your page is renderred by the browser.</p>
+<p>But it should work! AngularJS is broken!  No, what happens here is the angular code is not executed before your page is rendered by the browser.</p>
 <p>The whole point of putting your script files to the bottom of your body tag to minimize a blocking experience has been negated!  <em>sort of...</em></p>
 <h4>Solutions to an Awesome UX</h4>
 <p>Alright, we pointed out the problems and our first shot at this was a slight failure.</p>
 <h5>Enter ng-bind</h5>
-<p>Instead of having your expressions intercepted and renderred by the angular runtime, aka <code>{{stuff}}</code>, you can just bind data to your elements directly:</p>
+<p>Instead of having your expressions intercepted and rendered by the angular runtime, aka <code>{{stuff}}</code>, you can just bind data to your elements directly:</p>
 <br>
 <pre class="prettyprint">
 //Avoid this
