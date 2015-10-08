@@ -1,122 +1,139 @@
-<br>
-<p>How many of your users actually understand how an AngularJS application is bootstrapped and executed when they land on your site?  I would venture to say, close to zero.
+<p>I want to spend some time talking about Agile here.  It's something I'm quite passionate about and I'm glad the movement has gained so much traction over the years!  Unlike some developers who cringed at the first sight of Agile, I actually became really excited because I often put myself in the shoes of the customer and this is exactly what I would want.
 </p>
-<p>Unless you're in the tech industry and have a close relationship with the code base, you'll think one of two scenarios:</p>
+<p> Agile has been around for some time and you may be wondering what the best way to implement Agile in your organization, workflow or how you can better understand Agile.  Before we go head first into arguing about the best Agile framework, let's start with what Agile is all about.  I'll use a few direct quotes, but I want to keep it as layman as possible.</p>
+<br />
+<h4>What is Agile Software Development?</h4>
+
+<div>
+    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/77903303-6695-4c00-8d4c-563182332862_original.gif" alt="Agile Development Methodology Dilbert" width="600" text-align="center" />
+</div>
+<br />
+<p>Now that we got the jokes out of the way, let's grab the Wikipedia definition</p>
+<pre class="prettyprint">
+"Agile software development is a group of software development methods in which requirements and solutions evolve through collaboration between self-organizing, cross-functional teams."
+</pre>
+
+<p>So what does that mean? Well it's really not rocket science and the agile manifesto does a great job at breaking it down into very simple set of beliefs.  I'll expand on each one:
+</p>
+
 <ul>
-    <li>These guys have some broken code and they're sloppy letting bugs through</li>
-    <li>My computer/browser is old</li>
+<li><strong>Customer satisfaction by rapid delivery of useful software</strong>.  I don't know about you, but I want to create meaningful software that will be praised by the customer.  If you are sitting in a silo and knocking stuff out that no one wants, it doesn't matter if it's good "code".  In my opinion, even if the code is magnificent, if no one uses it then it was a waste of time(apart from a learning experiences).</li>
+<li><strong>Welcome changing requirements, even late in development</strong>.  It's software development, you should get used to change and not resist it like the plague.  We let other industries resist change and set bad examples!</li>
+<li><strong>Working software is delivered frequently (weeks rather than months)</strong>.  Nothing worse than waiting and waiting for the developers to make small changes only to be bombarded with a huge feature list that needs to be tested for 3 months.  Pushing out frequent changes allows for a QUICK feedback loop.</li>
+<li><strong>Close, daily cooperation between business people and developers</strong>.  I'm all about this one.  Daily cooperation between the teams is how you get questions and answers resolved quickly and minimize downtime.  Waiting around for a response or going off on a tangent to do your own thing only leads to rework in the future.</li>
+<li><strong>Projects are built around motivated individuals, who should be trusted.</strong>  Trust your developers and trust their abilities.  If we are confused and don't understand something, we will speak up and give you feedback.  Micromanaging and making every decision for them only breeds resentment.</li>
+<li><strong>Face-to-face conversation is the best form of communication (co-location)</strong>.  I'm on the fence about this one.  I prefer face-to-face communication but only when it doesn't dive into endless meetings that only create more unnecessary indecision.  Allowing developers to make decisions goes a long way into making huge progress during a scrum sprint.</li>
+<li><strong>Working software is the principal measure of progress</strong>.  Having buggy code and missing features is not a definition of a finished project, no matter how long it took the development team to get there.  </li>
+<li><strong>Sustainable development, able to maintain a constant pace</strong>.  Working overtime should always be an option to finish a sprint or iteration but if the development team needs to work 12 hours 5 days a week for months on end, that is a sure way to have high turnover and low productivity.  I actually prefer to stay late and finish up a module or piece of functionality if I'm close to completion.</li>
+<li><strong>Continuous attention to technical excellence and good design</strong>.  Good design breeds a quality product that will be easier to maintain in the long run.  Hacking stuff together is a bad idea.</li>
+<li><strong>Simplicity—the art of maximizing the amount of work not done—is essential</strong>.  Simplicity is something that is often missed when developers want to be clever.  There is no substitute for a simple design that is easy to read, maintain and deploy.</li>
+<li><strong>Self-organizing teams</strong>.  Not so sure about this one.  I always want to work with the best people but I also like to mix things up to get new and fresh ideas.  I would say this one is probably best coordinated by your organization</li>
+<li><strong>Regular adaptation to changing circumstance</strong>.  This goes hand in hand with point 2 above, welcome change.  Adapt quickly and be open minded.</li>
 </ul>
-<p>Which one of these is good for your business, product or message?  Neither, it gives a bad user experience which may lead your visitors to look elsewhere before consuming your content.</p>
-<h4>What do you mean by unstyled content?</h4>
-<p>Here is an example of a website where the angular interpolated bindings were rendered prior to the execution of the AngularJS application.</p>
+
+<p> Can't stop there, let's cover the core values:</p>
+<ul>
+<li><strong>Individuals and interactions over process and tools</strong>.  Instead of strictly following your policies and procedures, be adaptive and malleable to change.  "I cant do that because we normally do X, Y, Z..." is something that should be avoided.  Policies and procedures are important and every group needs to consider them when working on a sprint but don't close your mind to better ideas.</li>
+<li><strong>Working software over Comprehensive Documentation</strong>.  This one is going to be touchy but my feeling on documentation is important.  I prefer to write my code with long and descriptive class names and methods so usually I don't need to comment every line but I do write quite a few comments throughout the Business Logic to be able to easily reference what is going on in the future.  That said, if you type fast, writing documentation won't take you all that long.</li>
+<li><strong>Customer collaboration over contract negotiation</strong>.  Arguing over what the initial specifications were is never a smart decision.  At the end of the day you are creating software that the client is going to be using on a daily basis, why give them something they don't want?  Even if it met their original specs?  Future business is built on these experiences, make it stand out!</li>
+<li><strong>Responding to change over following a plan</strong>.  Some might thing this value talks about not following a plan, and that is simply not the case.  Stick to a plan as most agile frameworks recommend doing(each sprint) but be open to changing environments and requests.</li>
+</ul>
+
+<p>Well now that you know the core principles and values, where do you go next?  For me, these are all things that I believed in when I first started.  For others, there are great software development methodologies such as Extreme Programming(XP) and scrum.
+</p>
+<br />
+
+<h4>Extreme Programming(XP)</h4>
 <div>
-    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/0eb14df3-63e1-4e6d-a45a-c97a365b936e_original.png" alt="busted code angular expression state title" width="300" text-align="center" />
+    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/b6b829d9-cc2b-40c0-8260-f1ce73a956f0_original.png" alt="Extreme programming methodology xp development process flow pair programming" width="600" text-align="center" />
 </div>
-<br>
-<pre class="prettyprint">
-//Pre AngularJS initialization
-    {{user.name}}
-    {{user.email}}
-    {{user.phoneNumber}}
-    {{user.gravitarUrl}}
-</pre>
-<br>
-<pre class="prettyprint">
-//Post AngularJS initialization
-    Oleg Shalygin
-    oshalygin@outlook.com
-    123-245-6789
-    http://www.gravatar.com/avatar/2as654f65a4sf654
-</pre>
-<br>
 
+<br />
 
-<h4>ng-cloak to the rescue!</h4>
-<br>
+<p>
+Extreme programming was developed by developers for developers.  The intent was to break agile development into a set of development guidelines and methods to help get the team thinking and working more "Agile-like".  It is definitely more of a heavy-weight development methodology when compared to scrum(covered later), but don't be scared by all the terms and concepts, they are very straightforward and meant to help you.
+</p>
+<p>
+There are quite a few key parts to Extreme Programming and I will briefly cover just a few of them.  My only complaint about XP is that it feels a tad overwhelming for new people, but I will say this, give it a chance and you'll see that it is quite simple.
+</p>
+<p><strong>Goals:</strong>  The main goal is to minimize the cost and impact that changes have on a project.  The waterfall approach to software development works on some small projects but as we all know, changes happen and changes are rampant.  XP leverages Agile development to provide a solution set to ever changing conditions.</p>
+<p><strong>Coding:  </strong>  The main value that programmers offer the client is the code and working software.  Sitting around and debating the requirements or arguing about the original specifications does not create value for the customer. </p>
+<p><strong>Testing: </strong>  Some may feel as though programmers get paid to write code and not tests, but testing can go a long way in producing bug free code that reduces rework in the future.  Unit tests and test driven development leads to clean code!</p>
+<p><strong>Listening: </strong>  Please listen to the customer.  Writing good code isn't what the customer is looking for, they are looking for the "right" code for their business needs.  The customer can care less if you used Dependency Injection and followed the 4 pillars of Object Oriented Programming...Listen!</p>
+<p><strong>Simplicity: </strong>  Simple design leads to code that is easy to maintain and modify.  Being clever and over complicating code is going to confuse your team, the customer and probably yourself in the future when you try to reflect back on what you did </p>
+<p><strong>Courage: </strong>  Refactor and modify your code when needed.  Have the courage to throw away code that is no longer relevant.  Often times we feel as though deleting code erases the time we spent and our effort but it takes a truly courageous developer to move on with change! </p>
+
+<p>The following 12 practices are a cornerstone to Extreme Programming(XP).  They can be broken down further but they're fairly standard software development practices, you can read more about it at:</p>
+<span>
+Source:  <a href="http://en.wikipedia.org/wiki/Extreme_programming_practices">Extreme Programming Wiki </a>
+</span>
+
+<ul>
+<li>Pair Programming</li>
+<li>Planning</li>
+<li>Test Driven Development(TTD)</li>
+<li>Whole Team</li>
+<li>Continuous Integration </li>
+<li>Refactoring</li>
+<li>Small Releases</li>
+<li>Coding Standards </li>
+<li>Collective Code Ownership</li>
+<li>Simple Design</li>
+<li>System Metaphor</li>
+</ul>
+
+<p>Believe in the process! XP has a lot of benefits.  That said, I'll leave a bit of Dilbert humor here</p>
 <div>
-    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/698316a4-f048-4176-8a73-92e008c8ca5e_original.png" alt="the cloak image lol ng-cloak" width="400" text-align="center" />
-</div>
-<p>Not so fast.  If you haven't actually styled your page, you'll get the same wonderful flicker that you always had.  Here is an example of what you might quickly jump to if you read the angular documentation:</p>
-<span><a href="https://docs.angularjs.org/api/ng/directive/ngCloak">AngularJS documentation on ng-cloak</a></span>
-<br>
-<pre class="prettyprint">
-    The ngCloak directive is used to prevent the Angular html template from being briefly displayed by the browser in its raw (uncompiled) form while your application is loading. Use this directive to avoid the undesirable flicker effect caused by the html template display.
-</pre>
-
-<br>
-<pre class="prettyprint">
-//Example
-<div class="col-md-3 pull-left" ng-cloak>{{user.post}}</div>
-</pre>
-<br>
-<p>Before we understand why it isn't working, we should have a look at the source code for this directive!  You can CTRL+F this code in your unminified angular.js code, here is a link(<em><small>>Hint: I want you to actually look at the source of the file because you can learn a lot of things, but this actual snippet of code is the second to last line</small</em>):</p>
-<span><a href="https://code.angularjs.org/1.4.7/angular.js">angular.js ver: 1.4.7</a></span>
-<br>
-<pre class="prettyprint">
-!angular.$$csp() && angular.element(document)
-    .find('head')
-    .prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],' +
-             '[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,' +
-             '.ng-hide{display:none !important;}ng\\:form{display:block;}'
-             '.ng-animate-block-transitions{transition:0s all!important;-webkit-transition:0s all!important;}' +
-             '</style>');
-</pre>
-<br>
-<p>But it should work! AngularJS is broken!  No, what happens here is the angular code is not executed before your page is rendered by the browser.</p>
-<p>The whole point of putting your script files to the bottom of your body tag to minimize a blocking experience has been negated!  <em>sort of...</em></p>
-<h4>Solutions to an Awesome UX</h4>
-<p>Alright, we pointed out the problems and our first shot at this was a slight failure.</p>
-<h5>Enter ng-bind</h5>
-<p>Instead of having your expressions intercepted and rendered by the angular runtime, aka <code>{{stuff}}</code>, you can just bind data to your elements directly:</p>
-<br>
-<pre class="prettyprint">
-//Avoid this
-{{stuff}}
-
-//Do this
-<span ng-bind="stuff"></span>
-</pre>
-<br>
-<p>This solution is quite terrible in my point of view because you just jumbled your angular code and maintenance has taken a huge nose dive.</p>
-<p>Notice how most editors pickup on the double brace syntax and help you easily identify your angular code?  Yeah it's awesome...</p>
-
-<div>
-    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/e27cec30-d357-4308-a992-29441856aacc_original.png" alt="clean readable code expressions" width="400" text-align="center" />
+    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/817b9696-6e88-41e9-a634-17fbaaa41f1f_original.gif" alt="Extreme programming methodology xp development process flow pair programming Dilbert" width="600" text-align="center" />
 </div>
 <br />
-<h5>Enter angular.js at the top</h5>
-<p>In this solution you place the script file to the top of your page to load before the rest of the page.  Example:</p>
-<pre class="prettyprint">
+<h4>Scrum</h4>
 
-    <meta charset="UTF-8">
-    <title>AngularJS</title>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.0-beta.1/angular.min.js"></script>
+<p>Likely the most popular iterative agile software development methodology with a lightweight foundation.  The whole methodology is based around a flexible development strategy that accounts for customer feedback and change.  Traditional approaches such as waterfall struggle at meeting constant customer change especially as the project grows in length(time)</p>
 
-    <div ng-app="yourApp">
-        <span>{{user.name}}</span>
-        <span>{{user.email}}</span>
-    </div>
-
-</pre>
-<p>Problem with this?  Well now you blocked the page render until the script is loaded.  Terrible UX.  Sure you may think that the 1MB is lightning fast with today's internet speeds, but there are people out there still on 2G, yes, 2G.</p>
-<br />
-<h5>My solution - CSS</h5>
-<p>The solution that I prefer is to handroll my own 4 lines of CSS and target elements specifically with <strong>ng-cloak</strong> </p>
-<br>
-<pre class="prettyprint">
-[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
-  display: none !important;
-}
-</pre>
-<br>
-<p>No more flicker, time to apply this to the body tag! <strong>Hold your horses...</strong>  </p>
-<p>Think about the user experience, what does this style do to your page if you applied it to the body tag?  It won't display anything, so you might as well have a blocking script in your head achieving the same thing!</p>
-<br>
 <div>
-    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/f85dbe96-7f59-4482-ac87-24da62b36111_original.png" alt="it works it doesnt work lol" width="300" text-align="center" />
+    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/e71fc9bc-d3e7-4643-8205-a8125031337e_original.jpg" alt="Scrum development process flow values team owner sprint" width="600" text-align="center" />
 </div>
-<br>
 
+<br />
+<p>There are three parts to scrum which I will break down in detail:</p>
+<p><strong>Roles</strong></p>
 
-<h4>Target Your Elements</h4>
-<p>Use ng-cloak very diligently by applying it to individual div, table, and other elements that contain angular <em>{{}}</em> expressions.  </p>
+<ul>
+<li>Product Owner - Represents the stakeholder and gives the </li>
+<li>Scrum Master - Facilities the scrum and removes the roadblocks holding the team back </li>
+<li>Scrum Team - The cross-functional team that will work </li>
+</ul>
+
+<p><strong>Events</strong></p>
+<ul>
+<li>Sprint Planning - Before the team starts a sprint.  This meeting covers the goals and objectives of the upcoming sprint with a detailed plan for the backlog that will be accomplished. </li>
+<li>Daily Scrum - Team members discuss the activities completed the day before and what they aim to accomplish for the current day.  Short and brief </li>
+<li>Sprint Review - The team reviews the work that was completed during the sprint and the planned work that was not completed</li>
+<li>Sprint Retrospective - Review the last sprint at a 10,000 ft view.  What should the team continue doing?  What should the team stop?  What should the team start doing?</li>
+</ul>
+
+<p><strong>Other scrum activities </strong></p>
+<ul>
+<li>Scrum of Scrums - A meeting among different scrums, typically attended by scrum masters to discuss the status of other ongoing scrums in the organization</li>
+<li>Backlog refinement - Constant prioritization and review of the backlog that is outstanding on a project </li>
+</ul>
+
+<br />
+<h4>Kanban</h4>
+<p>DISCLAIMER:  I do not have extensive experience with Kanban.  When I first joined my last company they were phasing it out for the new hotness, scrum, but I will give a general overview of the 4 key principles:</p>
+<ul>
+<li><strong>Visualize the Workflow</strong> - Use Kanban boards</li>
+<li><strong>Lead Using a Team Approach </strong> - Develop as a team and with clear leadership  </li>
+<li><strong>Reduce the Batch Size of your Efforts</strong> </li>
+<li><strong>Learn and Improve Continuously</strong> - Reflect back on your progress, success and failures.</li>
+</ul>
+<br />
+<h4>Agile development hardships </h4>
+<p>We can't just cover the awesome benefits of Agile without talking a little about the downsides.  Remember, if it was universally the absolute best methodology for software development, it would be used by every single team all across the world(bar those that hate change).</p>
+<p>Large corporations with established processes and procedures that are based on the waterfall approach are going to struggle initially to adopt Agile.  Not because they don't want to, but because there has to be a concentrated effort to train and educate the staff to follow a different development methodology.  You have an army of project managers that <i>LOVE</i> Gantt charts, clearly defined specifications and a technology suite that everyone is familiar with.  Can you imagine telling 100 employees to go from waterfall to scrum?  That would be a pretty fun meeting.</p>
+<p>Scope creep is something that is very scary on all projects, but particularly when teams employ Agile.  Having customer feedback and changes is awesome for creating an awesome product but the customer can get carried away and want everything but the kitchen sink.  That said, I would actually recommend to embrace scope creep and keep pushing to make an awesome product that the users will <strong>LOVE</strong>.  Nothing worse than spending 6 months working hard on a project only to find out the one awesome feature that would of made the users lives perfect was excluded because the team pushed back against scope creep.  Embrace. Scope. Creep.</p>
+
+<br />
+
+<p> That's all I got for now, feel free to drop me a line and let me know what you think! </p>
