@@ -1,0 +1,211 @@
+<br />
+<div>
+<p>If you're coming from a strongly typed language to JavaScript, you might feel a bit underwhelmed by the debug experience.  There are many tips that we can discuss to hone your debug skills, but as a starting point we should start getting familiar with <strong>strict mode</strong>.</p>
+</div>
+<div>
+    <p><em>"strict mode"</em> refers to a restricted version of JavaScript that is sensitive to common JavaScript mistakes which lead to silent and deadly errors.  With strict mode enabled, syntax errors will be thrown instead of silently being executed behind the scenes.</p>
+</div>
+
+<div class="text-center">
+    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/75e3a707-cfda-4794-b0f9-ef027bef64d1_original.png" alt="use strict" width="500" text-align="center" />
+</div>
+<br>
+
+<div>
+    <h4>Enabling Strict Mode</h4>
+    <p>This is pretty simple, just add <em>"use strict";</em> inside a function or at the top level of the script.  Typically if you're working in a greenfield environment, you'll want to enable strict mode at the top of your script so that it is applied to all of the contained JavaScript.  If you're working with an existing codebase and you're afraid of borking something, then you can apply it to individual functions.  Here is <em>strict mode</em> in action</p>
+
+</div>
+<div>
+    <pre class="prettyprint">
+        "use strict";
+
+        var apples = "Super Apples";
+        var appleQuantity = 30;
+
+        function() {
+
+            var name = "Oleg"
+            console.log("Oleg");
+
+            //Rest of your code
+        }
+        //In this case, strict mode is applied to EVERYTHING in this script file
+    </pre>
+    <pre class="prettyprint">
+
+        var apples = "Super Apples";
+        var appleQuantity = 30;
+
+        function() {
+            "use strict";
+
+            var name = "Oleg"
+            console.log("Oleg");
+
+            //Rest of your code
+        }
+        //In this case, strict mode is applied to ONLY the function block.
+    </pre>
+</div>
+<div>
+<br>
+    <h4>Concatenated Script files</h4>
+    <p>One thing to note is when you concatenate your script files, you'll need to be very careful to understand that if you're scoping your strict mode via functions or the whole file.  <em>"strict mode"</em> will apply to the concatenated scripts!!</p>
+    <p>For instance, suppose you have <strong>scriptDerp.js</strong>, <strong>scriptFooBar.js</strong> and <strong>scriptQuux.js</strong> concatenated into <strong>app.js</strong>.  Now suppose that the order of concatenation is as follows:</p>
+    <ol>
+        <li>scriptDerp.js</li>
+        <li>scriptFooBar.js</li>
+        <li>scriptQuux.js</li>
+    </ol>
+    <p>
+   Now suppose <strong>scriptFoobar.js</strong> is enabling strict mode via <em>"use strict";</em> and you intentionally aren't invoking it in <strong>scriptQuux.js</strong>, guess what will happen when the files are concatenated?  That's right you get a strict mode concatenation!</p>
+    <p><em>How do I avoid this?</em>  Ideally you make sure all of your scripts have strict mode enabled, and if your code throws syntax errors, fix them.  This should always be plan A.</p>
+    <p>But lets say you don't have the time right now and you're concatenating with new scripts but you want to take advantage of strict mode, what do you do? <strong>Scope the strict mode into function blocks.</strong></p>
+
+</div>
+<br>
+<div><h3>Strict Mode Changes</h3>
+<p><u>Let's now cover what strict gives you!</u></p>
+</div>
+<div>
+<br>
+    <h4>No accidental globals</h4>
+    <p>Imagine you had a global variable named <strong>apples</strong> and further down in your code you decided to assign <em>apples</em> a value of 30, but you typo'd the variable and called it <strong>aples</strong>.  Well without strict mode, you would actually create a new global variable and assign 30.  In strict mode, this would throw an error.  Here is an example:</p>
+</div>
+<div>
+    <pre class="prettyprint">
+
+        "use strict";
+        aples = 30;  //Error
+        apples = 30; //Assigned 30 to global variable apples
+
+    </pre>
+</div>
+<div>
+<br>
+    <h4>Octal syntax</h4>
+    <p>First of all, don't ever use octal syntax.  It's pointless, confusing and prone to errors in JavaScript.  Unfortunately we have to live with it since it keeps getting passed down from one browser to the next.  I haven't see any intentional octal syntax in real production code, but I digress...Don't use it.</p>
+    <p><em>strict mode</em> disallows usage of octal syntax altogether and will throw an error.</p>
+    <p>Here is an example of octal syntax:</p>
+</div>
+<div>
+    <pre class="prettyprint">
+        "use strict";
+
+        var firstNumber = 30;
+        var secondNumber = 50;
+        var thirdNumber = 070; //Throws error here.
+
+        var stuff = 50 + 0130 + 5; //Throws error here.
+
+    </pre>
+</div>
+<br>
+<div class="text-center">
+    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/072c0675-a03a-4117-93b5-9be68e5b0bfb_original.jpg" alt="just dont do it logo" width="300" text-align="center" />
+</div>
+<br>
+
+<div>
+    <h4>"with" statement</h4>
+    <p>The "with" statement is confusing  and is rarely used/seen.  It is highly recommended that you forget you even learned that this statement exists, because it shouldn't be used anywhere.  Basically it's a shorthand for a default object to be used inside of a statement block.  Such as:   </p>
+</div>
+<div>
+    <pre class="prettyprint">
+        "use strict";
+
+        var firstValue = 30;
+        var secondValue = 50;
+        var result;
+
+        with (Math) {   //Throws error
+            result = cos(PI) * firstValue + sin(PI) * secondValue;
+        }
+    </pre>
+</div>
+<div>
+    <p>Using <strong>"with"</strong> in <em>"strict mode"</em> will throw an error. Don't use it.</p>
+</div>
+
+<div>
+<br>
+    <h4>Trying to "delete" undeletable properties</h4>
+    <p><em>delete</em> is rarely used but when it is, it can't be used on undeletable properties such as prototype.  Before even trying to run that piece of code, you'll get an error in <em>strict mode</em>.  You also cannot use delete on a variable name in <em>strict mode</em>.  Here is an example:</p>
+
+</div>
+<div>
+    <pre class="prettyprint">
+        //use strict;
+
+        var foobar = "Hello foobaru";
+        delete Object.prototype;  //Throws error.
+
+        delete foobar; //Throws error.
+    </pre>
+</div>
+<br>
+<div class="text-center">
+    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/355b7457-8b8a-4a7b-8462-01afdde40ce5_original.png" alt="ecmascript 6 logo 2015" width="500" text-align="center" />
+</div>
+<br>
+
+<div>
+    <h4>Using ES6 reserved words</h4>
+    <p>There is a series of reserved words in the ECMAScript 6(ES6) specification.  You are disallowed from using these keywords as variables or arguments in strict mode.  The list of reserved keywords are: </p>
+    <ul>
+        <li>implements</li>
+        <li>interface</li>
+        <li>let</li>
+        <li>package</li>
+        <li>private</li>
+        <li>protected</li>
+        <li>public</li>
+        <li>static</li>
+        <li>yield</li>
+    </ul>
+</div>
+<div>
+<br>
+    <h4>Declaring Functions inside of blocks</h4>
+    <p>This can lead to ridiculously hard to debug errors due to the way that JavaScript hoisting works, so it's best to avoid this, but strict mode will throw an error if you even try.  Here is an example of a function being declared inside of a statement block: </p>
+
+</div>
+<div>
+    <pre class="prettyprint">
+        "use strict";
+        if(firstValue > secondValue){
+
+            function calculateNewValue(){  //Throws an Error.
+                //Some Random calculation
+            }
+        }
+    </pre>
+</div>
+<br>
+<div>
+    <h4>The Obvious</h4>
+    <p>The following here shouldn't be said because it goes against writing clean code but things like declaring identical function arguments in the same function and defining identical property names should be avoided.  In <em>strict mode</em> these will present themselves as errors.</p>
+</div>
+<div>
+    <pre class="prettyprint">
+
+        "use strict";
+        function(apples, oranges, apples) {  //Throws Error.
+            var total = apples + oranges + apples;
+        }
+
+        var someObject = {
+            firstName: "Oleg",
+            lastName: "Shalygin",
+            firstName: "John"
+        };  //Throws error
+
+
+    </pre>
+</div>
+
+<div class="text-center">
+    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/61d6c9fe-e8c0-461a-879f-6775ff60ed5b_original.jpg" alt="stating the obvious lol" width="400" text-align="center" />
+</div>
+<br>
