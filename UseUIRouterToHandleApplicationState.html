@@ -2,16 +2,18 @@
 <div>
 <p>Proper routing in your Single Page Application(<em>SPA</em>) is integral to a positive UX (User Experience).  The applications that developers are building these days have multiple views, sections, and most importantly reusable components for rapid development and consistent delivery.</p>
 </div>
+<br>
 <div>
+    <h4>Routing</h4>
     <p>So far I've we've talking about routing, and isn't routing typically directly related to the site URL?  Well no, it doesn't have to be, and unfortunately the initial implementation of the Angular Router followed that convention.</p>
     <p><strong>ngRoute</strong> was the first iteration by the Angular team which was eventually removed from the core framework sometime around Angular 1.2.  If you want to use the Angular Router v1, you'll have to download the package exclusively and inject it via <em>"ngRoute"</em>.</p>
     <p>The router has a straight forward implementation, map the URL to specific JavaScript code that is ran when the URL changed.  All of this to preserve the back button functionality</p>
 
 </div>
 <br>
-</div>
+
 <div class="text-center">
-    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/a63b7e8d-5756-4fa8-a9c9-cf719d2f87d7_original.jpg" alt="back button" width="500" text-align="center" />
+    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/a63b7e8d-5756-4fa8-a9c9-cf719d2f87d7_original.jpg" alt="back button" style="border:0" width="200" text-align="center" />
 </div>
 <br>
 
@@ -24,9 +26,9 @@
 </div>
 
 <br>
-</div>
+
 <div class="text-center">
-    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/b1b54234-4f89-4b77-af38-793517b30c5c_original.jpg" alt="back button" width="300" text-align="center" />
+    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/b1b54234-4f89-4b77-af38-793517b30c5c_original.jpg" alt="code reuse ctrlc" style="border:0" width="300" text-align="center" />
 </div>
 <br>
 
@@ -34,17 +36,20 @@
 <h4>UI Router to the Rescue</h4>
 <p>UI-Router, largely influenced by frameworks such as Durandal.js and Ember.js, pushed the routing experience within Angular to a whole new level.</p>
 <br>
-
+</div>
+<div>
 <h4>States</h4>
 <p>States are the driving force in UI-Router.  The <code>$stateProvider</code> is similar to ngRoute, except the state is focused on the <em>location</em> in the application and not the <em>URL</em>.</p>
 <p>States can be centrally defined in your application module <code>.config()</code> or a better solution would be to define the states on individual modules.  For more information on clean Angular code, refer to the <a href="https://github.com/johnpapa/angular-styleguide">Style Guide</a></p>
-<br>
-<br>
+
 </div>
+<br>
 <div class="text-center">
-    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/2c4c6836-3eba-40b4-8e90-137bfb4ea88b_original.png" alt="go to state" width="400" text-align="center" />
+    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/2c4c6836-3eba-40b4-8e90-137bfb4ea88b_original.png" alt="go to state" style="border:0" width="400" text-align="center" />
 </div>
+
 <br>
+<div>
 <h4>Installation and Configuration</h4>
 <p>Installation is fairly straightforward and can be done with either NPM or Bower.  I prefer bower because I use <a href="https://github.com/taptapship/wiredep">wiredep</a> to inject the resources, but you have options :).</p>
 <p><code>npm install angular-ui-router</code></p>
@@ -52,6 +57,7 @@
 <p>Don't forget to pick up the DefinitelyTyped TypeScript typings as well:</p>
 <p><code>tsd install angular-ui-router --save-dev</code></p>
 <br>
+</div>
 <div>
 <pre class="prettyprint">
 app.module("main")
@@ -76,6 +82,7 @@ function configuration($stateProvider) {
 </pre>
 <br>
 </div>
+<div>
 <p>The <em>State</em> defines the UI with a controller and view.  A state can have parent/child hierarchy which allows for nesting and multiple views, which leads us to the major features behind UI-Router.</p>
 <ul>
     <li><strong>Nested Views:  </strong>Allows you to define the state hierarchy with <em>dot notation</em> or the parent parameter.  The power here is SRP (Single Responsibility Principle) which allows you to separate various views to their own controllers.  </li>
@@ -83,6 +90,7 @@ function configuration($stateProvider) {
 </ul>
 
 </div>
+<br>
 <div>
 <h4>Nested Views In Depth</h4>
 <p>With the traditional Angular router, <strong>ngRoute</strong>, you're defeated by being forced to navigate to other views when you want to show related model information.  Sure you can get around this by strategies such as <code>ng-hide</code> <code>ng-show</code>, and <code>ng-include</code> but these are not maintainable solutions.  One controller will have to handle all of the logic or do intricate handoffs...</p>
@@ -112,28 +120,27 @@ $stateProvider
     </pre>
 </div>
 <br>
+<div>
    <p>Note that a parent state must <strong>exist</strong>.  If you specify a child state with dot notation such as "post.tagList", <em>tagList</em> will never activate unless a <em>post</em> state is defined.</p>
-
-<br>
 </div>
+<br>
 <div class="text-center">
-    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/70794f27-81e9-4652-af9d-6cd748c05afc_original.jpg" alt="nested views angular ui" width="500" text-align="center" />
+    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/70794f27-81e9-4652-af9d-6cd748c05afc_original.jpg" alt="nested views angular ui" style="border:0" width="500" text-align="center" />
 </div>
 <br>
-
 <div>
 <h4>Multiple Named Views</h4>
 <p>Reusable, modular and maintainable code should be your goal when designing modern web applications.  <em>UI-Router</em> enables you to separate your states into multiple named views which you can inject with specific state names.</p>
 <p>
 For instance, suppose you have a standard view page with a navigation bar, sidebar, a footer and maybe a few tabs in the center of the page.  The center page may change based on user interaction, do you want to navigate to a whole new view and re-render the navbar and sidebar?  No, you want to reuse those components and the logic behind the scenes.
 </p>
-
-<br>
 </div>
+<br>
 <div class="text-center">
-    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/a9ddba52-38bd-4f93-b0a8-0db8e0f5bd9c_original.png" alt="multiple named views angular ui" width="500" text-align="center" />
+    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/a9ddba52-38bd-4f93-b0a8-0db8e0f5bd9c_original.png" alt="multiple named views angular ui" style="border:0" width="500" text-align="center" />
 </div>
 <br>
+
 
 <div>
     <pre class="prettyprint">
@@ -157,6 +164,7 @@ For instance, suppose you have a standard view page with a navigation bar, sideb
     </pre>
 </div>
 <br>
+<div>
 <p>UI-Router gives us the power to have parallel views that can reference previous states within deeply nested states.</p>
 <p>In another post we'll dive deep into how I use <em>UI-Router</em> in the OSS blog application I am building.</p>
 <p>Before I forget, take a look at the following links for deep documentation behind UI-Router!</p>
@@ -166,3 +174,6 @@ For instance, suppose you have a standard view page with a navigation bar, sideb
     <li><a href="https://github.com/angular/router">Preliminary Angular 2 Router (<em>currently the build is failing)</em></a></li>
 </ul>
 
+</div>
+<br>
+<br>
