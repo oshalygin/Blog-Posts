@@ -1,13 +1,15 @@
 <br />
 <div>
-<p>Proper routing in your Single Page Application(<em>SPA</em>) is integral to a positive UX (User Experience).  The applications that developers are building these days have multiple views, sections, and most importantly reusable components for rapid development and consistent delivery.</p>
+<p>Proper routing in your Single Page Application(<em>SPA</em>) is integral to good UX (User Experience).  The applications that developers are building these days have multiple views, sections, and most importantly reusable components for rapid development and consistent delivery.</p>
 </div>
 <br>
 <div>
     <h4>Routing</h4>
-    <p>So far I've we've talking about routing, and isn't routing typically directly related to the site URL?  Well no, it doesn't have to be, and unfortunately the initial implementation of the Angular Router followed that convention.</p>
-    <p><strong>ngRoute</strong> was the first iteration by the Angular team which was eventually removed from the core framework sometime around Angular 1.2.  If you want to use the Angular Router v1, you'll have to download the package exclusively and inject it via <em>"ngRoute"</em>.</p>
-    <p>The router has a straight forward implementation, map the URL to specific JavaScript code that is ran when the URL changed.  All of this to preserve the back button functionality</p>
+    <p>Isn't routing typically directly related to the site URL?  Well no, it doesn't have to be, and unfortunately the initial implementation of the Angular Router followed this convention.</p>
+    <br>
+    <p><code>ngRoute</code> was the first iteration by the Angular team which was eventually removed from the core framework sometime around Angular 1.2.  If you want to use the Angular Router v1, you'll have to download the package exclusively and inject it via <em>"ngRoute"</em>.</p>
+    <br>
+    <p><code>ngRoute</code> has a straight forward implementation, map the URL to specific JavaScript code that is executed when the URL changes.  All of this to preserve the back button functionality...</p>
 
 </div>
 <br>
@@ -21,7 +23,7 @@
 <h4>Issues associated with ngRoute</h4>
 <p>The primary issue with the ngRoute implementation is that it ultimately focuses on the URL!  The URL is the dominant force which determines where you are in the application.  This is the reason why you can only have a single <code>ng-view</code> directive on a page at a time.</p>
 
-<p>The handicap here is forcing you to build all of the potentially reusable components into a single view and then using directives such as <code>ng-include</code> as a workaround when you need to nest or have multiple views.  Things can get even hairier when you start having <code>ng-hide</code> and <code>ng-show</code> directives everywhere... </p>
+<p>The handicap here is forcing you to build all of the potentially reusable components into a single view and then using directives such as <code>ng-include</code> as a workaround when you need to nest your views.  Things can get even hairier when you start having <code>ng-hide</code> and <code>ng-show</code> directives everywhere... </p>
     </p>
 </div>
 
@@ -59,6 +61,11 @@
 <br>
 </div>
 <div>
+<h4>Configuring States</h4>
+<p>Let's dive into the state configuration:</p>
+</div>
+<br>
+<div>
 <pre class="prettyprint">
 app.module("main")
     .config(configuration);
@@ -83,17 +90,18 @@ function configuration($stateProvider) {
 <br>
 </div>
 <div>
-<p>The <em>State</em> defines the UI with a controller and view.  A state can have parent/child hierarchy which allows for nesting and multiple views, which leads us to the major features behind UI-Router.</p>
+<p>The <em>State</em> defines the UI with a controller and view.  A state can have a parent/child hierarchy which allows for nesting and multiple views, which leads us to the major features behind UI-Router.</p>
 <ul>
     <li><strong>Nested Views:  </strong>Allows you to define the state hierarchy with <em>dot notation</em> or the parent parameter.  The power here is SRP (Single Responsibility Principle) which allows you to separate various views to their own controllers.  </li>
-    <li><strong>Multiple Named Views:  Allows you to have multiple named views within a single view that point to different states.</strong></li>
+    <li><strong>Multiple Named Views: </strong> Allows you to have multiple named views within a view, which point point to different views.</li>
 </ul>
 
 </div>
 <br>
 <div>
-<h4>Nested Views In Depth</h4>
-<p>With the traditional Angular router, <strong>ngRoute</strong>, you're defeated by being forced to navigate to other views when you want to show related model information.  Sure you can get around this by strategies such as <code>ng-hide</code> <code>ng-show</code>, and <code>ng-include</code> but these are not maintainable solutions.  One controller will have to handle all of the logic or do intricate handoffs...</p>
+<h4>Nested Views</h4>
+<p>With the traditional Angular router, <strong>ngRoute</strong>, you're already defeated by being forced to navigate to other views when you want to show related model information.</p>
+<p> Sure you can get around this by strategies such as <code>ng-hide</code> <code>ng-show</code>, and <code>ng-include</code> but these are not maintainable solutions.  One controller will have to handle all of the logic or do intricate handoffs...</p>
 <p>Here is an example of a parent/child hierarchy:</p>
 </div>
 <div>
@@ -121,7 +129,7 @@ $stateProvider
 </div>
 <br>
 <div>
-   <p>Note that a parent state must <strong>exist</strong>.  If you specify a child state with dot notation such as "post.tagList", <em>tagList</em> will never activate unless a <em>post</em> state is defined.</p>
+   <p>Note that a parent state must <strong>exist</strong>!!  If you specify a child state with dot notation such as <code> "post.tagList"</code>, <em>tagList</em> will never activate unless a <code>post</code> state is defined.</p>
 </div>
 <br>
 <div class="text-center">
@@ -132,7 +140,7 @@ $stateProvider
 <h4>Multiple Named Views</h4>
 <p>Reusable, modular and maintainable code should be your goal when designing modern web applications.  <em>UI-Router</em> enables you to separate your states into multiple named views which you can inject with specific state names.</p>
 <p>
-For instance, suppose you have a standard view page with a navigation bar, sidebar, a footer and maybe a few tabs in the center of the page.  The center page may change based on user interaction, do you want to navigate to a whole new view and re-render the navbar and sidebar?  No, you want to reuse those components and the logic behind the scenes.
+For instance, suppose you have a standard view page with a filters bar, tabledata graph, a pie chart and maybe other sub-views such as the header and footer.  The center page may change based on user interaction, do you want to navigate to a whole new view and re-render the navbar and sidebar?  No, you want to reuse those components and the logic behind the scenes.
 </p>
 </div>
 <br>
@@ -140,8 +148,10 @@ For instance, suppose you have a standard view page with a navigation bar, sideb
     <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/a9ddba52-38bd-4f93-b0a8-0db8e0f5bd9c_original.png" alt="multiple named views angular ui" style="border:0" width="500" text-align="center" />
 </div>
 <br>
-
-
+<div>
+<p>HTML markup to locate your named views:</p>
+</div>
+<br>
 <div>
     <pre class="prettyprint">
 
@@ -150,6 +160,10 @@ For instance, suppose you have a standard view page with a navigation bar, sideb
     &lt;div ui-view="graph"&gt;&lt;/div&gt;
 
     </pre>
+</div>
+<br>
+<div>
+<p>State configuration for your named views:</p>
 </div>
 <br>
 <div>
@@ -167,7 +181,9 @@ For instance, suppose you have a standard view page with a navigation bar, sideb
 <div>
 <p>UI-Router gives us the power to have parallel views that can reference previous states within deeply nested states.</p>
 <p>In another post we'll dive deep into how I use <em>UI-Router</em> in the OSS blog application I am building.</p>
-<p>Before I forget, take a look at the following links for deep documentation behind UI-Router!</p>
+<br>
+<h4>Other Resources</h4>
+<p>Take a look at the following links for deep documentation behind UI-Router!</p>
 <ul>
     <li><a href="https://github.com/angular-ui/ui-router">UI Router GitHub Source</a></li>
     <li><a href="http://angular-ui.github.io/ui-router/site/#/api/ui.router">UI Router Documentation</a></li>
