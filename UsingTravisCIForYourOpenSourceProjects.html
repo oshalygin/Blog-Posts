@@ -1,7 +1,7 @@
-<br />
+<br/>
 
 <p>
-    In this post we will cover the benefits of integrating your Open Source Project with <em>Travis CI</em>. We will also dive into the configuration hooks that will enable you to leverage a <em>continuous integration</em> pipeline.
+    In this post we will cover the benefits of integrating your Open Source Project with <em>Travis CI</em>.  We will also dive into the configuration hooks that will enable you to leverage a <em>continuous integration</em> pipeline.
 </p>
 <p>You may have never heard of Continuous Integration or why you should start employing this in your project, but don't worry, we'll cover the basics behind continuous integration as we dive into TravisCI. </p>
 <p>After reading this post, you'll see how simple it is to setup a CI environment on all of your projects and start reaping the benefits of higher quality code and rapid feedback!</p>
@@ -9,54 +9,54 @@
 <br>
 <div class="text-center">
     <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/28d9c8b3-bada-4fdb-88bc-18e9fc4f284c_original.png"
-         alt="Travis CI Logo" style="border: 0" width="300" text-align="center" />
+         alt="Travis CI Logo" style="border: 0" width="300" text-align="center"/>
 </div>
 <br>
 
-<h4>What is Travis CI and Why Should I Care?</h4>
-<p>Have you ever wondered what those shiny "Build Failing" or "Build Passing" status images were on GitHub projects?</p>
-<p>These are Travis CI embedded status image shows anyone who is about to clone or fork the project that the current status.</p>
-
-<br>
-<div class="text-center">
-    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/ab48907f-9a28-4c19-9b71-37e25cc26018_original.png"
-         alt="Travis CI passing status" style="border: 0" width="100" text-align="center" />
-</div>
-<br>
-
-<p>
-    <em>What Travis CI allows developers is the ability to tie in their unit, integration and acceptance tests along with the build into a continuous integration environment that is ran on every single code commit.</em>
-</p>
-<p>Rapid feedback is key in development and that is the true essence of continuous integration and Travis CI. But before I butcher their mission statement, how about we get it from the horses mouth? Here are the goals behind the Travis CI team: </p>
-<ul>
-    <li>Allows open-source projects to effortlessly register their GitHub repository and have their test suites run after pushes.</li>
-    <li>Allows users to contribute build capacity by connecting a machine that runs Travis workers and VMs they use on their underused servers.</li>
-    <li>With Travis CI our vision is to become for builds (i.e. tests, for starters) what services like rubygems.org or Maven Central are for distribution of libraries.</li>
-    <li>We strive to build a rock solid, but dead-easy to use open-source continuous integration service for the open source community.</li>
-</ul>
-<br>
 <div>
     <h4>What is Continuous Integration?</h4>
+    <p>Continuous Integration is nothing more than a practice where numerous developers continually contribute their code to a shared pipeline to minimize integration issues and rapidly review the quality of their code.</p>
     <p>
-        Continuous Integration is nothing more than a practice where numerous developers continually contribute their code to a shared pipeline to minimize integration issues.
+        Heralded by the XP(Extreme Programming) community, continuous integration has become widely popular amongst companies embracing modern SDLC practices.
     </p>
     <p>
-        Heralded by the XP(Extreme Programming) community, it's become widely popular amongst companies embracing modern SDLC practices.
-    </p>
-    <p>
-        Do I need to use Travis-CI? No, but the other commercially available products are considerably lengthier to install and take advantage of. For instance, the major player in the scene is <strong>Jenkins</strong>, followed closely by <strong>Team City</strong>. Neither of these are going to be a sub 1hr task, whereas Travis CI can be finished in a matter of 15 minutes.
+        Do I need to use Travis-CI? No, but the other commercially available products are considerably lengthier to setup and take advantage of.  For instance, the major player in the scene are <strong>Jenkins</strong>, <strong>Team City</strong>, and <strong>Bamboo</strong>.  Neither of these are going to be a sub 1hr task, whereas Travis CI can be building and delivering feedback in a matter of 15 minutes.
     </p>
 </div>
 
 <br>
 <div>
     <h4>Continuous Integration Best Practices</h4>
-    <p>These are a basic set of best practices behind Continuous Integration. I won't dive in depth on each one until a future post, but if you've been a developer for any length of time, you'll understand the value of each:</p>
+    <p>These are a basic set of best practices behind Continuous Integration.  I won't dive in depth on each one until a future post, but if you've been a developer for any length of time, you'll be able to appreciate the value of each:</p>
     <ul>
-        <li><strong>Maintain a code repository:</strong> If you're not using some form of source control, you're living in the stone ages and you won't benefit from CI, let alone Travis CI. If you're one these developers, go to GitHub.com ASAP and start reading!</li>
-        <li><strong>Automate the build:</strong> There are many tools to accomplish this such as my favorite(<a href="https://github.com/psake/psake">psake</a></li>
-        <li><strong>Automate the Tests:</strong> With every single build, all of the unit, integration and acceptance tests need to run automatically. I don't know about you, but I often forget to run all my tests before I push the changes, this helps catch issues.</li>
-        <li><strong>Commit to a main branch regularly:</strong> Nothing more absurd than various people working on their own branch only to commit 3 weeks later to the main and everything breaks. Remember, you want to catch integration issues early, so the team should be committing to a central source regularly(preferably daily).</li>
+        <li><strong>Maintain a code repository:</strong>  If you're not using some form of source control, you're living in the stone ages and you won't benefit from CI, let alone Travis CI.  Go to, scratch that, <em>RUN</em> to GitHub or BitBucket and create an account!</li>
+        <li><strong>Automate the Build:</strong>  There are many tools to accomplish this task.  Have a look at my favorite powershell script tool:  <a href="https://github.com/psake/psake">psake</a></li>
+        <li><strong>Automate Tests:</strong>  With every build, all of the unit, integration and acceptance tests need to run automatically.  I don't know about you, but I sometimes forget to run all my tests before I push the changes.  I run my tests, but sometimes I forget to run all of the tests in the project, this helps catch that problem.</li>
+        <li><strong>Commit to a main branch regularly:</strong>  Nothing more absurd than various people working on their own branch only to commit 3 weeks later to the main with everything breaks.  Remember, you want to catch integration issues early, so the team should be committing to a central source regularly(preferably daily).</li>
+    </ul>
+    <br>
+</div>
+<div>
+    <h4>What is Travis CI and Why Should I Care?</h4>
+    <p>Have you ever wondered what those shiny "Build Failing" or "Build Passing" status images were on GitHub projects?</p>
+    <p>These are Travis CI embedded status images. They shows team members and other views of your project what the current test and build status is. Anyone who is about to clone or fork your repo ought to know where the project currently stands!</p>
+
+    <br>
+    <div class="text-center">
+        <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/ab48907f-9a28-4c19-9b71-37e25cc26018_original.png"
+             alt="Travis CI passing status" style="border: 0" width="100" text-align="center"/>
+    </div>
+    <br>
+
+    <p>
+        <em>The power that Travis CI gives developers is the ability to tie-in unit, integration and acceptance tests along with the build into a continuous integration environment that is ran on every single code push to the repository.</em>
+    </p>
+    <p>Rapid feedback is key in development and the true essence of Travis CI. Before I butcher the TravisCI mission statement, how about we get it from the horses mouth? Here are the goals that the Travis CI guys aim to accomplish: </p>
+    <ul>
+        <li>Allow open-source projects to effortlessly register their GitHub repository and have their test suites run after pushes.</li>
+        <li>Allow users to contribute build capacity by connecting a machine that runs Travis workers and VMs they use on their underused servers.</li>
+        <li>The vision is to become for builds (i.e. tests, for starters) what services like rubygems.org or Maven Central are for distribution of libraries.</li>
+        <li>To strive to build a rock solid, but dead-easy to use open-source continuous integration service for the open source community.</li>
     </ul>
 </div>
 <br>
@@ -66,31 +66,31 @@
     <p>
         Step one, register on <a href="https://travis-ci.org/">https://travis-ci.org/</a>.
     </p>
-    <p>Through the registration process you're going to need to specify your GitHub profile and allow Travis to start polling for data.</p>
-    <p>Once you've completed registration, navigate to your account from the top right menu</p>
+    <p>Throughout the registration process you're going to need to specify your GitHub profile and allow Travis to start polling for commits.</p>
+    <p>Once you've completed registration, navigate to your account from the top right menu:</p>
     <br>
     <div class="text-center">
         <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/34afd60e-3f31-44f1-8b0f-ea910cf1843e_original.png"
-             alt="travis ci account page" style="border: 0" width="500" text-align="center" />
+             alt="travis ci account page" style="border: 0" width="500" text-align="center"/>
     </div>
     <br>
-    <p>You'll notice I don't tie in many of my projects into Travis CI just yet, but that's because a lot of big side projects I'm working on are still under the hood at BitBucket private repos. Either way, click the box to enable your repo to be tracked by Travis CI.</p>
+    <p>You'll notice I don't integratate all of my projects into Travis CI.  This isn't because I dislike TravisCI, but because a lot of big side projects I'm working on are still under the hood in private BitBucket private. Either way I'm going to be moving a large portion of my OSS work to TravisCI in the near future.  Click the box to enable your repo to be tracked by Travis CI:</p>
     <br>
     <div class="text-center">
         <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/d17d6888-565d-4951-ad58-dd0aecd0b99a_original.png"
-             alt="travis ci repository toggle" style="border: 0" width="300" text-align="center" />
+             alt="travis ci repository toggle" style="border: 0" width="300" text-align="center"/>
     </div>
     <br>
-    <p>That's it for Travis CI configuration page, now we need to dive into our project!</p>
+    <p>That's it for Travis CI configuration!  Now we need to dive into our project configuration!</p>
 </div>
 <br>
 <div>
-    <h4>.travis.yml File Configuration</h4>
+    <h4>.travis.yml file Configuration</h4>
     <p>
-        You'll use a <strong>.travis.yml</strong> file to configure your build, and execute any tests before or after the build.
+        You'll use a <strong>.travis.yml</strong> file to configure your build and execute any tests before or after the build.  For instance, if you're running a bunch of JavaScript jasmine tests, you don't actually need the csharp build to run first.  Remember, rapid feedback, if the JavaScript tests fail you want to stop the build and notify the developers!
     </p>
     <p>
-        <em>Note:</em> it is imperative that you tie your test framework runner into configuration, otherwise all you'll do is build!
+        <em>Note:</em> it is imperative that you configure your test framework runner into Travis CI, otherwise all you'll do is build!
     </p>
     <p>
         Here is an example of a <strong>.travis.yml</strong> file that the gents at Travis CI provide:
@@ -107,7 +107,7 @@
         # script: bundle exec rspec spec
     </pre>
     <br>
-    <p>Now I'm not a Ruby developer, so I need an example of a .NET or Node project. Thankfully, they're supported so let's look at some examples and break down each section:</p>
+    <p>I'm not a Ruby developer, so I need an example of a .NET or Node project. Thankfully, they're are plenty of examples, so let's have a look and break down each section:</p>
     <br>
     <pre class="prettyprint">
         language: csharp
@@ -124,7 +124,7 @@
         - "iojs"
     </pre>
     <br>
-    <p>How do I actually run my tests with in node? Well you can leverage(and should already be using) GulpJS or Grunt. All you need to do to run your gulp tasks is the following configuration step:</p>
+    <p>How do I actually run my tests with a JavaScript project or Node?  Well you can leverage(and should already be using) GulpJS or Grunt.  All you need to do to run your gulp tasks in the following configuration step:</p>
     <br>
     <pre class="prettyprint">
         before_script:
@@ -133,7 +133,7 @@
     </pre>
     <br>
     <p>
-        Here is an example of my vNext(.NET/C#), AngularJS, Karma, Jasmine and xUnit(<em>still working on integration with vNext</em>) configuration.
+        Here is an example of my vNext(.NET/C#), AngularJS, Karma, Jasmine and xUnit(<em>still working on integration with vNext</em>) configuration:
     </p>
     <br>
     <pre class="prettyprint">
@@ -151,18 +151,17 @@
         This project first installs(globally) bower, gulp, phantomjs, karma and typescript(for transpilation). Then we navigate to the WEB project and resolve all bower and npm dependencies. After that, we run two gulp tasks, <code>gulp deploy</code> and <code>gulp run-jtests</code>.
     </p>
     <p>
-        I'm still refactoring this file and if you visit my GitHub projects you'll see plenty of activity and progress on this repo. <a href="https://github.com/oshalygin/SolutionPub">SolutionPub GitHub repository</a>.
+        <em>Note:</em>  I'm still refactoring this file and if you visit my GitHub projects you'll see plenty of activity and progress on this repo. <a href="https://github.com/oshalygin/SolutionPub">SolutionPub GitHub repository</a>.
     </p>
     <p>
-        Note that your <strong>.travis.yml</strong> file needs to be at the root of your repository and you'll need to CD into various projects.
+        <strong>NOTE:</strong>  Your <em>.travis.yml</em> file needs to be at the root of your repository and you'll need to CD into various projects.
     </p>
 </div>
 <br>
 <div>
-    <h4>Validating your .travis.yml File</h4>
+    <h4>Validating the .travis.yml file</h4>
     <p>This is going to be a crucial step. If you don't trust me, just go ahead and kick off your first Travis CI build and enjoy the red, haha.</p>
-    <p>
-        The Travis CI team offers a neat linter that verifies the details of your <strong>travis.yml</strong> file. Navigate to the following link: <span>
+    <p>Travis CI offers a neat linter that verifies the details of your <strong>travis.yml</strong> file. Navigate to the following link: <span>
             <a href="http://lint.travis-ci.org/">
                 Travis WebLint
             </a>
@@ -172,14 +171,14 @@
     <br>
     <div class="text-center">
         <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/6e13b81d-99ce-49fb-a428-3811788c5e43_original.png"
-             alt="travis web linter yml" style="border: 0" width="400" text-align="center" />
+             alt="travis web linter yml" style="border: 0" width="400" text-align="center"/>
     </div>
     <br>
-    <p>Simply copy paste your .travis.yml contents into the textarea input and confirm that you've set things up appropriately. Here is an example of a valid response:</p>
+    <p>Simply copy paste your .travis.yml contents into the textarea and confirm that you've set things up appropriately. Here is an example of a valid response:</p>
     <br>
     <div class="text-center">
         <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/5252ec18-f1c0-4eaf-a8d1-491eed1c4078_original.png"
-             alt="travis web valid linter yml response" style="border: 0" width="400" text-align="center" />
+             alt="travis web valid linter yml response" style="border: 0" width="400" text-align="center"/>
     </div>
     <br>
     <p>
@@ -188,13 +187,13 @@
     <br>
     <div class="text-center">
         <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/49c9d958-199a-47c8-b0e1-b6a9bc399198_original.png"
-             alt="travis ci csharp community supported" style="border: 0" width="400" text-align="center" />
+             alt="travis ci csharp community supported" style="border: 0" width="400" text-align="center"/>
     </div>
     <br>
-    <p>When running the web linter, you'll get an error for an invalid language(csharp). Ignore this and address any other issues!</p>
+    <p>When running the web linter, you'll get an error for an invalid language(csharp). Ignore this and address the other issues!</p>
 
 </div>
-<br />
+<br/>
 <div>
     <h4>Kicking off Travis CI for your Projects</h4>
     <p>You've done all the hard, so how do you monitor your builds and kick them off?</p>
@@ -202,7 +201,7 @@
     <br>
     <div class="text-center">
         <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/96793125-9bc7-4d1a-86c6-f7c90f4630e1_original.png"
-             alt="travis ci repository build configuration" style="border: 0" width="300" text-align="center" />
+             alt="travis ci repository build configuration" style="border: 0" width="300" text-align="center"/>
     </div>
     <br>
     <p>
@@ -211,26 +210,26 @@
     <br>
     <div class="text-center">
         <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/d474566c-c92c-4e41-b8d1-63ee975b5e96_original.png"
-             alt="travis ci repository build configuration" style="border: 0" width="400" text-align="center" />
+             alt="travis ci repository build configuration" style="border: 0" width="400" text-align="center"/>
     </div>
     <br>
 
 </div>
-<br />
+<br/>
 <div>
     <h4>The Fun Part - Status Badge</h4>
     <p>
-        Now that you've done all the hard work, you'll want to visibly see the status of your repository. This is where you add your status icon.
+        Time to reap some cool rewards for your efforts...the ability to visibly see the status of your repository!
     </p>
     <p>Navigate to your repository in Travis-CI.</p>
     <p>
-        You'll see your build icon at the top right of your repository, click it grab the URL which will be used in your markdown page, <strong>README.md</strong>.
+        You'll see your build icon at the top right of your repository, click it to grab the URL which will be used in your markdown page, <strong>README.md</strong>.
     </p>
 
     <br>
     <div class="text-center">
         <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/f7c7e0d0-2787-47a9-93c3-178a62ed45b5_original.jpg"
-             alt="travis ci status icon" style="border: 0" width="400" text-align="center" />
+             alt="travis ci status icon" style="border: 0" width="400" text-align="center"/>
     </div>
     <br>
     <p>
@@ -242,6 +241,11 @@
 </div>
 <br>
 <div>
-    <p>That's it for now, happy integrating!</p>
+    <p>Happy integrating!</p>
 </div>
-<br>
+    <br>
+    <div class="text-center">
+        <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/715f1dc7-3cc9-4ac4-92e2-a1abacd31992_original.png"
+             alt="Travis CI all the projects" style="border: 0" width="300" text-align="center"/>
+    </div>
+    <br>
