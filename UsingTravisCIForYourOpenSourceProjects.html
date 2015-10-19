@@ -1,12 +1,29 @@
-<br/>
+<br />
 
 <p>
-    Today we'll cover the benefits of integrating your Open Source project with <em>Travis CI</em> and the simple configuration hooks that are necessary to move your pipeline into the future.
+    In this post we will cover the benefits of integrating your Open Source Project with <em>Travis CI</em>. We will also dive into the configuration hooks that will enable you to leverage a <em>continuous integration</em> pipeline.
 </p>
+<p>You may have never heard of Continuous Integration or why you should start employing this in your project, but don't worry, we'll cover the basics behind continuous integration as we dive into TravisCI. </p>
+<p>After reading this post, you'll see how simple it is to setup a CI environment on all of your projects and start reaping the benefits of higher quality code and rapid feedback!</p>
+
+<br>
+<div class="text-center">
+    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/28d9c8b3-bada-4fdb-88bc-18e9fc4f284c_original.png"
+         alt="Travis CI Logo" style="border: 0" width="300" text-align="center" />
+</div>
+<br>
 
 <h4>What is Travis CI and Why Should I Care?</h4>
 <p>Have you ever wondered what those shiny "Build Failing" or "Build Passing" status images were on GitHub projects?</p>
 <p>These are Travis CI embedded status image shows anyone who is about to clone or fork the project that the current status.</p>
+
+<br>
+<div class="text-center">
+    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/ab48907f-9a28-4c19-9b71-37e25cc26018_original.png"
+         alt="Travis CI passing status" style="border: 0" width="100" text-align="center" />
+</div>
+<br>
+
 <p>
     <em>What Travis CI allows developers is the ability to tie in their unit, integration and acceptance tests along with the build into a continuous integration environment that is ran on every single code commit.</em>
 </p>
@@ -54,14 +71,14 @@
     <br>
     <div class="text-center">
         <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/34afd60e-3f31-44f1-8b0f-ea910cf1843e_original.png"
-             alt="travis ci account page" style="border: 0" width="500" text-align="center"/>
+             alt="travis ci account page" style="border: 0" width="500" text-align="center" />
     </div>
     <br>
     <p>You'll notice I don't tie in many of my projects into Travis CI just yet, but that's because a lot of big side projects I'm working on are still under the hood at BitBucket private repos. Either way, click the box to enable your repo to be tracked by Travis CI.</p>
     <br>
     <div class="text-center">
         <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/d17d6888-565d-4951-ad58-dd0aecd0b99a_original.png"
-             alt="travis ci repository toggle" style="border: 0" width="300" text-align="center"/>
+             alt="travis ci repository toggle" style="border: 0" width="300" text-align="center" />
     </div>
     <br>
     <p>That's it for Travis CI configuration page, now we need to dive into our project!</p>
@@ -129,7 +146,6 @@
         - npm install -g karma
         - npm install -g typescript
         script: cd src/SP.WEB && bower install && npm install && gulp deploy && gulp run-jtests
-
     </pre>
     <p>
         This project first installs(globally) bower, gulp, phantomjs, karma and typescript(for transpilation). Then we navigate to the WEB project and resolve all bower and npm dependencies. After that, we run two gulp tasks, <code>gulp deploy</code> and <code>gulp run-jtests</code>.
@@ -145,20 +161,25 @@
 <div>
     <h4>Validating your .travis.yml File</h4>
     <p>This is going to be a crucial step. If you don't trust me, just go ahead and kick off your first Travis CI build and enjoy the red, haha.</p>
-    <p>The Travis CI team offers a neat linter that verifies the details of your <strong>travis.yml</strong> file. Navigate to the following link: <span><a href="http://lint.travis-ci.org/">Travis WebLint
-</a></span></p>
+    <p>
+        The Travis CI team offers a neat linter that verifies the details of your <strong>travis.yml</strong> file. Navigate to the following link: <span>
+            <a href="http://lint.travis-ci.org/">
+                Travis WebLint
+            </a>
+        </span>
+    </p>
 
     <br>
     <div class="text-center">
         <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/6e13b81d-99ce-49fb-a428-3811788c5e43_original.png"
-             alt="travis web linter yml" style="border: 0" width="400" text-align="center"/>
+             alt="travis web linter yml" style="border: 0" width="400" text-align="center" />
     </div>
     <br>
     <p>Simply copy paste your .travis.yml contents into the textarea input and confirm that you've set things up appropriately. Here is an example of a valid response:</p>
     <br>
     <div class="text-center">
         <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/5252ec18-f1c0-4eaf-a8d1-491eed1c4078_original.png"
-             alt="travis web valid linter yml response" style="border: 0" width="400" text-align="center"/>
+             alt="travis web valid linter yml response" style="border: 0" width="400" text-align="center" />
     </div>
     <br>
     <p>
@@ -167,13 +188,13 @@
     <br>
     <div class="text-center">
         <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/49c9d958-199a-47c8-b0e1-b6a9bc399198_original.png"
-             alt="travis ci csharp community supported" style="border: 0" width="400" text-align="center"/>
+             alt="travis ci csharp community supported" style="border: 0" width="400" text-align="center" />
     </div>
     <br>
     <p>When running the web linter, you'll get an error for an invalid language(csharp). Ignore this and address any other issues!</p>
 
 </div>
-<br/>
+<br />
 <div>
     <h4>Kicking off Travis CI for your Projects</h4>
     <p>You've done all the hard, so how do you monitor your builds and kick them off?</p>
@@ -181,7 +202,7 @@
     <br>
     <div class="text-center">
         <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/96793125-9bc7-4d1a-86c6-f7c90f4630e1_original.png"
-             alt="travis ci repository build configuration" style="border: 0" width="300" text-align="center"/>
+             alt="travis ci repository build configuration" style="border: 0" width="300" text-align="center" />
     </div>
     <br>
     <p>
@@ -190,12 +211,12 @@
     <br>
     <div class="text-center">
         <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/d474566c-c92c-4e41-b8d1-63ee975b5e96_original.png"
-             alt="travis ci repository build configuration" style="border: 0" width="400" text-align="center"/>
+             alt="travis ci repository build configuration" style="border: 0" width="400" text-align="center" />
     </div>
     <br>
 
 </div>
-<br/>
+<br />
 <div>
     <h4>The Fun Part - Status Badge</h4>
     <p>
@@ -209,7 +230,7 @@
     <br>
     <div class="text-center">
         <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/f7c7e0d0-2787-47a9-93c3-178a62ed45b5_original.jpg"
-             alt="travis ci status icon" style="border: 0" width="400" text-align="center"/>
+             alt="travis ci status icon" style="border: 0" width="400" text-align="center" />
     </div>
     <br>
     <p>
