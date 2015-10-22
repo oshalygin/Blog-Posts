@@ -1,0 +1,104 @@
+<br/>
+
+<p>
+    When you first start working with a large monolithic framework like AngularJS, you may not want to or care to understand the innner workings of the framework.  Once you start to get more comfortable, you start to wonder how things actually work under the hood and how you can write better code.  If you don't yet understand the digest loop, don't worry, I'll cover it in great detail shortly.
+</p>
+<h4>Two Way Databinding - Wizardry</h4>
+<p>
+    To truly understand how two way databinding works with AngularJS we need to start collecting a whole array of concepts and tie them together.  I'll warn you, if you aren't already familiar with JavaScript or the basics behind AngularJS, you're going to get lost real fast.  I urge you to review some of the posts on my blog and the AngularJS site as a prerequisite.
+</p>
+<br>
+<div>
+<h4>Browser Event Handling</h4>
+<p>
+    Your browser is constantly executing callbacks based on various events such as <code>click</code>, <code>keypress</code>, <code>focus</code>, <code>change</code>, <code>scroll</code>, <code>blur</code> events, etc.
+</p>
+<p>You can tie into these events via JavaScript <code>addEventListener</code> function.  Here is an example:</p>
+<br>
+<pre class="prettyprint">
+
+    function modifyText(newValue) {
+        var someRandomPageElement = document.getElementById("someRandomPageElement");
+        someRandomPageElement.firstChild.nodeValue = newValue;
+    }
+
+    var element = document.getElementById("someOuterDivElement");
+
+    element.addEventListener("click", function eventHandler() {
+        modifyText("bar")
+    });
+</pre>
+<br>
+    <p>There are many more JavaScript methods that you can use to kick off events, attach events and set listeners.  The short list as follows:</p>
+    <ul>
+        <li><em>EventTarget.addEventListener()</em></li>
+        <li><em>EventTarget.detachEvent()</em></li>
+        <li><em>EventTarget.dispatchEvent()</em></li>
+        <li><em>EventTarget.fireEvent()</em></li>
+        <li><em>EventTarget.removeEventListener()</em></li>
+    </ul>
+</div>
+<br>
+<div>
+    <h4>$digest Loop</h4>
+    <p>
+        The <code>Angular context</code> includes the Angular event loop, which ties direclty into the above browser event flow.  There are various components to the Angular event loop, and we'll start the discussion with <code>$watch</code>.
+    </p>
+</div>
+<div>
+    <h4>$watch & the $watch List</h4>
+    <p>
+        Every model binding on the UI within the Angular context is given the $watch method and is added to the <code>$watch List</code>.  The list of <code>$watch</code> functions are resolved during the $digest loop via <em>dirty checking</em>.
+    </p>
+    <pre class="prettyprint">
+        &lt;textarea ng-model="lifeStory" rows="10" cols="50"&gt;
+
+        &lt;/textarea&gt;
+
+        &lt;span&gt;{{lifeStory}}&lt;/span&gt;
+    </pre>
+<br>
+<p>In the above code there was a single <code>$watch</code> function that was registered with the $digest loop whcih will be resolved.</p>
+<p>Here is an inside look into the <code>$watch</code> function that you can use yourself:</p>
+<pre class="prettyprint">
+    //$watch(watchExpression, listener, [objectEquality])
+
+    scope.numberOfTimesExecuted = 0;
+    scope.EverInitialized = false;
+
+    scope.$watch("lifeStory", function(newValue, oldValue) {
+        if(newValue ==== oldValue){
+            scope.EverInitialized = true;
+        }
+        scope.numberOfTimesExecuted = scope.numberOfTimesExecuted + 1;
+});
+</pre>
+<br>
+<p>You don't need to setup any of this manually,  all the heavy lifting has already been done for you by the Angular framework.  But how does Angular know when to check for changes and how to update the bindings?  That's where the concept of <em>dirty checking</em> comes into play and what we'll cover next.</p>
+<br>
+</div>
+<div>
+    <h4>Dirty Checking</h4>
+    <p>We know that the <code>Angular context</code> keeps track of all of the UI bindings with a $watch function and adds it to the $watch list.  <em>Dirty Checking</em> in essence walks down the $watch list and compares the <code>oldValue</code> to the <code>newValue</code>.</p>
+    <p>If there are no changes to the specific binding being watched, we proceed by moving on to the next item in the $watch list.  If there is a change, we update the value and continue.</p>
+    <p>So once we traversed all of the $watch functions in the $watch list, we are done with the loop?  No, we go through the list <em>ONE</em> more time and verify that nothing has changed.  We do this because there could have been a change to one of the values when another $watch item updated it.  We continue through this loop until no changes are present.</p>
+    <p>If we go through this loop more than 10 times, the application will die.  This is necessary to stop you from blowing up the browser by going into an infinite loop. </p>
+</div>
+<div>
+    <h4>Dirty Checking 24/7?</h4>
+    <p></p>
+</div>
+
+
+    <br>
+    <div class="text-center">
+        <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/715f1dc7-3cc9-4ac4-92e2-a1abacd31992_original.png"
+             alt="Travis CI all the projects" style="border: 0" width="300" text-align="center"/>
+    </div>
+    <br>
+<br>
+<div class="text-center">
+    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/28d9c8b3-bada-4fdb-88bc-18e9fc4f284c_original.png"
+         alt="Travis CI Logo" style="border: 0" width="300" text-align="center"/>
+</div>
+<br>
