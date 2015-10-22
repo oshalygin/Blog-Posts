@@ -1,12 +1,12 @@
 
 <p>
-    When you first start working with a large monolithic framework like AngularJS, you may not want to or care to understand the innner workings of the framework.  Once you start to get more comfortable, you'll naturally wonder how things <em>actually</em> work under the hood and how you can write better code.</p>
+    When you first start working with a large monolithic framework like AngularJS, you may not want to or care to understand the inner workings of the framework.  Once you start to get more comfortable, you'll naturally wonder how things <em>actually</em> work under the hood and how you can write better code.</p>
 
     <p>If you have yet to understand the $digest loop, don't worry, I'll cover it in great detail in this post
 </p>
-<h4>Two Way Databinding - The Wizardry</h4>
+<h4>Two Way Data-binding - The Wizardry</h4>
 <p>
-    To truly understand how two way databinding works within AngularJS, we need to start collecting a whole array of concepts and tie them together.
+    To truly understand how two way data-binding works within AngularJS, we need to start collecting a whole array of concepts and tie them together.
     </p>
     <p>I'll warn you, if you aren't already familiar with JavaScript or the basics behind AngularJS, you might have some trouble following along.  As a prerequisite, I urge you to review the fundamental posts on my blog and the AngularJS documentation.
 </p>
@@ -41,7 +41,7 @@
 </pre>
 <br>
 
-<p>Nothing magical here, just plain ol JavaScript.</p>
+<p>Nothing magical here, just plain ol' JavaScript.</p>
 
     <p>There are many more JavaScript methods that you can use to kick off events, attach events and set listeners.  The short list as follows:</p>
     <ul>
@@ -56,7 +56,7 @@
 <div>
     <h4>$digest Loop</h4>
     <p>
-        The <code>Angular context</code> includes the Angular event loop, which ties direclty into the above browser event flow.  There are various components to the Angular event loop, and we'll start the discussion with <code>$watch</code> and <code>$watch list</code>.
+        The <code>Angular context</code> includes the Angular event loop, which ties directly into the above browser event flow.  There are various components to the Angular event loop, and we'll start the discussion with <code>$watch</code> and <code>$watch list</code>.
     </p>
 
     <br>
@@ -206,7 +206,7 @@
     <p>Along with the $watch list, the the $digest loop runs through the <code>$asyncQueue</code>.  We can tie functions or strings into <code>$evalAsync</code> to execute after the function that scheduled the evaluation.</p>
 
 </div>
-<p>Hopefully that gets you a little more familiar with the $digest loop and helps clear up some of the magic behind the scenes.  You're now one step closer to trully understanding AngularJS!</p>
+<p>Hopefully that gets you a little more familiar with the $digest loop and helps clear up some of the magic behind the scenes.  You're now one step closer to truly understanding AngularJS!</p>
 <br>
 <div class="text-center">
     <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/211c739d-277d-4084-a858-abc40ad7c33d_original.jpg"
