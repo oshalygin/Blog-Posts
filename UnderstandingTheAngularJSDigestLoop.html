@@ -86,16 +86,92 @@
 </div>
 <div>
     <h4>Dirty Checking 24/7?</h4>
-    <p></p>
+    <p>No, not realy, but sort of.  Let's see what's happening with our previous example with a textarea and an submit button:</p>
+    <pre class="prettyprint">
+        &lt;textarea ng-model="lifeStory" rows="10" cols="50"&gt;
+
+        &lt;/textarea&gt;
+        &lt;span&gt;{{lifeStory}}&lt;/span&gt;
+        &lt;input type="submit" ng-click="activateReader()" value="blast off" /&gt;
+    </pre>
+
+<br>
+<p>The digest loop runs as you type in the textarea box.  Once you are done and the digest loop has ran through the $watch list(recall there is a final loop) and nothing has updated, it exits.</p>
+<p>
+    Remember how we talked about the browser event flow?  The <code>Angular context</code> ties directly into this flow and performs the digest loop.  So when a user clicks the bound button, is the digest loop executed?  <strong>Yes</strong>, but with a slight twist(<code>$apply()</code>) which we will cover shortly.
+</p>
 </div>
+<div>
+    <h4>$evalAsync List</h4>
+    <p>There is a key aspect that we forgot.  Actually, we didn't forget, it just seems much more appropriate to talk about it now that we covered the <em>"basics"</em></p>
+    <p>Along with the $watch list, the the $digest lopp runs through the <code>$asyncQueue</code>.  We can tie in functions or strings into <code>$evalAsync</code> to execute after the function that scheduled the evaluation.</p>
+
+</div>
+<div>
+    <h4>Using $apply()</h4>
+    <p>
+        Simply put, <code>$apply()</code> executes an expression inside Angular when the call site is outside of the Framework, think jQuery.  $apply() is necessary for DOM events, setTimeout, XHR(http), or any kind of 3rd party libraries that aren't part of Angular.
+    </p>
+    <p>
+        <code>$apply</code> can optionally take a function or string, and if you pass a function, it will be executed on the scope thats passed to the function.  For instance:
+    </p>
+    <pre class="prettyprint">
+        $scope.$apply(function(scope){
+            scope.lifeStory = "Once upon a time I woke up in a forrest..."
+        });
+    </pre>
+    <br>
+    <p>Calling <code>$scope.$apply()</code> forces a $digest loop.  Remember, if our third party library interacts with our page and some element that has a binding and the Angular context knows nothing about this interaction then there is no way for the $digest loop to run and update the other associated bindings!</p>
+    <p>
+        Almost every single Angular directive internally will call $apply() for us.  For instance, lets look at <code>ngClick</code>:
+    </p>
+    <pre class="prettyprint">
+//Source Code Above
+        forEach(
+  'click dblclick mousedown mouseup mouseover mouseout mousemove mouseenter mouseleave keydown keyup keypress submit focus blur copy cut paste'.split(' '),
+  function(eventName) {
+    var directiveName = directiveNormalize('ng-' + eventName);
+    ngEventDirectives[directiveName] = ['$parse', '$rootScope', function($parse, $rootScope) {
+      return {
+        restrict: 'A',
+        compile: function($element, attr) {
+          // We expose the powerful $event object on the scope that provides access to the Window,
+          // etc. that isn't protected by the fast paths in $parse.  We explicitly request better
+          // checks at the cost of speed since event handler expressions are not executed as
+          // frequently as regular change detection.
+          var fn = $parse(attr[directiveName], /* interceptorFn */ null, /* expensiveChecks */ true);
+          return function ngEventHandler(scope, element) {
+            element.on(eventName, function(event) {
+              var callback = function() {
+                fn(scope, {$event:event});
+              };
+              if (forceAsyncEvents[eventName] && $rootScope.$$phase) {
+                scope.$evalAsync(callback);
+              } else {
+                scope.$apply(callback);
+              }
+            });
+          };
+        }
+      };
+    }];
+  }
+);
+//Source Code Below
+    </pre>
+    <br>
+    <p><a href="https://github.com/angular/angular.js/blob/master/src/ng/directive/ngEventDirs.js#L3">Angular JS ngEvent Directives</a></p>
+    <p>Notice <code>$evalAsync</code> and <code>$apply</code> being called.</p>
+    <p class="text-red">Do not call $apply() in a controller because you will have a hell of a time testing that controller later, refactor this to a service that performs the logic for you.</p>
+</div>
+<p>Hopefully that gets you a little more familiar with the $digest loop and helps clear up some of the behind the scenes magic.  You're now one step closer to trully understanding AngularJS!</p>
 
 
-    <br>
-    <div class="text-center">
-        <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/715f1dc7-3cc9-4ac4-92e2-a1abacd31992_original.png"
-             alt="Travis CI all the projects" style="border: 0" width="300" text-align="center"/>
-    </div>
-    <br>
+
+
+
+
+
 <br>
 <div class="text-center">
     <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/28d9c8b3-bada-4fdb-88bc-18e9fc4f284c_original.png"
