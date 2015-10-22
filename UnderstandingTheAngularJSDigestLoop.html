@@ -4,6 +4,7 @@
 
     <p>If you have yet to understand the $digest loop, don't worry, I'll cover it in great detail in this post
 </p>
+<br>
 <h4>Two Way Data-binding - The Wizardry</h4>
 <p>
     To truly understand how two way data-binding works within AngularJS, we need to start collecting a whole array of concepts and tie them together.
@@ -14,15 +15,15 @@
 
 <br>
 <div class="text-center">
-    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/70ef99a1-3de2-448c-babb-0e4c0e42ad9f_original.jpg"
+    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/b74ab47e-52da-4c71-ba8c-716ba1c7f245_original.png"
          alt="Wizard lol" style="border: 0" width="400" text-align="center"/>
 </div>
 <br>
-
+<br>
 <div>
 <h4>Browser Event Handling</h4>
 <p>
-    Your browser is constantly executing callbacks based on various events such as <code>click</code>, <code>keypress</code>, <code>focus</code>, <code>change</code>, <code>scroll</code>, <code>blur</code> events, etc.
+    Your browser is constantly executing callbacks based on various events such as <code>click</code>, <code>keypress</code>, <code>focus</code>, <code>change</code>, <code>scroll</code>, and <code>blur</code> events, etc.
 </p>
 <p>You can tie into these events via JavaScript <code>addEventListener</code> function.  Here is an example:</p>
 <br>
@@ -43,7 +44,7 @@
 
 <p>Nothing magical here, just plain ol' JavaScript.</p>
 
-    <p>There are many more JavaScript methods that you can use to kick off events, attach events and set listeners.  The short list as follows:</p>
+    <p>There are many more JavaScript functions that you can use to kick off events, attach events and set listeners.  The short list as follows:</p>
     <ul>
         <li><em>EventTarget.addEventListener()</em></li>
         <li><em>EventTarget.detachEvent()</em></li>
@@ -56,7 +57,7 @@
 <div>
     <h4>$digest Loop</h4>
     <p>
-        The <code>Angular context</code> includes the Angular event loop, which ties directly into the above browser event flow.  There are various components to the Angular event loop, and we'll start the discussion with <code>$watch</code> and <code>$watch list</code>.
+        The <em>Angular context</em> includes the Angular event loop, which ties directly into the above browser event flow.  There are various components to the Angular event loop, and we'll start the discussion with <code>$watch</code> and <code>$watch list</code>.
     </p>
 
     <br>
@@ -69,13 +70,13 @@
 </div>
 <br>
 <div>
-    <h4>$watch & the $watch list</h4>
+    <h4>$watch and the $watch list</h4>
     <p>
-        Every model binding on the UI within the Angular context is given the $watch method and is added to the <code>$watch list</code>.  The list of <code>$watch</code> functions are resolved during the $digest loop via <em>dirty checking</em>.  The beauty here is that even if <code>$scope</code> does not have that property, it will still be registered with a $watch function and added to the $watch list.
+        Every model binding on the UI within the Angular context is given the $watch function and is added to the <code>$watch list</code>.  The list of <code>$watch</code> functions are resolved during the $digest loop via <em>dirty checking</em>.  The beauty here is that even if <code>$scope</code> does not have that property, it will still be registered with a $watch function and added to the $watch list.
     </p>
+<br>
     <pre class="prettyprint">
         &lt;textarea ng-model="lifeStory" rows="10" cols="50"&gt;
-
         &lt;/textarea&gt;
 
         &lt;span&gt;{{lifeStory}}&lt;/span&gt;
@@ -107,6 +108,12 @@
     <h4>Dirty Checking</h4>
     <p>We know that the <code>Angular context</code> keeps track of all of the UI bindings with a $watch function and adds it to the $watch list.  <em>Dirty Checking</em> in essence walks down the $watch list and compares the <code>oldValue</code> to the <code>newValue</code>.</p>
     <p>If there are no changes to the specific binding being watched, we proceed by moving on to the next item in the $watch list.  If there is a change, we update the value, then continue on.</p>
+    <br>
+    <div class="text-center">
+        <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/5ba21211-2d0d-4461-8376-29e7b8867193_original.jpg"
+            alt="digest loop by angularjs" style="border: 0" width="500" text-align="center"/>
+    </div>
+    <br>
     <p>So once we traversed all of the $watch functions in the $watch list, are we done with the $digest loop?  No, we go through the list <em>ONE</em> more time and verify that nothing has changed.  We do this because there could have been a change to one of the values when another $watch item updated it.  We continue through this loop until no changes are present in any of the values.</p>
     <p>If we go through this loop more than 10 times in a single $digest loop, the application will die.  This is necessary to stop you from blowing up the browser by going into an infinite loop. </p>
 </div>
@@ -114,9 +121,9 @@
 <div>
     <h4>Dirty Checking 24/7?</h4>
     <p>No, not realy, but sort of.  Let's see what's happening with our previous example with a textarea and an submit button:</p>
+<br>
     <pre class="prettyprint">
         &lt;textarea ng-model="lifeStory" rows="10" cols="50"&gt;
-
         &lt;/textarea&gt;
         &lt;span&gt;{{lifeStory}}&lt;/span&gt;
         &lt;input type="submit" ng-click="activateReader()" value="blast off" /&gt;
@@ -145,14 +152,16 @@
         });
     </pre>
     <br>
-    <p>Calling<code>$scope.$apply()</code> forces a $digest loop.  Note when third party libraries interact with an element that has a binding, the Angular context doesn't know anything about this unless it is notified.  Because Angular knows nothing about this interaction, it has no chance to update the values via the $digest loop.  Be careful when using 3rd party libraries with Angular.</p>
+    <p>Calling<code>$scope.$apply()</code> forces a $digest loop.  When third party libraries interact with an element that has a binding, the <code>Angular context</code> doesn't know anything about this unless it is notified.
+</p><p>Because Angular knows nothing about this interaction, it has no chance to update the values via the $digest loop.  Be careful when using 3rd party libraries with Angular.</p>
     </div>
     <br>
     <div class="text-center">
         <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/47135bd0-bc5a-4171-be5f-86c38d41e40d_original.jpg"
-            alt="scope apply lol" style="border: 0" width="300" text-align="center"/>
+            alt="scope apply lol" style="border: 0" width="450" text-align="center"/>
     </div>
     <br>
+    <p class="text-danger">Do not call $apply() in a controller because you will have a hell of a time testing that controller later, refactor this to a service that handles the logic for you.</p>
 
 
     <br>
@@ -198,14 +207,16 @@
     <br>
     <p><a href="https://github.com/angular/angular.js/blob/master/src/ng/directive/ngEventDirs.js#L3">Angular JS ngEvent Directives</a></p>
     <p>Notice <code>$evalAsync</code> and <code>$apply</code> being called.</p>
-    <p class="text-red">Do not call $apply() in a controller because you will have a hell of a time testing that controller later, refactor this to a service that handles the logic for you.</p>
 </div>
+<br>
 <div>
+
     <h4>$evalAsync List</h4>
     <p>There is a key aspect that we forgot to mention.  Actually, we didn't forget, it just seems much more appropriate to talk about it now that we covered the <em>"basics"</em>.</p>
     <p>Along with the $watch list, the the $digest loop runs through the <code>$asyncQueue</code>.  We can tie functions or strings into <code>$evalAsync</code> to execute after the function that scheduled the evaluation.</p>
 
 </div>
+<br>
 <p>Hopefully that gets you a little more familiar with the $digest loop and helps clear up some of the magic behind the scenes.  You're now one step closer to truly understanding AngularJS!</p>
 <br>
 <div class="text-center">
