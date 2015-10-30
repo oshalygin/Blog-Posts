@@ -1,0 +1,69 @@
+
+<br />
+<p>Knowing the fundamentals of JavaScript will go a long way to helping you become confident in day-to-day development, but knowing the built in methods will exponentially boost your productivity.</p>
+<br>
+<h4>String Manipulation</h4>
+<p>Working with strings is an unavoidable fact for programmers in modern web development.  Knowing this, the EcmaScript(JavaScript), committee has deliberated and spend considerable time standardizing the functions available through the prototype chain.  All of this to make your life easier!
+</p>
+<p>
+I wanted to spend some time discussing some of the functions that are used on a regular basis in JavaScript and help you become familiar with their use cases.  Keep in mind, the more tools you have in your toolbox, the more productive and creative you can be.  Also, don't try to handroll and reinvent the wheel when it is clearly <em>unnecessary</em>.</p>
+<br>
+<div class="text-center">
+    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/2280801c-0a5d-47ec-a62b-c65270e363d5_original.png"
+    alt="angularjs2 typescript guilp" style="border:0"  width="600" text-align="center" />
+</div>
+<br>
+
+<div>
+<h4>String.prototype.charAt()</h4>
+<br>
+<pre class="prettyprint">
+ var myName = "Oleg Shalygin";
+ //Usage:  myName.charAt(index)
+ var letter = myName.charAt(6);  //h
+</pre>
+<br>
+<p>In essence what you are doing with <code>.charAt</code> is grabbing the character at the integer index being passed in.  Ultra useful when you know exactly which index to dive to.  Note, that you cannot exceed the length of the string, and if you do, you'll be rewarded with an <em>empty string</em>.</p>
+</div>
+
+<br>
+<div>
+    <h4>String.prototype.concat()</h4>
+    <br>
+    <pre class="prettyprint">
+    var firstName = "Oleg"
+    var lastName = "Shalygin"
+    var ID = 12321312;
+    //Usage: firstName.concat(string2, string 3, string 3, ...);
+    var fullIdentification = firstName.concat(lastName, ":", ID);
+    console.log(fullIdentification);
+    </pre>
+    <p>This is actually one that I would not recommend using too often because the performance hit from strictly using the assignment operator is not worth it.  There are some benefits to using this method when you want to write cleaner looking code on multiple lines(something you need to be careful with if you are using <em>+</em> operators).</p>
+    <p><code>.join()</code> is another method to perform string concatenation, but this one is SUPER slow, almost 2x slower than the assignment operator.  Why is this the case?  Simple, most of the JavaScript compilers and optimization engines are built around the common use case which is <code>+</code> used by most JavaScript developers.  Take a look at this performance test for more information:</p>
+    <br>
+    <span><a href="http://jsperf.com/concat-vs-plus-vs-join">Performance Test:  Concat vs. Plus Operator vs. Join</a></span>
+</div>
+<br>
+<div>
+    <h4>String.prototype.indexOf()</h4>
+    <br>
+    <pre class="prettyprint">
+    var fullName = "Oleg Shalygin"
+    //Usage:  fullName.indexOf(searchTerm, startingIndex)
+    var index = fullName.indexOf("Oleg"); //0
+    index = fullName.indexOf("Shalygin") //5
+    index = fullName.indexOf("l") //1
+    index = fullName.indexOf("l",4) //8
+    index = fullName.indexOf("Girlfriend") //-1
+    </pre>
+    <p>The <code>.indexOf</code> function allows you to locate the index of specific strings or characters.  Note that if the searchCriteria returns a false response the value is <code>-1</code>.  When performing a comparison for whether or not the searchCriteria is met, check for -1 as such:</p>
+    <pre class="prettyprint">
+    fullName.indexOf("Girlfriend") === -1 //true
+    </pre>
+    <br>
+    <p>Keep in mind that <code>.indexOf</code> is <em>CASE SENSITIVE</em>.  If you are trying to do an loose search, use the <code>String.prototype.toUpperCase()</code> which we will cover shortly.</p>
+</div>
+<br>
+<div>
+    <h4>String.prototype.lastIndexOf()</h4>
+</div>
