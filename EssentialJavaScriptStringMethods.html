@@ -1,12 +1,13 @@
 
 <br />
-<p>Knowing the fundamentals of JavaScript will go a long way to helping you become confident in day-to-day development, but knowing the built in methods will exponentially boost your productivity.</p>
+<p>Knowing the fundamentals of JavaScript will go a long way to helping you become confident in day-to-day development, but knowing the built in functions that are available through the prototype chain will exponentially boost your productivity.</p>
 <br>
 <h4>String Manipulation</h4>
-<p>Working with strings is an unavoidable fact for programmers in modern web development.  Knowing this, the EcmaScript(JavaScript), committee has deliberated and spend considerable time standardizing the functions available through the prototype chain.  All of this to make your life easier!
+<p>Working with strings is an unavoidable fact for programmers.  Knowing this, the EcmaScript(JavaScript), committee has deliberated and spend considerable time standardizing the functions available through the prototype chain.  All of this to make your life easier!
 </p>
 <p>
-I wanted to spend some time discussing some of the functions that are used on a regular basis in JavaScript and help you become familiar with their use cases.  Keep in mind, the more tools you have in your toolbox, the more productive and creative you can be.  Also, don't try to handroll and reinvent the wheel when it is clearly <em>unnecessary</em>.</p>
+I wanted to spend some time discussing some of the functions that are used on a regular basis in JavaScript.  Keep in mind, the more tools you have in your toolbox, the more productive and creative you can be.  Don't try to handroll and reinvent the wheel when it is clearly <em>unnecessary</em>.</p>
+<p>Let's get started!</p>
 <br>
 <div class="text-center">
     <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/2280801c-0a5d-47ec-a62b-c65270e363d5_original.png"
@@ -23,26 +24,9 @@ I wanted to spend some time discussing some of the functions that are used on a 
  var letter = myName.charAt(6);  //h
 </pre>
 <br>
-<p>In essence what you are doing with <code>.charAt</code> is grabbing the character at the integer index being passed in.  Ultra useful when you know exactly which index to dive to.  Note, that you cannot exceed the length of the string, and if you do, you'll be rewarded with an <em>empty string</em>.</p>
+<p>In essence what you are doing with <code>.charAt</code> is grabbing the character at the integer index being passed in to the caller.  Ultra useful when you know exactly which index to dive to.  Note, that you cannot exceed the length of the string, and if you do, you'll be rewarded with an <em>empty string</em>.</p>
 </div>
 
-<br>
-<div>
-    <h4>String.prototype.concat()</h4>
-    <br>
-    <pre class="prettyprint">
-    var firstName = "Oleg"
-    var lastName = "Shalygin"
-    var ID = 12321312;
-    //Usage: firstName.concat(string2, string 3, string 3, ...);
-    var fullIdentification = firstName.concat(lastName, ":", ID);
-    console.log(fullIdentification);
-    </pre>
-    <p>This is actually one that I would not recommend using too often because the performance hit from strictly using the assignment operator is not worth it.  There are some benefits to using this method when you want to write cleaner looking code on multiple lines(something you need to be careful with if you are using <em>+</em> operators).</p>
-    <p><code>.join()</code> is another method to perform string concatenation, but this one is SUPER slow, almost 2x slower than the assignment operator.  Why is this the case?  Simple, most of the JavaScript compilers and optimization engines are built around the common use case which is <code>+</code> used by most JavaScript developers.  Take a look at this performance test for more information:</p>
-    <br>
-    <span><a href="http://jsperf.com/concat-vs-plus-vs-join">Performance Test:  Concat vs. Plus Operator vs. Join</a></span>
-</div>
 <br>
 <div>
     <h4>String.prototype.indexOf()</h4>
@@ -74,7 +58,7 @@ I wanted to spend some time discussing some of the functions that are used on a 
         console.log(storyMode.lastIndexOf("!")); //-1
         console.log(storyMode.lastIndexOf("foobar")); //38
     </pre>
-    <p>Using <code>.lastIndexOf</code> you can find the <em>last</em> occurance of the search criteria.  In the case of <code>.indexOf</code> you are finding the <em>first</em> occurance.  These two are very handy in doing lookup and performing string manipulation.  Keep these in your pocket at all times!</p>
+    <p>Using <code>.lastIndexOf</code> you can find the <em>last</em> occurence of the search criteria.  Recall in the case of <code>.indexOf</code> you are locating the <em>first</em> occurence.  These two are very handy in doing lookup and performing string manipulation.  Keep these in your pocket at all times!</p>
     <p>Tip:  <code>.lastIndexOf</code>, similar to <code>.indexOf</code> is case sensitive!</p>
 </div>
 <br>
@@ -89,7 +73,8 @@ I wanted to spend some time discussing some of the functions that are used on a 
         //someOtherResultsArray = null
     </pre>
     <br>
-    <p>With <code>.match()</code> you are able to use regular expressions to match strings.  There are no <strong>'</strong> or <strong>"</strong> when passing in the regular expression.  What you get back is an array of matching strings.  A quick way to check whether or not your regular expression finds any matches is to check for a null result array.  Don't forget, you get all matching instances, not just the first.</p>
+    <p>With <code>.match()</code> you are able to use regular expressions to match strings.  There are no <strong>'</strong> or <strong>"</strong> when passing in the regular expression.  What you get back is an array of matching strings.  A quick way to check whether or not your regular expression finds any matches is to check for a null result array.</p>
+    <p>Don't forget, you get all matching instances, not just the first.</p>
 </div>
 <br>
 <div>
@@ -101,8 +86,8 @@ I wanted to spend some time discussing some of the functions that are used on a 
         //newString = "Hello there, my name is lolrarand and I am a magical foobarus creature"
     </pre>
     <br>
-    <p>I give a simple example here using <code>.replace()</code> but you can use <code>.replace()</code> and as a second parameter pass in a function to be called when the matching criteria is met.  This is pretty useful when you want to do a quick and dirty replace throughout a massive wall of text.  </p>
-    <p>Typically I'll use <code>.match()</code> first followed by <code>.replace()</code>.  The reason for that is I want to make sure I'm not modifying more than I actually intend to within the string.  Get comfortable with regular expressions, these are very handy!</p>
+    <p>I provided a simple example here using <code>.replace()</code> but you can use a function as a second optional parameter to <code>.replace()</code>.  This function will be called when the matching criteria is met.  This is pretty useful when you want a function to be called and don't care to perform string building or manipulation.</p>
+    <p>Typically I'll use <code>.match()</code> first, followed by <code>.replace()</code>.  The reason for this is I want to make sure I'm not modifying more than I actually intend to, within the string.  Get comfortable with regular expressions, these are very handy!</p>
 </div>
 <br>
 <div>
@@ -127,8 +112,8 @@ I wanted to spend some time discussing some of the functions that are used on a 
         console.log(previewStory[1]); //Unicorns fly?  Regardless!
     </pre>
     <br>
-    <p>With <code>.split()</code> you pass in a string separator and if there is matching result the second element in the array will return a value.  If there is no match for the separator, the second element will return back undefined.  Remember, undefined is a value, it's not the absensce of a value in JavaScript!</p>
-    <p>Use <code>.split()</code> when you want to break up the string into multiple parts and manage them without having to use 5 functions to get there.</p>
+    <p>With <code>.split()</code> you pass in a string separator and if there is matching result the second element in the array will return the second part of the string.  If there is no match for the separator, the second element will return back undefined.  Remember, undefined is a value, <em>it's not the absensce of a value in JavaScript!</em></p>
+    <p>Use <code>.split()</code> when you want to break up the string into two parts and manage them without having to use 5 functions to get there.</p>
 </div>
 <br>
 <div>
@@ -139,7 +124,7 @@ I wanted to spend some time discussing some of the functions that are used on a 
         console.log("..." + theLastFewCharacters); // ..ns fly?  Regardless!
     </pre>
     <br>
-    <p>Depending on what you're doing you may just want to get the first or last part of a string.  Use <code>.substring()</code> with interchangeable first and second parameters.  There are a few key features to keep in mind: </p>
+    <p>Depending on what you're doing, you may just want to get the first or last part of a string.  Use <code>.substring()</code> with interchangeable first and second parameters.  There are a few key features to keep in mind: </p>
     <ul>
         <li>If indexStart equals indexEnd, substring() returns an empty string.</li>
         <li>If indexEnd is omitted, substring() extracts characters to the end of the string.</li>
@@ -158,7 +143,7 @@ I wanted to spend some time discussing some of the functions that are used on a 
       var foobarus = allUpperCase.match(/FOOBARUS/); //["FOOBARUS", index: 0, input: "FOOBARUS IS A MAGICAL UNICORN WITH AN ID OF 21313 …N ALL OTHER UNICORNS.  UNICORNS FLY?  REGARDLESS!]
     </pre>
     <br>
-    <p>These two functions will come in very handy when you are doing string comparison or matching. You can also use this when you want to quickly capitalize or lowercase the whole string before presenting it.</p>
+    <p>These two functions will come in very handy when you are doing string comparison or matching. You can also use this when you want to quickly upperCase or lowerCase the whole string before presenting it in a view or some form of analytics.</p>
 </div>
 <br>
 <div>
@@ -173,7 +158,26 @@ I wanted to spend some time discussing some of the functions that are used on a 
 </div>
 <br>
 <div>
+    <h4>String.prototype.concat()</h4>
+    <br>
+    <pre class="prettyprint">
+    var firstName = "Oleg"
+    var lastName = "Shalygin"
+    var ID = 12321312;
+    //Usage: firstName.concat(string2, string 3, string 3, ...);
+    var fullIdentification = firstName.concat(lastName, ":", ID);
+    console.log(fullIdentification);
+    </pre>
+    <p>This is actually one that I would not recommend using too often because the performance hit from strictly using the assignment operator is not worth it.  There are some benefits to using this method when you want to write cleaner looking code on multiple lines(something you need to be careful with if you are using <em>+</em> operators).</p>
+    <p><code>.join()</code> is another method to perform string concatenation, but this one is SUPER slow, almost 2x slower than the assignment operator.  Why is this the case?  Simple, most of the JavaScript compilers and optimization engines are built around the common use case which is <code>+</code> used by most JavaScript developers.  Take a look at this performance test for more information:</p>
+    <br>
+    <span><a href="http://jsperf.com/concat-vs-plus-vs-join">Performance Test:  Concat vs. Plus Operator vs. Join</a></span>
+    <p>So why do I even list this here?  Well it's used quite often by some newer JavaScript developers because they think there's some performance benefit, especially when you're iterating through an array and constantly concatenating. </p>
+    <p>TLDR: Dont' use it.</p>
+</div>
+<br>
+<div>
     <h4>Bringing it Full Circle</h4>
-    <p>We glossed over a lot of utilities here and I really wanted this to be an introductory eye-opening experience as to what is <em>available</em>.  Don't just use the one function you know, get familiar with all of the tools at your disposal so you can be productive and not reinvent the wheel at every go.</p>
+    <p>We glossed over some of these utilities here and I really wanted this to be an introductory eye-opening experience as to what is <em>available</em>.  Don't just use the one function you know, get familiar with all of the tools at your disposal so you can be productive and not reinvent the wheel at every go.</p>
     <p>That's it for now, happy coding!</p>
 </div>
