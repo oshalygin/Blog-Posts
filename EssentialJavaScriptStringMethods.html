@@ -66,4 +66,45 @@ I wanted to spend some time discussing some of the functions that are used on a 
 <br>
 <div>
     <h4>String.prototype.lastIndexOf()</h4>
+    <br>
+    <pre class="prettyprint">
+        var storyMode = "Once upon a time, there was a magical foobar that was controlling the universe...";
+        console.log(storyMode.lastIndexOf(",")); //16
+        console.log(storyMode.lastIndexOf(".")); //80
+        console.log(storyMode.lastIndexOf("!")); //-1
+        console.log(storyMode.lastIndexOf("foobar")); //38
+    </pre>
+    <p>Using <code>.lastIndexOf</code> you can find the <em>last</em> occurance of the search criteria.  In the case of <code>.indexOf</code> you are finding the <em>first</em> occurance.  These two are very handy in doing lookup and performing string manipulation.  Keep these in your pocket at all times!</p>
+    <p>Tip:  <code>.lastIndexOf</code>, similar to <code>.indexOf</code> is case sensitive!</p>
+</div>
+<br>
+<div>
+    <h4>String.prototype.match()</h4>
+    <br>
+    <pre class="prettyprint">
+        var someString = "Hello there, my name is aararand and I am a magical foobarus creature";
+        var resultsArray = someString.match(/a{2}/);
+        //resultsArray = ["aa", index: 24, input: "Hello there, my name is aararand and I am a magical foobarus creature"]
+        var someOtherResultsArray = someString.match(/b{2});
+        //someOtherResultsArray = null
+    </pre>
+    <br>
+    <p>With <code>.match()</code> you are able to use regular expressions to match strings.  There are no <strong>'</strong> or <strong>"</strong> when passing in the regular expression.  What you get back is an array of matching strings.  A quick way to check whether or not your regular expression finds any matches is to check for a null result array.  Don't forget, you get all matching instances, not just the first.</p>
+</div>
+<br>
+<div>
+    <h4>String.prototype.replace()</h4>
+    <br>
+    <pre class="prettyprint">
+        var someString = "Hello there, my name is aararand and I am a magical foobarus creature";
+        var newString = someString.replace(/a{2}/, "lol");
+        //newString = "Hello there, my name is lolrarand and I am a magical foobarus creature"
+    </pre>
+    <br>
+    <p>I give a simple example here using <code>.replace()</code> but you can use <code>.replace()</code> and as a second parameter pass in a function to be called when the matching criteria is met.  This is pretty useful when you want to do a quick and dirty replace throughout a massive wall of text.  </p>
+    <p>Typically I'll use <code>.match()</code> first followed by <code>.replace()</code>.  The reason for that is I want to make sure I'm not modifying more than I actually intend to within the string.  Get comfortable with regular expressions, these are very handy!</p>
+</div>
+<br>
+<div>
+    <h4>String.prototype.slice()</h4>
 </div>
