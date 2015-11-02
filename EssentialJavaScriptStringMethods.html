@@ -10,14 +10,13 @@ I wanted to spend some time discussing some of the functions that are used on a 
 <p>Let's get started!</p>
 <br>
 <div class="text-center">
-    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/2280801c-0a5d-47ec-a62b-c65270e363d5_original.png"
-    alt="angularjs2 typescript guilp" style="border:0"  width="600" text-align="center" />
+    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/beb9c26a-cc2d-436d-9b0f-5f1d3d10c82d_original.jpg"
+    alt="Grow new ideas" style="border:0"  width="500" text-align="center" />
 </div>
 <br>
 
 <div>
 <h4>String.prototype.charAt()</h4>
-<br>
 <pre class="prettyprint">
  var myName = "Oleg Shalygin";
  //Usage:  myName.charAt(index)
@@ -30,7 +29,6 @@ I wanted to spend some time discussing some of the functions that are used on a 
 <br>
 <div>
     <h4>String.prototype.indexOf()</h4>
-    <br>
     <pre class="prettyprint">
     var fullName = "Oleg Shalygin"
     //Usage:  fullName.indexOf(searchTerm, startingIndex)
@@ -40,6 +38,7 @@ I wanted to spend some time discussing some of the functions that are used on a 
     index = fullName.indexOf("l",4) //8
     index = fullName.indexOf("Girlfriend") //-1
     </pre>
+    <br>
     <p>The <code>.indexOf</code> function allows you to locate the index of specific strings or characters.  Note that if the searchCriteria returns a false response the value is <code>-1</code>.  When performing a comparison for whether or not the searchCriteria is met, check for -1 as such:</p>
     <pre class="prettyprint">
     fullName.indexOf("Girlfriend") === -1 //true
@@ -50,7 +49,6 @@ I wanted to spend some time discussing some of the functions that are used on a 
 <br>
 <div>
     <h4>String.prototype.lastIndexOf()</h4>
-    <br>
     <pre class="prettyprint">
         var storyMode = "Once upon a time, there was a magical foobar that was controlling the universe...";
         console.log(storyMode.lastIndexOf(",")); //16
@@ -58,13 +56,13 @@ I wanted to spend some time discussing some of the functions that are used on a 
         console.log(storyMode.lastIndexOf("!")); //-1
         console.log(storyMode.lastIndexOf("foobar")); //38
     </pre>
-    <p>Using <code>.lastIndexOf</code> you can find the <em>last</em> occurence of the search criteria.  Recall in the case of <code>.indexOf</code> you are locating the <em>first</em> occurence.  These two are very handy in doing lookup and performing string manipulation.  Keep these in your pocket at all times!</p>
+    <br>
+    <p>Using <code>.lastIndexOf</code> you can find the <em>last</em> occurrence of the search criteria.  Recall in the case of <code>.indexOf</code> you are locating the <em>first</em> occurrence .  These two are very handy in doing lookup and performing string manipulation.  Keep these in your pocket at all times!</p>
     <p>Tip:  <code>.lastIndexOf</code>, similar to <code>.indexOf</code> is case sensitive!</p>
 </div>
 <br>
 <div>
     <h4>String.prototype.match()</h4>
-    <br>
     <pre class="prettyprint">
         var someString = "Hello there, my name is aararand and I am a magical foobarus creature";
         var resultsArray = someString.match(/a{2}/);
@@ -79,7 +77,6 @@ I wanted to spend some time discussing some of the functions that are used on a 
 <br>
 <div>
     <h4>String.prototype.replace()</h4>
-    <br>
     <pre class="prettyprint">
         var someString = "Hello there, my name is aararand and I am a magical foobarus creature";
         var newString = someString.replace(/a{2}/, "lol");
@@ -92,7 +89,6 @@ I wanted to spend some time discussing some of the functions that are used on a 
 <br>
 <div>
     <h4>String.prototype.slice()</h4>
-    <br>
     <pre class="prettyprint">
         var story = "Foobarus is a magical unicorn with an ID of 21313 which flies higher than all other unicorns.  Unicorns fly?  Regardless!"
         var previewStory = story.slice(0, 40); //Foobarus is a magical unicorn with an ID
@@ -100,10 +96,18 @@ I wanted to spend some time discussing some of the functions that are used on a 
     <br>
     <p><code>.slice()</code> is one of those functions that you will use so regularly once you become familiar with it that you'll wonder how you got around without it.  Great for text extraction when you're doing a lookup with <code>.lastIndexOf()</code> or matching with <code>.replace()</code>.</p>
 </div>
+
+<br>
+<div class="text-center">
+    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/1cb34a5c-9b83-4c57-8212-fa654cf66b2e_original.jpg"
+    alt="mind blown are you a wizard" style="border:0"  width="300" text-align="center" />
+</div>
+<br>
+<p>No wizardry, just leveraging your tools!</p>
+
 <br>
 <div>
     <h4>String.prototype.split()</h4>
-    <br>
     <pre class="prettyprint">
         var story = "Foobarus is a magical unicorn with an ID of 21313 which flies higher than all other unicorns.  Unicorns fly?  Regardless!"
         var previewStory = story.split(".");
@@ -112,7 +116,7 @@ I wanted to spend some time discussing some of the functions that are used on a 
         console.log(previewStory[1]); //Unicorns fly?  Regardless!
     </pre>
     <br>
-    <p>With <code>.split()</code> you pass in a string separator and if there is matching result the second element in the array will return the second part of the string.  If there is no match for the separator, the second element will return back undefined.  Remember, undefined is a value, <em>it's not the absensce of a value in JavaScript!</em></p>
+    <p>With <code>.split()</code> you pass in a string separator and if there is matching result the second element in the array will return the second part of the string.  If there is no match for the separator, the second element will return back undefined.  Remember, undefined is a value, <em>it's not the absence of a value in JavaScript!</em></p>
     <p>Use <code>.split()</code> when you want to break up the string into two parts and manage them without having to use 5 functions to get there.</p>
 </div>
 <br>
@@ -135,7 +139,6 @@ I wanted to spend some time discussing some of the functions that are used on a 
 <br>
 <div>
     <h4>String.prototype.toLowerCase() and String.prototype.toUpperCase()</h4>
-    <br>
     <pre class="prettyprint">
       var story = "Foobarus is a magical unicorn with an ID of 21313 which flies higher than all other unicorns.  Unicorns fly?  Regardless!"
       var allUpperCase = story.toUpperCase();
@@ -148,7 +151,6 @@ I wanted to spend some time discussing some of the functions that are used on a 
 <br>
 <div>
     <h4>String.prototype.trim()</h4>
-    <br>
     <pre class="prettyprint">
         var fullName = "  Oleg Shalygin       ";
         var trimmedFullName = fullName.trim(); //Oleg Shalygin
@@ -159,7 +161,6 @@ I wanted to spend some time discussing some of the functions that are used on a 
 <br>
 <div>
     <h4>String.prototype.concat()</h4>
-    <br>
     <pre class="prettyprint">
     var firstName = "Oleg"
     var lastName = "Shalygin"
@@ -173,7 +174,7 @@ I wanted to spend some time discussing some of the functions that are used on a 
     <br>
     <span><a href="http://jsperf.com/concat-vs-plus-vs-join">Performance Test:  Concat vs. Plus Operator vs. Join</a></span>
     <p>So why do I even list this here?  Well it's used quite often by some newer JavaScript developers because they think there's some performance benefit, especially when you're iterating through an array and constantly concatenating. </p>
-    <p>TLDR: Dont' use it.</p>
+    <p>TLDR: Don't use it.</p>
 </div>
 <br>
 <div>
@@ -181,3 +182,10 @@ I wanted to spend some time discussing some of the functions that are used on a 
     <p>We glossed over some of these utilities here and I really wanted this to be an introductory eye-opening experience as to what is <em>available</em>.  Don't just use the one function you know, get familiar with all of the tools at your disposal so you can be productive and not reinvent the wheel at every go.</p>
     <p>That's it for now, happy coding!</p>
 </div>
+
+<br>
+<div class="text-center">
+    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/1b6b8b97-3bf2-4c12-b5e1-069c472c6cf7_original.png"
+    alt="javascript logo" style="border:0"  width="300" text-align="center" />
+</div>
+<br>
