@@ -107,4 +107,73 @@ I wanted to spend some time discussing some of the functions that are used on a 
 <br>
 <div>
     <h4>String.prototype.slice()</h4>
+    <br>
+    <pre class="prettyprint">
+        var story = "Foobarus is a magical unicorn with an ID of 21313 which flies higher than all other unicorns.  Unicorns fly?  Regardless!"
+        var previewStory = story.slice(0, 40); //Foobarus is a magical unicorn with an ID
+    </pre>
+    <br>
+    <p><code>.slice()</code> is one of those functions that you will use so regularly once you become familiar with it that you'll wonder how you got around without it.  Great for text extraction when you're doing a lookup with <code>.lastIndexOf()</code> or matching with <code>.replace()</code>.</p>
+</div>
+<br>
+<div>
+    <h4>String.prototype.split()</h4>
+    <br>
+    <pre class="prettyprint">
+        var story = "Foobarus is a magical unicorn with an ID of 21313 which flies higher than all other unicorns.  Unicorns fly?  Regardless!"
+        var previewStory = story.split(".");
+
+        console.log(previewStory[0]); //Foobarus is a magical unicorn with an ID of 21313 which flies higher than all other unicorns
+        console.log(previewStory[1]); //Unicorns fly?  Regardless!
+    </pre>
+    <br>
+    <p>With <code>.split()</code> you pass in a string separator and if there is matching result the second element in the array will return a value.  If there is no match for the separator, the second element will return back undefined.  Remember, undefined is a value, it's not the absensce of a value in JavaScript!</p>
+    <p>Use <code>.split()</code> when you want to break up the string into multiple parts and manage them without having to use 5 functions to get there.</p>
+</div>
+<br>
+<div>
+    <h4>String.prototype.substring()</h4>
+    <pre class="prettyprint">
+        var story = "Foobarus is a magical unicorn with an ID of 21313 which flies higher than all other unicorns.  Unicorns fly?  Regardless!"
+        var theLastFewCharacters = story.substring(story.length - 20);
+        console.log("..." + theLastFewCharacters); // ..ns fly?  Regardless!
+    </pre>
+    <br>
+    <p>Depending on what you're doing you may just want to get the first or last part of a string.  Use <code>.substring()</code> with interchangeable first and second parameters.  There are a few key features to keep in mind: </p>
+    <ul>
+        <li>If indexStart equals indexEnd, substring() returns an empty string.</li>
+        <li>If indexEnd is omitted, substring() extracts characters to the end of the string.</li>
+        <li>If either argument is less than 0 or is NaN, it is treated as if it were 0.</li>
+        <li>If either argument is greater than stringName.length, it is treated as if it were stringName.length.</li>
+    </ul>
+</div>
+<br>
+<div>
+    <h4>String.prototype.toLowerCase() and String.prototype.toUpperCase()</h4>
+    <br>
+    <pre class="prettyprint">
+      var story = "Foobarus is a magical unicorn with an ID of 21313 which flies higher than all other unicorns.  Unicorns fly?  Regardless!"
+      var allUpperCase = story.toUpperCase();
+      var allLowerCase = story.toLowerCase();
+      var foobarus = allUpperCase.match(/FOOBARUS/); //["FOOBARUS", index: 0, input: "FOOBARUS IS A MAGICAL UNICORN WITH AN ID OF 21313 …N ALL OTHER UNICORNS.  UNICORNS FLY?  REGARDLESS!]
+    </pre>
+    <br>
+    <p>These two functions will come in very handy when you are doing string comparison or matching. You can also use this when you want to quickly capitalize or lowercase the whole string before presenting it.</p>
+</div>
+<br>
+<div>
+    <h4>String.prototype.trim()</h4>
+    <br>
+    <pre class="prettyprint">
+        var fullName = "  Oleg Shalygin       ";
+        var trimmedFullName = fullName.trim(); //Oleg Shalygin
+    </pre>
+    <br>
+    <p><code>.trim()</code> is critical in cleaning up strings that you get from other sources that don't have whitepsace trimmed from either end of the string. </p>
+</div>
+<br>
+<div>
+    <h4>Bringing it Full Circle</h4>
+    <p>We glossed over a lot of utilities here and I really wanted this to be an introductory eye-opening experience as to what is <em>available</em>.  Don't just use the one function you know, get familiar with all of the tools at your disposal so you can be productive and not reinvent the wheel at every go.</p>
+    <p>That's it for now, happy coding!</p>
 </div>
