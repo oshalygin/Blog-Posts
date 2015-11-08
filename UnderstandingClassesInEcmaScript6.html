@@ -5,6 +5,13 @@
 <br>
 <div>
     <h4>Traditional Classes</h4>
+    <br>
+    <div class="text-center">
+        <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/8b3d6c98-c946-4222-8688-94b8f9b96cf5_original.jpg"
+        alt="never assume anything lol" style="border:0"  width="400" text-align="center" />
+    </div>
+    <br>
+
     <p>The way many of us have learned about classes inevitabiliy clouds our judgement and understanding of non-class based language such as JavaScript.  Classes are the blueprint that is used to create objects.  Do not confuse classes and objects, especially in JavaScript.  In JavaScript you create objects and link them to other objects.</p>
     <p>Going back to how classes actually work, once a blueprint for a class has been defined, such as it's methods and properties, it does not change.  Objects are exact and distinct copies of the class.  Objects are instances of classes and the process to creating objects involves class instantiation.  Following?  Good, let's cover one very distinct point with classes and instantiated objects:
     </p>
@@ -26,6 +33,12 @@
 <br>
 <div>
     <h4>Assuming Classes exist in JavaScript</h4>
+    <br>
+    <div class="text-center">
+        <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/c026b9fe-e6ca-490d-ac57-d92c1737c419_original.jpg"
+        alt="never assume anything lol" style="border:0"  width="600" text-align="center" />
+    </div>
+    <br>
     <p>It's not entirely your fault if you were mislead by the <code>new</code> and <code>instanceof</code> keywords, especially if you heard <strong>"JavaScript is getting classes in ES6!"</strong>.</p>
     <p>You can coerce a <em>design pattern</em> in JavaScript to <em>simulate</em> classes through with <code>.prototype</code>. </p>
     <p> With JavaScript, there is no inherent way to copy object or parent function behavior, there is only object linking.  Remember, you instantiate/create objects in JavaScript, not classes.  These objects, that are linked together through the <code>prototype</code> chain, and through extensive effort by numerous JavaScript hacky code, we can coerce the language via <strong>mixins</strong> to <em>"have"</em> classes.</p>
@@ -36,6 +49,13 @@
 <br>
 <div>
     <h4>ES6 Classes</h4>
+
+    <br>
+    <div class="text-center">
+        <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/fb913409-8f2b-4f32-849e-9be7013728d1_original.png"
+        alt="ecmascript 6 logo" style="border:0"  width="600" text-align="center" />
+    </div>
+    <br>
     <p>As we initially started to talk about ES6 classes, the <code>class</code> keyword is syntatic sugar over the <code>[[Prototype]]</code> delegation that's been in existence in JavaScript for ages.</p>
     <p>Classes are nothing but functions with a few hidden special features behind the scenes.  Classes can exist as <em>class expressions</em> and <em>class declarations</em>. </p>
     <p> Remember how in another post we discussed the "hoisting" mechanism, which is nothing more than a JavaScript JIT compilation step.  In regards to function declarations, the function is hoisted.  This is not the case with classes, and classes will need to be <em>declared</em> <strong>first</strong> before it is used.  That's neat, we just lost some awesome functionality for syntatic sugar.</p>
@@ -156,16 +176,21 @@
     oleg.describe(); // "My height is 60"......LOL
     </pre>
 </div>
-<br>
-
-
-
-
-
 
 <br>
 <div class="text-center">
-    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/1b6b8b97-3bf2-4c12-b5e1-069c472c6cf7_original.png"
-    alt="javascript logo" style="border:0"  width="300" text-align="center" />
+    <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/9e6328eb-e82f-4172-9334-a6daed064b42_original.jpg"
+    alt="lol what bird" style="border:0"  width="400" text-align="center" />
 </div>
 <br>
+<div>
+    <h4>Traceur or Babel</h4>
+    <p>You don't have to wait until all browser adopt the ES6 class syntax.  You can begin using the syntax today and transpile with either <strong>Traceur</strong> or <strong>BabelJS</strong>.  Here are links to get you started:</p>
+    <ul>
+        <li><a href="https://github.com/google/traceur-compiler/wiki/Getting-Started">Traceur</a></li>
+        <li><a href="https://github.com/google/traceur-compiler/wiki/Getting-Started">Babel</a></li>
+    </ul>
+</div>
+<div>
+    <p>That's it for now.  Happy coding!</p>
+</div>
