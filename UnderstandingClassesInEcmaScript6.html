@@ -1,10 +1,14 @@
 
 <br />
-<p>By now you may have heard the news, EcmaScript(ES) 6 2015 is finalized and JavaScript is going to be propelled into future and satisfy the needs of all non-JavaScript developers to easily transition to a dynamic language without Classes.  Well, I'm not here to burst your bubble, but that's not happening.  What <em>IS</em> happening, is that we are getting nothing more than <strong>syntatic sugar over JavaScript prototypal inheritance.</strong></p>
-<p>Just to be 100% clear, "class oriented" programming, in the sense that we are not going to be able to instantiate classes like we can in C# or Java.  If you aren't already familiar with the tradional sense of classes and how developers have been butchering JavaScript to re-invent classes, don't worry, we'll cover it shortly.</p>
+<p>By now you may have heard the news, EcmaScript(ES) 6 2015 is finalized and JavaScript is going to be propelled into future, satisfying the needs of non-JavaScript developers to easily transition to a language that didn't have <em>"classes"</em>.  Well, I'm not here to burst your bubble, but that's not happening.  What <em>IS</em> happening, is that we are getting nothing more than <strong>syntatic sugar over JavaScript prototypal inheritance.</strong></p>
+<p>Just to be 100% clear, "class oriented"(<small>Java, C#, etc</small>) programming involves object creation through constructors.  It is best to think of traditional instantiation as <em>class instantiation</em> which contrasts JavaScript in which objects are instantiated(<small>created and linked</small>).  Objects in JavaScript do not stand on their own, they are interlinked.</p>
+<p>If you aren't already familiar with the tradional sense of classes and how developers have been butchering JavaScript to re-invent classes, don't worry, we'll cover it shortly.</p>
 <br>
 <div>
     <h4>Traditional Classes</h4>
+
+
+    <p>The way in which many of us learned about classes inevitabiliy clouds our judgement and understanding of a non-class based language such as JavaScript.  Classes are the blueprint that is used to create objects.  Do not confuse classes and objects, especially in JavaScript.  In JavaScript you create objects and link them to other objects.</p>
     <br>
     <div class="text-center">
         <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/8b3d6c98-c946-4222-8688-94b8f9b96cf5_original.jpg"
@@ -12,10 +16,9 @@
     </div>
     <br>
 
-    <p>The way many of us have learned about classes inevitabiliy clouds our judgement and understanding of non-class based language such as JavaScript.  Classes are the blueprint that is used to create objects.  Do not confuse classes and objects, especially in JavaScript.  In JavaScript you create objects and link them to other objects.</p>
-    <p>Going back to how classes actually work, once a blueprint for a class has been defined, such as it's methods and properties, it does not change.  Objects are exact and distinct copies of the class.  Objects are instances of classes and the process to creating objects involves class instantiation.  Following?  Good, let's cover one very distinct point with classes and instantiated objects:
+    <p>Going back to how classes actually work, once a blueprint for a class has been defined, such as it's methods and properties, it does not change.  Objects are exact and distinct copies of the class.  Objects are instances of classes and the process used to create objects involves class instantiation.  Following?  Good, let's cover one very distinct point with classes and instantiated objects:
     </p>
-    <p><strong>Changes to one object instance does not influence other instances.</strong></p>
+    <p><strong>Changes to one object instance does not influence other instances.  Every object is a copy of the class and is completely independent of other instantiated objects</strong></p>
     <p>Inheritance, Encapsulation, Polymorphism, and Overriding are all part of traditional class oriented languages.  Normally these are represented as the 4 pillars:</p>
     <ul>
         <li>Abstraction</li>
@@ -29,6 +32,7 @@
         <li><a href="https://msdn.microsoft.com/en-us/library/dd460654.aspx#Inheritance">C# Inheritance - MSDN</a></li>
         <li><a href="https://msdn.microsoft.com/en-us/library/dd460654.aspx#Overriding">C# Overriding - MSDN</a></li>
     </ul>
+    <p>I don't want to spend the entire post explaining what classes are in C#, that's best saved for MSDN and other resources.  I just wanted to give you a brief refresher if you forgot the details.</p>
 </div>
 <br>
 <div>
@@ -39,12 +43,16 @@
         alt="never assume anything lol" style="border:0"  width="600" text-align="center" />
     </div>
     <br>
-    <p>It's not entirely your fault if you were mislead by the <code>new</code> and <code>instanceof</code> keywords, especially if you heard <strong>"JavaScript is getting classes in ES6!"</strong>.</p>
-    <p>You can coerce a <em>design pattern</em> in JavaScript to <em>simulate</em> classes through with <code>.prototype</code>. </p>
-    <p> With JavaScript, there is no inherent way to copy object or parent function behavior, there is only object linking.  Remember, you instantiate/create objects in JavaScript, not classes.  These objects, that are linked together through the <code>prototype</code> chain, and through extensive effort by numerous JavaScript hacky code, we can coerce the language via <strong>mixins</strong> to <em>"have"</em> classes.</p>
+    <p>It's not entirely your fault if you were mislead by the <code>new</code> and <code>instanceof</code> keywords, especially if you heard <strong>"JavaScript is getting classes in ES6!"</strong>.  These keywords, which are very similar to other language keywords referring to class instantiation, have a tendency to confuse novice JavaScript developers.</p>
+    <p>You can coerce a <em>design pattern</em> in JavaScript to <em>simulate</em> classes through <code>.prototype</code> delegation but at the 10,000 foot view, you are employing a design pattern, not some fundamental language feature. </p>
+    </div>
+    <br>
+    <div>
+        <h4>Mixins</h4>
+    <p> With JavaScript, there is no inherent way to copy objects or parent function behavior, there is only object linking.  Remember, you instantiate/create objects in JavaScript, not classes.  These objects, that are linked together through the <code>prototype</code> chain.  Through extensive effort and through hacky JavaScript code, we can coerce the language via <strong>mixins</strong> to <em>"simulate"</em> classes.</p>
     <p>Many libraries that try to emulate classes have their own implimentation of mixins, such as JQuery with <code>$.extend()</code> or <code>angular.extend()</code>.</p>
-    <p>Frankly, the mixin pattern is very brittle and is typically a maintenance nightmare.  Mostly because as a design pattern, it is implemented whichever way the developer felt like hand rolling it.  What you're doing by is setting yourself up for a series of landmines unless you have a deep understanding of how JavaScript works.</p>
-    <p>I've already covered, in depth, why you should use TypeScript and transpile down to ES5/ES6, in which you can minimize all of these landmines, but now we divert our attention to the EcmaScript 6 classes.</p>
+    <p>Frankly, the mixin pattern is very brittle and is typically a maintenance nightmare.  Mostly because as a design pattern, it is implemented whichever way the developer felt like hand rolling it.  What you're doing is setting yourself up for a series of landmines unless you have a deep understanding of how JavaScript works, and if you did, you wouldn't even bother using mixins.</p>
+    <p>I've already covered, in depth, why you should use TypeScript and transpile down to ES5/ES6, in which you can minimize all of these landmines, but now we should divert our attention to the EcmaScript 6 classes and what facade we actually get.</p>
 </div>
 <br>
 <div>
@@ -57,15 +65,15 @@
     </div>
     <br>
     <p>As we initially started to talk about ES6 classes, the <code>class</code> keyword is syntatic sugar over the <code>[[Prototype]]</code> delegation that's been in existence in JavaScript for ages.</p>
-    <p>Classes are nothing but functions with a few hidden special features behind the scenes.  Classes can exist as <em>class expressions</em> and <em>class declarations</em>. </p>
-    <p> Remember how in another post we discussed the "hoisting" mechanism, which is nothing more than a JavaScript JIT compilation step.  In regards to function declarations, the function is hoisted.  This is not the case with classes, and classes will need to be <em>declared</em> <strong>first</strong> before it is used.  That's neat, we just lost some awesome functionality for syntatic sugar.</p>
-
+    <p>Classes are nothing but functions with a few caveats.  Classes can exist as <em>class expressions</em> and <em>class declarations</em>. </p>
+    <p> Remember how in another post we discussed the "hoisting" mechanism, which is nothing more than a JavaScript JIT compilation step that stores variable and function declarations?.  In regards to function declarations, the function is hoisted.  This is not the case with classes, and classes will need to be <em>declared</em> <strong>first</strong> before they are used.  </p>
+    <p>Well that's neat, we just lost some awesome functionality for syntatic sugar...</p>
     </div>
     <br>
 
     <div>
-        <h4>Constructor</h4>
-        <p>Only one <code>constructor</code> function exists within a single class.  The <code>constructor</code> function allows you to initalize the objects that will be used within the class and can be coupled with the <code>super</code> keyword.  Here is an example: </p>
+        <h4>Constructors</h4>
+        <p>Only one <code>constructor</code> function exists within a ES6 class.  The <code>constructor</code> function allows you to initalize the objects that will be used within the class and can be coupled with the <code>super</code> keyword.  Here is an example: </p>
         <br>
         <pre class="prettyprint">
         class Person {
@@ -120,7 +128,7 @@
     <br>
     <div>
         <h4>Extending the Parent Class</h4>
-        <p>The <code>extends</code> keyword allows you to <em>"extend"</em> or "inherit" the base class functionality.  This is a way to emulate a subclass.  Here is an example:</p>
+        <p>The <code>extends</code> keyword allows you to <em>"extend"</em> or "inherit" the base class functionality.  This is a way to emulate a subclass.  Under the hood we are merely delegating via <code>[[Prototype]]</code>.  Here is an example:</p>
         <br>
         <pre class="prettyprint">
             class Person {
@@ -150,18 +158,18 @@
     <br>
     <div>
         <h4>Gotchas</h4>
-    <p>Earlier we discussed how traditional classes work and how the subclasses that inherit from it have no way of changing the parent class.  Think of this as your child breaking their leg, your leg will be just fine.  But since JavaScript delegates up the <code>[[Prototype]]</code> chain, you can <em>accidentally</em> bork the parent class behavior.</p>
+    <p>Earlier we discussed how traditional classes work and how subclasses inherit functionality.  In traditional class oriented languages, the subclass has no way of changing the parent class functionality/blueprint.  Think of this as your child breaking their leg, your leg will be just fine(<small>clear parent-to-child relationship</small>).  But since JavaScript delegates up the <code>[[Prototype]]</code> chain, you can <em>accidentally</em> bork the parent class behavior.</p>
     <p>Let's take a look at an example:</p>
     <br>
     <pre class="prettyprint">
-        class Person {
-            constructor() {
-                this.height = 6;
-            }
-            describe() {
-                console.log( "My height is: " + this.height );
-            }
+    class Person {
+        constructor() {
+            this.height = 6;
         }
+        describe() {
+            console.log( "My height is: " + this.height );
+        }
+    }
 
     var oleg = new Person();
     oleg.describe(); // "My height is: 6"
@@ -183,9 +191,10 @@
     alt="lol what bird" style="border:0"  width="400" text-align="center" />
 </div>
 <br>
+<p>That said, let's look at how you can start using ES6 classes today!</p>
 <div>
     <h4>Traceur or Babel</h4>
-    <p>You don't have to wait until all browser adopt the ES6 class syntax.  You can begin using the syntax today and transpile with either <strong>Traceur</strong> or <strong>BabelJS</strong>.  Here are links to get you started:</p>
+    <p>You don't have to wait until all browser adopt the ES6 class syntax(although most of the popular browsers already have).  You can begin using the syntax today and transpile with either <strong>Traceur</strong> or <strong>BabelJS</strong>.  Here are links to get you started:</p>
     <ul>
         <li><a href="https://github.com/google/traceur-compiler/wiki/Getting-Started">Traceur</a></li>
         <li><a href="https://github.com/google/traceur-compiler/wiki/Getting-Started">Babel</a></li>
