@@ -1,14 +1,14 @@
 
 <br />
-<p>By now you may have heard the news, EcmaScript(ES) 6 2015 is finalized and JavaScript is going to be propelled into future, satisfying the needs of non-JavaScript developers to easily transition to a language that didn't have <em>"classes"</em>.  Well, I'm not here to burst your bubble, but that's not happening.  What <em>IS</em> happening, is that we are getting nothing more than <strong>syntatic sugar over JavaScript prototypal inheritance.</strong></p>
+<p>By now you may have heard the news, EcmaScript(ES) 6 2015 is finalized and JavaScript is going to be propelled into future, satisfying the needs of non-JavaScript developers to easily transition to a language that didn't have <em>"classes"</em>.  Well, I'm not here to burst your bubble, but that's not happening.  What <em>IS</em> happening, is that we are getting nothing more than <strong>syntactic sugar over JavaScript prototypal inheritance.</strong></p>
 <p>Just to be 100% clear, "class oriented"(<small>Java, C#, etc</small>) programming involves object creation through constructors.  It is best to think of traditional instantiation as <em>class instantiation</em> which contrasts JavaScript in which objects are instantiated(<small>created and linked</small>).  Objects in JavaScript do not stand on their own, they are interlinked.</p>
-<p>If you aren't already familiar with the tradional sense of classes and how developers have been butchering JavaScript to re-invent classes, don't worry, we'll cover it shortly.</p>
+<p>If you aren't already familiar with the traditional sense of classes and how developers have been butchering JavaScript to re-invent classes, don't worry, we'll cover it shortly.</p>
 <br>
 <div>
     <h4>Traditional Classes</h4>
 
 
-    <p>The way in which many of us learned about classes inevitabiliy clouds our judgement and understanding of a non-class based language such as JavaScript.  Classes are the blueprint that is used to create objects.  Do not confuse classes and objects, especially in JavaScript.  In JavaScript you create objects and link them to other objects.</p>
+    <p>The way in which many of us learned about classes inevitably clouds our judgement and understanding of a non-class based language such as JavaScript.  Classes are the blueprint that is used to create objects.  Do not confuse classes and objects, especially in JavaScript.  In JavaScript you create objects and link them to other objects.</p>
     <br>
     <div class="text-center">
         <img class="postImage" src="http://techiejs.com/Content/img/PublicImages/8b3d6c98-c946-4222-8688-94b8f9b96cf5_original.jpg"
@@ -50,7 +50,7 @@
     <div>
         <h4>Mixins</h4>
     <p> With JavaScript, there is no inherent way to copy objects or parent function behavior, there is only object linking.  Remember, you instantiate/create objects in JavaScript, not classes.  These objects, that are linked together through the <code>prototype</code> chain.  Through extensive effort and through hacky JavaScript code, we can coerce the language via <strong>mixins</strong> to <em>"simulate"</em> classes.</p>
-    <p>Many libraries that try to emulate classes have their own implimentation of mixins, such as JQuery with <code>$.extend()</code> or <code>angular.extend()</code>.</p>
+    <p>Many libraries that try to emulate classes have their own implementation of mixins, such as JQuery with <code>$.extend()</code> or <code>angular.extend()</code>.</p>
     <p>Frankly, the mixin pattern is very brittle and is typically a maintenance nightmare.  Mostly because as a design pattern, it is implemented whichever way the developer felt like hand rolling it.  What you're doing is setting yourself up for a series of landmines unless you have a deep understanding of how JavaScript works, and if you did, you wouldn't even bother using mixins.</p>
     <p>I've already covered, in depth, why you should use TypeScript and transpile down to ES5/ES6, in which you can minimize all of these landmines, but now we should divert our attention to the EcmaScript 6 classes and what facade we actually get.</p>
 </div>
@@ -64,16 +64,16 @@
         alt="ecmascript 6 logo" style="border:0"  width="600" text-align="center" />
     </div>
     <br>
-    <p>As we initially started to talk about ES6 classes, the <code>class</code> keyword is syntatic sugar over the <code>[[Prototype]]</code> delegation that's been in existence in JavaScript for ages.</p>
+    <p>As we initially started to talk about ES6 classes, the <code>class</code> keyword is syntactic sugar over the <code>[[Prototype]]</code> delegation that's been in existence in JavaScript for ages.</p>
     <p>Classes are nothing but functions with a few caveats.  Classes can exist as <em>class expressions</em> and <em>class declarations</em>. </p>
     <p> Remember how in another post we discussed the "hoisting" mechanism, which is nothing more than a JavaScript JIT compilation step that stores variable and function declarations?.  In regards to function declarations, the function is hoisted.  This is not the case with classes, and classes will need to be <em>declared</em> <strong>first</strong> before they are used.  </p>
-    <p>Well that's neat, we just lost some awesome functionality for syntatic sugar...</p>
+    <p>Well that's neat, we just lost some awesome functionality for syntactic sugar...</p>
     </div>
     <br>
 
     <div>
         <h4>Constructors</h4>
-        <p>Only one <code>constructor</code> function exists within a ES6 class.  The <code>constructor</code> function allows you to initalize the objects that will be used within the class and can be coupled with the <code>super</code> keyword.  Here is an example: </p>
+        <p>Only one <code>constructor</code> function exists within a ES6 class.  The <code>constructor</code> function allows you to initialize the objects that will be used within the class and can be coupled with the <code>super</code> keyword.  Here is an example: </p>
         <br>
         <pre class="prettyprint">
         class Person {
@@ -175,7 +175,7 @@
     oleg.describe(); // "My height is: 6"
 
     Person.prototype.describe = function() {
-        console.log( "My height is: " + (this.num * 10));
+        console.log( "My height is: " + (this.height * 10));
     };
 
     var michael = new Person();
